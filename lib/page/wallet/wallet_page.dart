@@ -1,0 +1,262 @@
+import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:xdag/common/color.dart';
+import 'package:xdag/common/global.dart';
+import 'package:xdag/common/helper.dart';
+import 'package:xdag/model/db_model.dart';
+import 'package:xdag/model/wallet_modal.dart';
+import 'package:xdag/widget/home_transaction_item.dart';
+import 'package:xdag/widget/wallet_header.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+class WalletPage extends StatefulWidget {
+  const WalletPage({super.key});
+
+  @override
+  State<WalletPage> createState() => _WalletPageState();
+}
+
+class _WalletPageState extends State<WalletPage> {
+  final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  String _crurrentAddress = "";
+  String lastTime = "";
+  List<Transaction> list = [];
+  final dio = Dio();
+  CancelToken cancelToken = CancelToken();
+  int currentPage = 1;
+  int totalPage = 1;
+  bool loading = false;
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      _refreshIndicatorKey.currentState?.show();
+    });
+    _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.removeListener(_scrollListener);
+    _scrollController.dispose();
+    cancelToken.cancel();
+    dio.close();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (!loading && _scrollController.position.pixels > _scrollController.position.maxScrollExtent - 100 && currentPage < totalPage) {
+      currentPage += 1;
+      fetchPage();
+    }
+  }
+
+  fetchPage() async {
+    if (loading) return;
+    setState(() {
+      loading = true;
+    });
+    WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
+    Wallet wallet = walletModal.getWallet();
+    try {
+      Response responseBalance = await dio.post(Global.rpcURL, cancelToken: cancelToken, data: {
+        "jsonrpc": "2.0",
+        "method": "xdag_getBalance",
+        "params": [wallet.address],
+        "id": 1
+      });
+      walletModal.setBlance(responseBalance.data['result']);
+      Response response = await dio.get(
+        "${Global.explorURL}/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=200",
+        cancelToken: cancelToken,
+      );
+      if (response.data["addresses_pagination"] != null) {
+        totalPage = response.data["addresses_pagination"]["last_page"];
+      }
+      // if (response.data["balance"] != null) {
+      //   walletModal.setBlance(response.data["balance"]);
+      // }
+      if (response.data["block_as_address"] != null) {
+        List<Transaction> newList = [];
+        for (var i = 0; i < response.data["block_as_address"].length; i++) {
+          var item = response.data["block_as_address"][i];
+          String amountString = Helper.removeTrailingZeros(item["amount"].toString());
+          try {
+            newList.add(Transaction(
+              time: item["time"],
+              amount: amountString,
+              address: item["address"],
+              status: "",
+              from: item["direction"] == 'input' ? "" : wallet.address,
+              to: item["direction"] != 'input' ? "" : wallet.address,
+              type: item["direction"] != 'snapshot' ? 0 : 1,
+              hash: '',
+              blockAddress: item["address"],
+              fee: 0,
+              remark: item["remark"] ?? "",
+            ));
+          } catch (e) {
+            // print(e);
+          }
+        }
+        // delay 1s
+        // await Future.delayed(const Duration(seconds: 1));
+        if (mounted) {
+          if (currentPage == 1) {
+            setState(() {
+              list = newList;
+              loading = false;
+            });
+          } else {
+            setState(() {
+              list.addAll(newList);
+              loading = false;
+            });
+          }
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          loading = false;
+        });
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    const titleStyle = TextStyle(
+      decoration: TextDecoration.none,
+      fontSize: 22,
+      fontFamily: 'RobotoMono',
+      fontWeight: FontWeight.w700,
+      color: Colors.white,
+    );
+    return Consumer<WalletModal>(builder: (context, walletModal, child) {
+      Wallet wallet = walletModal.getWallet();
+      return Container(
+        color: DarkColors.bgColor,
+        child: Column(
+          children: [
+            SizedBox(height: ScreenHelper.topPadding),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+              child: Row(
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: Center(
+                      child: Text(
+                        wallet.name,
+                        style: titleStyle,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                  const Spacer(),
+                  SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: CupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: Image.asset("images/switch.png", width: 25, height: 25),
+                      onPressed: () async {
+                        await Navigator.pushNamed(context, "/select");
+                        if (mounted) {
+                          if (_crurrentAddress != Provider.of<WalletModal>(context, listen: false).getWallet().address) {
+                            _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
+                            setState(() {
+                              list = [];
+                            });
+                            _refreshIndicatorKey.currentState?.show();
+                          }
+                        }
+                      },
+                    ),
+                  )
+                ],
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                color: DarkColors.mainColor,
+                semanticsLabel: "1123",
+                onRefresh: () async {
+                  cancelToken.cancel();
+                  cancelToken = CancelToken();
+                  loading = false;
+                  currentPage = 1;
+                  await fetchPage();
+                },
+                child: ListView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  padding: EdgeInsets.zero,
+                  itemCount: list.length + 2,
+                  controller: _scrollController,
+                  itemBuilder: (BuildContext buildContext, int index) {
+                    if (index == 0) return WalletHeader(address: wallet.address, balance: wallet.amount);
+                    if (index == list.length + 1) {
+                      if (list.isEmpty) {
+                        return Column(children: [
+                          const SizedBox(height: 50),
+                          const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
+                          Text(AppLocalizations.of(context).no_transactions, style: const TextStyle(color: Colors.white, fontSize: 16)),
+                        ]);
+                      }
+                      if (loading) {
+                        return Column(
+                          children: const [
+                            SizedBox(height: 20),
+                            Center(
+                              child: SizedBox(
+                                width: 30,
+                                height: 30,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(DarkColors.mainColor),
+                                ),
+                              ),
+                            )
+                          ],
+                        );
+                      }
+                      return const SizedBox(height: 20);
+                    }
+                    int pos = index - 1;
+                    Transaction transaction = list[pos];
+                    // print("transaction.type = ${transaction.type} and index = $index");
+                    Widget box = Container();
+                    if (pos == 0) {
+                      lastTime = transaction.time;
+                      box = WalletTransactionDateHeader(time: transaction.time);
+                    } else {
+                      if (lastTime.substring(0, 7) != transaction.time.substring(0, 7)) {
+                        lastTime = transaction.time;
+                        box = WalletTransactionDateHeader(time: transaction.time);
+                      }
+                    }
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        box,
+                        WalletTransactionItem(transaction: transaction, address: wallet.address),
+                      ],
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+}
