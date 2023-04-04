@@ -25,20 +25,6 @@ class Helper {
     return result;
   }
 
-  static bool checkAddress(String address) {
-    if (address.length != 33) {
-      return false;
-    }
-    // 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
-    for (var i = 0; i < address.length; i++) {
-      if (!RegExp(r"[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]").hasMatch(address[i])) {
-        return false;
-      }
-    }
-    //
-    return true;
-  }
-
   static String formatDate(String time) {
     DateTime date = DateTime.parse(time);
     return "${date.year}-${date.month < 10 ? "0${date.month}" : date.month}";

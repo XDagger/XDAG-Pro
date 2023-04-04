@@ -128,11 +128,6 @@ class WalletHeader extends StatelessWidget {
                     isScrollControlled: true,
                     builder: (BuildContext buildContext) => const ContactsPage(),
                   );
-                  // // final valBytes = Uint8List(8);
-                  // // ByteData.view(valBytes.buffer).setUint64(0, 1680091148335472711, Endian.little);
-                  // // print(valBytes);
-                  // // print(HEX.encode(valBytes));
-                  // TransactionHelper.getTransaction(wallet.address, 'CTrTVu717sgCAQuJay5YEdL2NYLqibUN5', '123', 3);
                 },
               )),
               const SizedBox(width: 15),

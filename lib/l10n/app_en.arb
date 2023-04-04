@@ -87,5 +87,6 @@
   "hash":"Hash",
   "state": "State",
   "pending": "Pending",
-  "remark":"remark"
+  "remark":"remark",
+  "walletAddressError":"Wallet address error"
 }

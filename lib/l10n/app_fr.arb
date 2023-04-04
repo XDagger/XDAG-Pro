@@ -87,5 +87,6 @@
   "hash":"Hachage",
   "state": "Statut",
   "pending": "En attente",
-  "remark":"remarque"
+  "remark":"remarque",
+  "walletAddressError": "L'adresse du portefeuille est incorrecte"
 }

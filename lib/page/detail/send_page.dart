@@ -106,7 +106,7 @@ class _SendPageState extends State<SendPage> {
         );
         if (context.mounted) {
           var res = response.data['result'] as String;
-          print(res);
+          // print(res);
           if (res.length == 32 && res.trim().split(' ').length == 1) {
             var transactionItem = Transaction(time: '', amount: Helper.removeTrailingZeros(sendAmount.toString()), address: fromAddress, status: 'pending', from: fromAddress, to: toAddress, type: 0, hash: '', fee: 0, blockAddress: res, remark: sendRemark);
             Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
@@ -135,7 +135,8 @@ class _SendPageState extends State<SendPage> {
 
     bool isButtonEnable = false;
     try {
-      isButtonEnable = amount.isNotEmpty && double.parse(amount.isEmpty ? '0' : amount) <= double.parse(wallet.amount);
+      var a = double.parse(amount.isEmpty ? '0' : amount);
+      isButtonEnable = amount.isNotEmpty && a <= double.parse(wallet.amount) && a > 0;
     } catch (e) {
       isButtonEnable = false;
     }

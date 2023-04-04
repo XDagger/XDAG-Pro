@@ -87,5 +87,6 @@
   "hash": "哈希",
   "state": "状态",
   "pending": "等待中",
-  "remark":"备注"
+  "remark":"备注",
+  "walletAddressError": "钱包地址错误"
 }

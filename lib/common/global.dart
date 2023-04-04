@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:hive/hive.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_ios/local_auth_ios.dart';
@@ -32,6 +33,9 @@ class Global {
   static const String _hasRunBeforeKey = 'hasRunBeforeKey';
   static const String walletListKey = 'walletListKey';
 
+  static String version = '';
+  static String buildNumber = '';
+
   static const String rpcURL = 'http://43.156.157.212:10001';
   static const String explorURL = 'https://www.testexplorer.xdag.io/api';
   static const bool isTest = false;
@@ -45,6 +49,9 @@ class Global {
     }
     walletConfig = WalletConfig(local: 0, hasSetPassword: false, hasSetBiometrics: false);
     walletListBox = await Hive.openBox<Wallet>(walletListKey);
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    version = packageInfo.version;
+    buildNumber = packageInfo.buildNumber;
     await checkBiometricType();
     await updateConfig();
   }

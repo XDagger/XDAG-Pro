@@ -87,5 +87,6 @@
   "hash": "Hash",
   "state": "Status",
   "pending": "Ausstehend",
-  "remark":"Bemerkung"
+  "remark":"Bemerkung",
+  "walletAddressError": "Wallet-Adresse ist ungültig"
 }

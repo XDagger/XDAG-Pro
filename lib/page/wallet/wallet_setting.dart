@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/page/common/langs_select.dart';
@@ -92,7 +93,7 @@ class WalletSettingPage extends StatelessWidget {
                         const SizedBox(height: 5),
                         const Text("XDAG-Pro", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: "RobotoMono")),
                         const SizedBox(height: 5),
-                        const Text("Version 1.0.0", style: TextStyle(color: Colors.white54, fontSize: 12, fontWeight: FontWeight.w400, fontFamily: "RobotoMono")),
+                        Text('Version ${Global.version}(${Global.buildNumber})', style: TextStyle(color: Colors.white54, fontSize: 12, fontWeight: FontWeight.w400, fontFamily: "RobotoMono")),
                       ],
                     ))),
           ),

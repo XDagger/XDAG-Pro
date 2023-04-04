@@ -17,7 +17,7 @@ class LangsSelectPage extends StatelessWidget {
     ConfigModal config = Provider.of<ConfigModal>(context);
     double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * ConfigModal.langs.length + 10;
     return ModalFrame(
-      height: height > screenHeight * 0.7 ? screenHeight * 0.7 : height,
+      height: height > screenHeight * 0.8 ? screenHeight * 0.8 : height,
       title: AppLocalizations.of(context).select_language,
       child: Column(
         children: [
