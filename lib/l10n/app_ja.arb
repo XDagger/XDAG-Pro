@@ -88,5 +88,8 @@
   "state": "状態",
   "pending": "保留中",
   "remark":"備考",
-  "walletAddressError": "ウォレットアドレスが正しくありません"
+  "walletAddressError": "ウォレットアドレスが正しくありません",
+  "error":"エラー",
+  "camera_permissions":"カメラの権限をオンにしてください",
+  "qr_not_found":"QRコードが見つかりません"
 }

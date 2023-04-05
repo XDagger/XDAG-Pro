@@ -88,5 +88,8 @@
   "state": "状态",
   "pending": "等待中",
   "remark":"备注",
-  "walletAddressError": "钱包地址错误"
+  "walletAddressError": "钱包地址错误",
+  "error":"错误",
+  "camera_permissions":"请打开相机权限",
+  "qr_not_found":"未找到二维码"
 }

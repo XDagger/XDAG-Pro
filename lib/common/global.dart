@@ -36,7 +36,7 @@ class Global {
   static String version = '';
   static String buildNumber = '';
 
-  static const String rpcURL = 'http://43.156.157.212:10001';
+  static const String rpcURL = 'https://testnet-rpc.xdagj.org';
   static const String explorURL = 'https://www.testexplorer.xdag.io/api';
   static const bool isTest = false;
 

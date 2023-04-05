@@ -112,16 +112,14 @@ class TransactionHelper {
   }
 
   static bool checkAddress(String address) {
-    if (address.length != 33) {
+    var addrBytes = Helper.base58Decode(address).reversed.toList();
+    if (addrBytes.length != 24) {
       return false;
     }
-    var addrBytes = Helper.base58Decode(address).reversed.toList();
     final addrBytes20 = addrBytes.sublist(0, 20);
     final addrBytes4 = addrBytes.sublist(20, 24);
     var h = sha256.convert(sha256.convert(addrBytes20).bytes).bytes;
     h = h.sublist(0, 4);
-    print(addrBytes4);
-    print(h);
     // 比较 h 和 addrBytes4
     for (var i = 0; i < 4; i++) {
       if (addrBytes4[i] != h[i]) {

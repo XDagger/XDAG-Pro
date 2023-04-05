@@ -88,5 +88,8 @@
   "state": "Statut",
   "pending": "En attente",
   "remark":"remarque",
-  "walletAddressError": "L'adresse du portefeuille est incorrecte"
+  "walletAddressError": "L'adresse du portefeuille est incorrecte",
+  "error":"Erreur",
+  "camera_permissions":"Veuillez activer les autorisations de la caméra",
+  "qr_not_found":"Code QR introuvable"
 }

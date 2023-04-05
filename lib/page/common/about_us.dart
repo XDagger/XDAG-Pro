@@ -25,10 +25,7 @@ class AboutUsPage extends StatelessWidget {
                         LabelButton(
                           label: "Telegram",
                           onPressed: () async {
-                            // https://t.me/dagger_cryptocurrency
-                            if (await canLaunchUrlString('https://t.me/dagger_cryptocurrency')) {
-                              launchUrlString('https://t.me/dagger_cryptocurrency');
-                            }
+                            launchUrlString('https://www.telegram.me/dagger_cryptocurrency', mode: LaunchMode.externalApplication);
                           },
                           child: Image.asset("images/telegram.png", width: 25, height: 25),
                         ),
@@ -37,8 +34,7 @@ class AboutUsPage extends StatelessWidget {
                           type: 2,
                           label: "Discord",
                           onPressed: () {
-                            // https://discord.gg/Nf72gd9
-                            launchUrlString('https://discord.gg/Nf72gd9');
+                            launchUrlString('https://discord.gg/Nf72gd9', mode: LaunchMode.externalApplication);
                           },
                           child: Image.asset("images/discord.png", width: 25, height: 25),
                         ),
@@ -47,8 +43,7 @@ class AboutUsPage extends StatelessWidget {
                           type: 2,
                           label: "Twitter",
                           onPressed: () {
-                            // https://twitter.com/XDAG_Community
-                            launchUrlString('https://twitter.com/XDAG_Community');
+                            launchUrlString('https://twitter.com/XDAG_Community', mode: LaunchMode.externalApplication);
                           },
                           child: Image.asset("images/twitter.png", width: 25, height: 25),
                         ),

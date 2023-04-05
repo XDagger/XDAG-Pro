@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/common/transaction.dart';
-import 'package:xdag/page/common/scan_qr.dart';
+import 'package:scan_qr/scan_qr.dart';
 import 'package:xdag/page/detail/send_page.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/nav_header.dart';
@@ -46,42 +46,69 @@ class ContactsStatePage extends State<ContactsPage> {
             NavHeader(
               title: "${AppLocalizations.of(context).send} XDAG",
               isColseIcon: true,
-              // rightWidget: Platform.isIOS || Platform.isAndroid
-              //     ? Row(children: [
-              //         SizedBox(
-              //           width: 40,
-              //           height: 40,
-              //           child: CupertinoButton(
-              //             padding: EdgeInsets.zero,
-              //             color: DarkColors.blockColor,
-              //             borderRadius: BorderRadius.circular(20),
-              //             onPressed: () async {
-              //               // var receiver = FlutterBarcodeScanner.getBarcodeStreamReceiver("#15A9EC", AppLocalizations.of(context).cancel, false, ScanMode.QR)?.listen((barcode) {
-              //               //   /// barcode to be used
-              //               //   print(barcode);
-              //               //   // receiver.cancel();
-              //               // });
-              //               if (FocusScope.of(context).hasFocus) {
-              //                 FocusScope.of(context).unfocus();
-              //                 await Future.delayed(const Duration(milliseconds: 200));
-              //               }
-              //               if (context.mounted) {
-              //                 Helper.changeAndroidStatusBar(true);
-              //                 await Helper.showBottomSheet(context, const ScanQrPage());
-              //                 Helper.changeAndroidStatusBar(false);
-              //               }
-              //             },
-              //             child: Row(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: const [
-              //                 Icon(Icons.qr_code_scanner_outlined, color: Colors.white, size: 16),
-              //               ],
-              //             ),
-              //           ),
-              //         ),
-              //         const SizedBox(width: 15),
-              //       ])
-              //     : null,
+              rightWidget: Platform.isIOS || Platform.isAndroid
+                  ? Row(children: [
+                      SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          color: DarkColors.blockColor,
+                          borderRadius: BorderRadius.circular(20),
+                          onPressed: () async {
+                            setState(() {
+                              error = "";
+                            });
+                            try {
+                              var res = await ScanQr.openScanQr(
+                                color: "#15A9EC",
+                                title: AppLocalizations.of(context).error,
+                                content: AppLocalizations.of(context).camera_permissions,
+                                confirmText: AppLocalizations.of(context).setting,
+                                cancelText: AppLocalizations.of(context).cancel,
+                                errQrText: AppLocalizations.of(context).qr_not_found,
+                              );
+                              // setState(() {
+                              //   address = res ?? '';
+                              // });
+                              if (res != null) {
+                                bool flag = TransactionHelper.checkAddress(res);
+                                if (flag) {
+                                  setState(() {
+                                    walletAddress = res;
+                                    error = "";
+                                  });
+                                  controller.text = res;
+                                  controller.selection = TextSelection.fromPosition(TextPosition(offset: res.length));
+                                } else {
+                                  controller.clear();
+                                  controller.selection = TextSelection.fromPosition(const TextPosition(offset: 0));
+                                  setState(() {
+                                    walletAddress = "";
+                                    error = AppLocalizations.of(context).walletAddressError;
+                                  });
+                                }
+                              } else {
+                                controller.clear();
+                                controller.selection = TextSelection.fromPosition(const TextPosition(offset: 0));
+                                setState(() {
+                                  walletAddress = "";
+                                  error = AppLocalizations.of(context).walletAddressError;
+                                });
+                              }
+                            } catch (e) {}
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(Icons.qr_code_scanner_outlined, color: Colors.white, size: 16),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                    ])
+                  : null,
             ),
             Expanded(
               child: SingleChildScrollView(

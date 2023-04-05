@@ -88,5 +88,8 @@
   "state": "State",
   "pending": "Pending",
   "remark":"remark",
-  "walletAddressError":"Wallet address error"
+  "walletAddressError":"Wallet address error",
+  "error":"Error",
+  "camera_permissions":"Please turn on the camera permissions",
+  "qr_not_found":"QR code not found"
 }

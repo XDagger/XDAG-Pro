@@ -88,5 +88,8 @@
   "state": "Состояние",
   "pending": "Ожидание",
   "remark":"примечание",
-  "walletAddressError":"Неверный адрес кошелька"
+  "walletAddressError":"Неверный адрес кошелька",
+  "error":"Ошибка",
+  "camera_permissions":"Пожалуйста, включите разрешения на камеру",
+  "qr_not_found":"QR-код не найден"
 }

@@ -88,5 +88,8 @@
   "state": "Status",
   "pending": "Ausstehend",
   "remark":"Bemerkung",
-  "walletAddressError": "Wallet-Adresse ist ungültig"
+  "walletAddressError": "Wallet-Adresse ist ungültig",
+  "error":"Fehler",
+  "camera_permissions":"Bitte aktivieren Sie die Kameraberechtigungen",
+  "qr_not_found":"QR-Code nicht gefunden"
 }
