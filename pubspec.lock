@@ -803,7 +803,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: "603b7f610fd17826f99b3a61c8a90554228bdc63"
-      url: "git@github.com:amazingCoding/flutter-scan-qr.git"
+      url: "https://github.com/amazingCoding/flutter-scan-qr.git"
     source: git
     version: "0.1.1"
   secp256k1:

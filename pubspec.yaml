@@ -40,7 +40,7 @@ dependencies:
   flutter_keyboard_visibility: ^5.4.0
   scan_qr:
     git:
-      url: git@github.com:amazingCoding/flutter-scan-qr.git
+      url: https://github.com/amazingCoding/flutter-scan-qr.git
   package_info_plus: ^3.0.3
   dio: ^5.0.3
   easy_refresh: ^3.3.1
