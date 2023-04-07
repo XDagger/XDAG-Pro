@@ -1,8 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/model/db_model.dart';
+import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/detail/contacts_page.dart';
 import 'package:xdag/page/detail/receive_page.dart';
 import 'package:xdag/page/detail/wallet_detail.dart';
@@ -16,6 +19,8 @@ class WalletHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    WalletModal walletModal = Provider.of<WalletModal>(context);
+    Wallet wallet = walletModal.getWallet();
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
       child: Column(
@@ -122,6 +127,9 @@ class WalletHeader extends StatelessWidget {
                 title: AppLocalizations.of(context).send,
                 icon: 'images/send.png',
                 onPressed: () {
+                  // if (!wallet.isBackup) {
+                  //   return;
+                  // }
                   showModalBottomSheet(
                     backgroundColor: DarkColors.bgColor,
                     context: context,
@@ -136,6 +144,9 @@ class WalletHeader extends StatelessWidget {
                 title: AppLocalizations.of(context).receive,
                 icon: 'images/receive.png',
                 onPressed: () async {
+                  // if (!wallet.isBackup) {
+                  //   return;
+                  // }
                   Helper.changeAndroidStatusBar(true);
                   await Helper.showBottomSheet(context, const ReceivePage());
                   Helper.changeAndroidStatusBar(false);

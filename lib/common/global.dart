@@ -37,7 +37,7 @@ class Global {
   static String buildNumber = '';
 
   static const String rpcURL = 'https://testnet-rpc.xdagj.org';
-  static const String explorURL = 'https://www.testexplorer.xdag.io/api';
+  static const String explorURL = 'https://testexplorer.xdag.io/api';
   static const bool isTest = false;
 
   static Future<void> init() async {

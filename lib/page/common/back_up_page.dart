@@ -11,6 +11,12 @@ class BackUpPageRouteParams {
   BackUpPageRouteParams(this.data, this.type);
 }
 
+class MnemonicItem {
+  int index;
+  String value;
+  MnemonicItem(this.index, this.value);
+}
+
 class BackUpPage extends StatelessWidget {
   const BackUpPage({super.key});
 
@@ -18,14 +24,15 @@ class BackUpPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenHelper.initScreen(context);
     BackUpPageRouteParams args = BackUpPageRouteParams('', 0);
-    List<String> mnemonicList = [];
+    List<MnemonicItem> mnemonicItemList = [];
     if (ModalRoute.of(context)!.settings.arguments != null) {
       args = ModalRoute.of(context)!.settings.arguments as BackUpPageRouteParams;
     }
-    // args.data 按照空格分割
-    // print(args.data);
     if (args.type == 0) {
-      mnemonicList = args.data.trim().split(' ');
+      var mnemonicList = args.data.trim().split(' ');
+      mnemonicList.asMap().forEach((index, value) {
+        mnemonicItemList.add(MnemonicItem(index + 1, value));
+      });
     }
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
@@ -55,7 +62,7 @@ class BackUpPage extends StatelessWidget {
                               : Wrap(
                                   spacing: 20,
                                   runSpacing: 20,
-                                  children: mnemonicList
+                                  children: mnemonicItemList
                                       .map((e) => Container(
                                           width: (ScreenHelper.screenWidth - 30 - 2 - 60) * 0.5,
                                           height: 50,
@@ -64,8 +71,7 @@ class BackUpPage extends StatelessWidget {
                                             borderRadius: BorderRadius.circular(25),
                                           ),
                                           child: Center(
-                                            //  动态生成的文本：当前序号 + 1+ 词语
-                                            child: Text('${mnemonicList.indexOf(e) + 1}. $e', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                                            child: Text('${e.index}. ${e.value}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                                           )))
                                       .toList(),
                                 ),
