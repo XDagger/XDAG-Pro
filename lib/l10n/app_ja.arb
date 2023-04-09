@@ -110,5 +110,6 @@
   "mnemonic_error":"ニーモニックフレーズが正しくありません",
    "mnemonic_error_1":"ニーモニックが一致しません",
    "network":"ネットワーク",
-   "select_network": "ネットワークを選択"
+   "select_network": "ネットワークを選択",
+   "contacts":"連絡先"
 }

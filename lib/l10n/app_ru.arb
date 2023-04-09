@@ -110,5 +110,6 @@
   "mnemonic_error":"Неверная мнемоническая фраза",
   "mnemonic_error_1":"Несоответствие мнемонике",
   "network":"Сеть",
-  "select_network": "Выберите сеть"
+  "select_network": "Выберите сеть",
+  "contacts":"Контакты"
 }

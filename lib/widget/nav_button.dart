@@ -12,12 +12,21 @@ class BottomNavButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color color = index == type ? DarkColors.mainColor : DarkColors.bottomNavColor;
-    String text = type == 0 ? AppLocalizations.of(context).wallet : AppLocalizations.of(context).setting;
+    String text;
     Widget image;
-    if (type == 0) {
-      image = index == 0 ? Image.asset('images/wallet.png', width: 25, height: 25) : Image.asset('images/wallet1.png', width: 25, height: 25);
-    } else {
-      image = index == 1 ? Image.asset('images/set.png', width: 25, height: 25) : Image.asset('images/set1.png', width: 25, height: 25);
+    switch (type) {
+      case 1:
+        image = index == 1 ? Image.asset('images/contacts.png', width: 25, height: 25) : Image.asset('images/contacts1.png', width: 25, height: 25);
+        text = AppLocalizations.of(context).contacts;
+        break;
+      case 2:
+        image = index == 2 ? Image.asset('images/set.png', width: 25, height: 25) : Image.asset('images/set1.png', width: 25, height: 25);
+        text = AppLocalizations.of(context).setting;
+        break;
+      default:
+        image = index == 0 ? Image.asset('images/wallet.png', width: 25, height: 25) : Image.asset('images/wallet1.png', width: 25, height: 25);
+        text = AppLocalizations.of(context).wallet;
+        break;
     }
     return CupertinoButton(
         padding: EdgeInsets.zero,

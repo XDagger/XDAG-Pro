@@ -110,5 +110,6 @@
   "mnemonic_error":"Mnemonic ist ungültig",
   "mnemonic_error_1":"Mnemonic stimmt nicht überein",
   "network":"Netzwerk",
-  "select_network": "Netzwerk auswählen"
+  "select_network": "Netzwerk auswählen",
+  "contacts":"Kontakte"
 }

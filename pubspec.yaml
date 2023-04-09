@@ -201,6 +201,14 @@ flutter:
     - images/2.0x/security_1.png
     - images/3.0x/security_1.png
 
+    - images/contacts.png
+    - images/2.0x/contacts.png
+    - images/3.0x/contacts.png
+
+    - images/contacts1.png
+    - images/2.0x/contacts1.png
+    - images/3.0x/contacts1.png
+
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

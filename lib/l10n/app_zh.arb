@@ -110,5 +110,6 @@
   "mnemonic_error":"助记词错误",
   "mnemonic_error_1":"助记词不匹配",
   "network":"网络",
-  "select_network": "选择网络"
+  "select_network": "选择网络",
+  "contacts":"联系人"
 }
