@@ -15,6 +15,7 @@ class WalletConfig {
   bool hasSetBiometrics;
   String walletAddress;
   bool hasReadLegal;
+  int network = 1;
 
   WalletConfig({this.local = 0, this.hasSetPassword = false, this.hasSetBiometrics = false, this.walletAddress = "", this.hasReadLegal = false});
 }
@@ -27,6 +28,7 @@ class Global {
   static late SharedPreferences _prefs;
   static late FlutterSecureStorage _storage;
   static const String _localeKey = 'localeKey';
+  static const String _newWorkKey = 'newWorkKey';
   static const String _readLegalKey = 'readLegalKey';
   static const String _passwordKey = 'passwordKey';
   static const String _biometricsKey = 'biometricsKey';
@@ -59,6 +61,7 @@ class Global {
   static updateConfig() async {
     // locale
     int locale = _prefs.getInt(_localeKey) ?? 0;
+    int network = _prefs.getInt(_newWorkKey) ?? 1;
     // secure
     bool hasSetPassword = await _storage.containsKey(key: _passwordKey);
     bool hasSetBiometrics = _prefs.getBool(_biometricsKey) ?? false;
@@ -69,6 +72,7 @@ class Global {
     walletConfig.hasSetPassword = hasSetPassword;
     walletConfig.hasSetBiometrics = hasSetBiometrics;
     walletConfig.hasReadLegal = hasReadLegal;
+    walletConfig.network = network;
   }
 
   static saveLocale(int index) async {

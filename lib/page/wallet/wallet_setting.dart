@@ -22,9 +22,9 @@ class WalletSettingPage extends StatelessWidget {
       color: Colors.white,
     );
     const labelStyle = TextStyle(
-      color: DarkColors.mainColor,
-      fontSize: 16,
-      fontWeight: FontWeight.w700,
+      color: Colors.white,
+      fontSize: 12,
+      fontWeight: FontWeight.w400,
       fontFamily: "RobotoMono",
     );
     ConfigModal config = Provider.of<ConfigModal>(context);
@@ -60,7 +60,30 @@ class WalletSettingPage extends StatelessWidget {
                             await Helper.showBottomSheet(context, const LangsSelectPage());
                             Helper.changeAndroidStatusBar(false);
                           },
-                          child: Text(ConfigModal.langs[config.walletConfig.local].name, style: labelStyle),
+                          child: Row(
+                            children: [
+                              Text(config.walletConfig.local == 0 ? AppLocalizations.of(context).auto : ConfigModal.langs[config.walletConfig.local].name, style: labelStyle),
+                              const SizedBox(width: 5),
+                              const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 12),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 1),
+                        LabelButton(
+                          type: 2,
+                          label: AppLocalizations.of(context).network,
+                          onPressed: () async {
+                            Helper.changeAndroidStatusBar(true);
+                            await Helper.showBottomSheet(context, const NetWorkSelectPage());
+                            Helper.changeAndroidStatusBar(false);
+                          },
+                          child: Row(
+                            children: [
+                              Text(ConfigModal.netWorks[config.walletConfig.network], style: labelStyle),
+                              const SizedBox(width: 5),
+                              const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 12),
+                            ],
+                          ),
                         ),
                         const SizedBox(height: 1),
                         LabelButton(
@@ -93,7 +116,7 @@ class WalletSettingPage extends StatelessWidget {
                         const SizedBox(height: 5),
                         const Text("XDAG-Pro", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: "RobotoMono")),
                         const SizedBox(height: 5),
-                        Text('Version ${Global.version}(${Global.buildNumber})', style: TextStyle(color: Colors.white54, fontSize: 12, fontWeight: FontWeight.w400, fontFamily: "RobotoMono")),
+                        Text('Version ${Global.version}(${Global.buildNumber})', style: const TextStyle(color: Colors.white54, fontSize: 12, fontWeight: FontWeight.w400, fontFamily: "RobotoMono")),
                       ],
                     ))),
           ),

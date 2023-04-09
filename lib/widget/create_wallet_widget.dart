@@ -20,15 +20,21 @@ class CreateWalletStep extends StatelessWidget {
           height: 69,
           child: Row(
             children: [
+              const SizedBox(width: 15),
               SizedBox(
-                width: 60,
-                height: 69,
+                width: 40,
+                height: 40,
                 child: CupertinoButton(
                   padding: EdgeInsets.zero,
+                  color: DarkColors.blockColor,
+                  borderRadius: BorderRadius.circular(20),
                   onPressed: onPressed,
-                  child: const Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      SizedBox(width: 5),
+                      Icon(Icons.arrow_back_ios, color: Colors.white, size: 16),
+                    ],
                   ),
                 ),
               ),
@@ -39,7 +45,7 @@ class CreateWalletStep extends StatelessWidget {
               Container(width: 50, height: 3, color: step > 2 ? DarkColors.mainColor : DarkColors.lineColor),
               Dot(size: 16, color: step > 2 ? DarkColors.mainColor : DarkColors.lineColor),
               const Spacer(),
-              const SizedBox(width: 60)
+              const SizedBox(width: 40)
             ],
           ),
         ),

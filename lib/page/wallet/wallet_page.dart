@@ -70,6 +70,7 @@ class _WalletPageState extends State<WalletPage> {
         "id": 1
       });
       walletModal.setBlance(responseBalance.data['result']);
+      // print("${Global.explorURL}/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=200");
       Response response = await dio.get(
         "${Global.explorURL}/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=200",
         cancelToken: cancelToken,
@@ -202,7 +203,7 @@ class _WalletPageState extends State<WalletPage> {
                   itemCount: list.length + 2,
                   controller: _scrollController,
                   itemBuilder: (BuildContext buildContext, int index) {
-                    if (index == 0) return WalletHeader(address: wallet.address, balance: wallet.amount);
+                    if (index == 0) return const WalletHeader();
                     if (index == list.length + 1) {
                       if (list.isEmpty) {
                         return Column(children: [

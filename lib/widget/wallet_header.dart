@@ -13,9 +13,7 @@ import 'package:xdag/widget/home_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WalletHeader extends StatelessWidget {
-  final String address;
-  final String balance;
-  const WalletHeader({super.key, required this.address, required this.balance});
+  const WalletHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +24,41 @@ class WalletHeader extends StatelessWidget {
       child: Column(
         children: [
           const SizedBox(height: 15),
+          if (!wallet.isBackup)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 15),
+              child: CupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () => Navigator.pushNamed(context, '/back_up_test_start'),
+                child: Container(
+                  width: ScreenHelper.screenWidth - 20,
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  decoration: BoxDecoration(
+                    color: DarkColors.redColorMask2,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: ScreenHelper.screenWidth - 70,
+                        child: Text(
+                          AppLocalizations.of(context).backup_your_wallet,
+                          style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white),
+                        ),
+                      ),
+                      const Spacer(),
+                      const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 12,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          else
+            const SizedBox(),
           Container(
             height: 120,
             decoration: BoxDecoration(
@@ -40,7 +73,7 @@ class WalletHeader extends StatelessWidget {
                     children: [
                       Image.asset('images/logo.png', width: 40, height: 40),
                       const Spacer(),
-                      Text("$balance XDAG",
+                      Text("${wallet.amount} XDAG",
                           style: const TextStyle(
                             fontSize: 16,
                             fontFamily: 'RobotoMono',
@@ -61,10 +94,8 @@ class WalletHeader extends StatelessWidget {
                         children: [
                           Container(
                             padding: const EdgeInsets.fromLTRB(10, 3, 10, 5),
-                            // alignment: Alignment.center,
-                            // height: 20,
                             decoration: BoxDecoration(
-                              color: DarkColors.redColorMask2,
+                              color: DarkColors.redColorMask,
                               borderRadius: BorderRadius.circular(5),
                             ),
                             child: const Text(
@@ -73,7 +104,7 @@ class WalletHeader extends StatelessWidget {
                                 fontSize: 12,
                                 fontFamily: 'RobotoMono',
                                 fontWeight: FontWeight.w400,
-                                color: Colors.white,
+                                color: Colors.white54,
                               ),
                             ),
                           ),
@@ -82,7 +113,7 @@ class WalletHeader extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             child: Row(
                               children: [
-                                Text(address,
+                                Text(wallet.address,
                                     style: const TextStyle(
                                       fontSize: 12,
                                       fontFamily: 'RobotoMono',
@@ -98,7 +129,7 @@ class WalletHeader extends StatelessWidget {
                               ],
                             ),
                             onPressed: () {
-                              Clipboard.setData(ClipboardData(text: address));
+                              Clipboard.setData(ClipboardData(text: wallet.address));
                               Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
                             },
                           ),
@@ -114,7 +145,7 @@ class WalletHeader extends StatelessWidget {
               Expanded(
                   child: HomeHeaderButton(
                 title: AppLocalizations.of(context).security,
-                icon: 'images/security.png',
+                icon: wallet.isBackup ? 'images/security_1.png' : 'images/security.png',
                 onPressed: () async {
                   Helper.changeAndroidStatusBar(true);
                   await Helper.showBottomSheet(context, const WalletDetailPage());
@@ -127,9 +158,6 @@ class WalletHeader extends StatelessWidget {
                 title: AppLocalizations.of(context).send,
                 icon: 'images/send.png',
                 onPressed: () {
-                  // if (!wallet.isBackup) {
-                  //   return;
-                  // }
                   showModalBottomSheet(
                     backgroundColor: DarkColors.bgColor,
                     context: context,
@@ -144,9 +172,6 @@ class WalletHeader extends StatelessWidget {
                 title: AppLocalizations.of(context).receive,
                 icon: 'images/receive.png',
                 onPressed: () async {
-                  // if (!wallet.isBackup) {
-                  //   return;
-                  // }
                   Helper.changeAndroidStatusBar(true);
                   await Helper.showBottomSheet(context, const ReceivePage());
                   Helper.changeAndroidStatusBar(false);

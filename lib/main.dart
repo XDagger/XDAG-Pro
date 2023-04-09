@@ -9,6 +9,7 @@ import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/about_us.dart';
 import 'package:xdag/page/common/back_up_page.dart';
+import 'package:xdag/page/common/back_up_test_page.dart';
 import 'package:xdag/page/common/change_name_page.dart';
 import 'package:xdag/page/common/face_id_page.dart';
 import 'package:xdag/page/common/legal_page.dart';
@@ -90,6 +91,8 @@ class MyWidget extends StatelessWidget {
               "/change_password": (context) => const PasswordPage(),
               "/send": (context) => const SendPage(),
               "/webview": (context) => const WebViewPage(),
+              "/back_up_test_start": (context) => const BackUpStartPage(),
+              "/back_up_test": (context) => const BackUpTestPage(),
             },
           ),
         ));

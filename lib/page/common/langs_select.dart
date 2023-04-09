@@ -63,3 +63,63 @@ class LangsSelectPage extends StatelessWidget {
     );
   }
 }
+
+class NetWorkSelectPage extends StatelessWidget {
+  const NetWorkSelectPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    double screenHeight = ScreenHelper.screenHeight;
+    double bottomPadding = ScreenHelper.bottomPadding;
+    ConfigModal config = Provider.of<ConfigModal>(context);
+    //List<String> netWorks = ConfigModal.netWorks;
+    List<String> netWorks = ["TestNet"];
+    double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * netWorks.length + 10;
+    return ModalFrame(
+      height: height > screenHeight * 0.8 ? screenHeight * 0.8 : height,
+      title: AppLocalizations.of(context).select_network,
+      child: Column(
+        children: [
+          const SizedBox(height: 20),
+          Expanded(
+            child: ListView.builder(
+              itemCount: netWorks.length,
+              itemBuilder: (context, index) {
+                var item = netWorks[index];
+                return CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: Container(
+                    margin: EdgeInsets.only(top: index == 0 ? 0 : 20, left: 15, right: 15),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: DarkColors.blockColor,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 15),
+                        Text(
+                          item,
+                          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700, fontFamily: "RobotoMono"),
+                        ),
+                        const Spacer(),
+                        // if (config.walletConfig.local == index) Image.asset('images/select.png', width: 20, height: 20) else const SizedBox(width: 20),
+                        Image.asset('images/select.png', width: 20, height: 20),
+                        const SizedBox(width: 15),
+                      ],
+                    ),
+                  ),
+                  onPressed: () {
+                    // config.changeLocal(index);
+                    // Navigator.of(context).pop();
+                  },
+                );
+              },
+            ),
+          ),
+          SizedBox(height: bottomPadding > 0 ? bottomPadding : 20),
+        ],
+      ),
+    );
+  }
+}

@@ -73,9 +73,7 @@ class _TransactionPageState extends State<TransactionPage> {
         fee = Helper.removeTrailingZeros(newFee.toString());
         hash = response.data['hash'];
       });
-    } catch (e) {
-      print(e);
-    }
+    } catch (e) {}
   }
 
   @override

@@ -34,8 +34,10 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
   String walletName = "";
   String importContent = "";
   bool isLoad = false;
+  String errorText = "";
   Isolate? isolate;
   List<String> mnemonicList = [];
+  int mnemonicNumber = 0;
   final _focusNode1 = FocusNode();
   final _focusNode2 = FocusNode();
   @override
@@ -43,6 +45,17 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
     super.initState();
     controller = TextEditingController();
     ScreenHelper.initScreen(context);
+    _focusNode1.addListener(() {
+      if (!isPrivateKey) {
+        if (!_focusNode1.hasFocus) {
+          setState(() {
+            mnemonicList = [];
+          });
+        } else {
+          getMnemonicList(controller.text);
+        }
+      }
+    });
   }
 
   @override
@@ -52,6 +65,44 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
     _focusNode2.dispose();
     isolate?.kill(priority: Isolate.immediate);
     super.dispose();
+  }
+
+  void getMnemonicList(String value) {
+    List<String> list = value.trim().split(" ");
+    setState(() {
+      mnemonicNumber = value.isEmpty ? 0 : list.length;
+      errorText = "";
+    });
+    if (list.isNotEmpty && value != "") {
+      String lastWord = list[list.length - 1];
+      list.removeLast();
+      if (lastWord == " " || lastWord == "") {
+        setState(() {
+          mnemonicList = [];
+        });
+      } else {
+        List<String> mnemonicList1 = [];
+        for (String word in wordList) {
+          if (word.startsWith(lastWord) || word == lastWord) {
+            bool isExist = false;
+            for (String word1 in list) {
+              if (word1 == word) {
+                isExist = true;
+                break;
+              }
+            }
+            if (!isExist) mnemonicList1.add(word);
+          }
+        }
+        setState(() {
+          mnemonicList = mnemonicList1;
+        });
+      }
+    } else {
+      setState(() {
+        mnemonicList = [];
+      });
+    }
   }
 
   @override
@@ -123,6 +174,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                       setState(() {
                                         isPrivateKey = false;
                                         importContent = "";
+                                        errorText = "";
                                         mnemonicList = [];
                                       });
                                     },
@@ -137,6 +189,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                       controller.clear();
                                       setState(() {
                                         isPrivateKey = true;
+                                        errorText = "";
                                         importContent = "";
                                       });
                                     },
@@ -153,37 +206,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                             focusNode: _focusNode1,
                             onChanged: (value) {
                               if (!isPrivateKey) {
-                                List<String> list = value.split(" ");
-                                if (list.isNotEmpty && value != "") {
-                                  String lastWord = list[list.length - 1];
-                                  list.removeLast();
-                                  if (lastWord == " " || lastWord == "") {
-                                    setState(() {
-                                      mnemonicList = [];
-                                    });
-                                  } else {
-                                    List<String> mnemonicList1 = [];
-                                    for (String word in WORDLIST) {
-                                      if (word.startsWith(lastWord) || word == lastWord) {
-                                        bool isExist = false;
-                                        for (String word1 in list) {
-                                          if (word1 == word) {
-                                            isExist = true;
-                                            break;
-                                          }
-                                        }
-                                        if (!isExist) mnemonicList1.add(word);
-                                      }
-                                    }
-                                    setState(() {
-                                      mnemonicList = mnemonicList1;
-                                    });
-                                  }
-                                } else {
-                                  setState(() {
-                                    mnemonicList = [];
-                                  });
-                                }
+                                getMnemonicList(value);
                               }
                               setState(() {
                                 importContent = value;
@@ -207,7 +230,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                               filled: true,
                               contentPadding: const EdgeInsets.all(15),
                               fillColor: DarkColors.blockColor,
-                              hintText: isPrivateKey ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic,
+                              hintText: isPrivateKey ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic_hint_1,
                               hintStyle: const TextStyle(
                                 decoration: TextDecoration.none,
                                 fontSize: 16,
@@ -225,6 +248,26 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 5),
+                          Row(
+                            children: [
+                              const Spacer(),
+                              Text('$mnemonicNumber ${mnemonicNumber > 1 ? AppLocalizations.of(context).words : AppLocalizations.of(context).word}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white54)),
+                            ],
+                          ),
+                          if (errorText.isNotEmpty)
+                            Container(
+                              width: ScreenHelper.screenWidth - 40,
+                              margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                              padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                              decoration: BoxDecoration(
+                                color: DarkColors.redColorMask,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Text(errorText, style: const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500)),
+                            )
+                          else
+                            const SizedBox(),
                           const SizedBox(height: 25),
                         ],
                       )
@@ -271,6 +314,9 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                       itemBuilder: (BuildContext buildContext, int index) {
                         String word = mnemonicList[index];
                         return TextButton(
+                          style: ButtonStyle(
+                            padding: MaterialStateProperty.all(const EdgeInsets.fromLTRB(20, 0, 20, 0)),
+                          ),
                           onPressed: () {
                             String text = controller.text;
                             List<String> list = text.split(" ");
@@ -301,11 +347,21 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                           disable: !isButtonEnable,
                           isLoad: isLoad,
                           onPressed: () async {
+                            if (args.isImport && !isPrivateKey) {
+                              List<String> list = importContent.trim().split(" ");
+                              for (String word in list) {
+                                if (!wordList.contains(word)) {
+                                  setState(() {
+                                    errorText = AppLocalizations.of(context).mnemonic_error;
+                                  });
+                                  return;
+                                }
+                              }
+                            }
                             if (isLoad) return;
                             setState(() {
                               isLoad = true;
                             });
-                            // 新建一个线程处理
                             final receivePort = ReceivePort();
                             isolate = await Isolate.spawn(isolateFunction, receivePort.sendPort);
                             receivePort.listen((data) async {
@@ -329,7 +385,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                     backgroundColor: DarkColors.redColor,
                                     behavior: SnackBarBehavior.fixed,
                                     content: Text(
-                                      data[1],
+                                      e.toString(),
                                       style: const TextStyle(fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white),
                                     ),
                                   ));

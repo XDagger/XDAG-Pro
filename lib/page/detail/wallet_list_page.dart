@@ -148,6 +148,7 @@ class Item extends StatelessWidget {
             Helper.changeAndroidStatusBarAndNavBar(true);
             final shouldDelete = await showCupertinoModalPopup(
               context: context,
+              barrierColor: Colors.black.withOpacity(0.6),
               builder: (BuildContext context) {
                 return AlertDialog(
                   backgroundColor: DarkColors.bgColor,

@@ -22,6 +22,7 @@ class ConfigModal extends ChangeNotifier {
     LangItem('Русский', const Locale('ru', 'RU')),
     LangItem('Deutsch', const Locale('de', 'DE')),
   ];
+  static final List<String> netWorks = ["MainNet", "TestNet"];
 
   get local => walletConfig.local == 0 ? window.locale : langs[walletConfig.local].locale!;
 

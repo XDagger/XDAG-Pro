@@ -51,32 +51,6 @@ class WalletModal extends ChangeNotifier {
       rethrow;
     }
   }
-  // createWallet(String name, String mnemonic) async {
-  //   try {
-  //     Wallet newWallet = await Global.createWalletByMnemonic(name, mnemonic, true);
-  //     await changeSelect(newWallet);
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
-
-  // importWalletByMnemonic(String name, String mnemonic) async {
-  //   try {
-  //     Wallet newWallet = await Global.createWalletByMnemonic(name, mnemonic, false);
-  //     await changeSelect(newWallet);
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
-
-  // importWalletByPrivateKey(String name, String privateKey) async {
-  //   try {
-  //     Wallet newWallet = await Global.createWalletByPrivateKey(name, privateKey);
-  //     await changeSelect(newWallet);
-  //   } catch (e) {
-  //     rethrow;
-  //   }
-  // }
 
   changeSelect(Wallet wallet) async {
     Wallet? defWallet = defaultWallet;
@@ -115,8 +89,16 @@ class WalletModal extends ChangeNotifier {
   setBlance(String amount) async {
     Wallet? wallet = defaultWallet;
     if (wallet != null) {
-      // amount 保留两位小数
       wallet.amount = double.parse(amount).toStringAsFixed(2);
+      await wallet.save();
+      notifyListeners();
+    }
+  }
+
+  setBackUp() async {
+    Wallet? wallet = defaultWallet;
+    if (wallet != null) {
+      wallet.isBackup = true;
       await wallet.save();
       notifyListeners();
     }
