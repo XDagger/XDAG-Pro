@@ -4,6 +4,7 @@
 * Execute this command to check `flutter doctor`
 * Execute this command to install dependencies `flutter pub get`
 * Execute this command to run the project `flutter run`
+* flutter gen-l10n
 * Recommended use [Android Studio](https://developer.android.com/studio) to run the project, or use [VSCode](https://code.visualstudio.com/) with [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) plugin
 
 ## add language

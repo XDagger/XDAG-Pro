@@ -142,14 +142,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
         List<String> mnemonicList1 = [];
         for (String word in wordList) {
           if (word.startsWith(lastWord) || word == lastWord) {
-            bool isExist = false;
-            for (String word1 in list) {
-              if (word1 == word) {
-                isExist = true;
-                break;
-              }
-            }
-            if (!isExist) mnemonicList1.add(word);
+            mnemonicList1.add(word);
           }
         }
         setState(() {
@@ -188,7 +181,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
+                padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
                 child: Column(
                   children: [
                     Text(AppLocalizations.of(context).confirm_Mnemonic, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor)),

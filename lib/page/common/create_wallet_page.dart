@@ -84,14 +84,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
         List<String> mnemonicList1 = [];
         for (String word in wordList) {
           if (word.startsWith(lastWord) || word == lastWord) {
-            bool isExist = false;
-            for (String word1 in list) {
-              if (word1 == word) {
-                isExist = true;
-                break;
-              }
-            }
-            if (!isExist) mnemonicList1.add(word);
+            mnemonicList1.add(word);
           }
         }
         setState(() {
