@@ -110,5 +110,6 @@
   "mnemonic_error":"La phrase mnémonique est incorrecte",
   "mnemonic_error_1":"Mnémonique ne correspond pas",
   "network":"Réseau",
-  "select_network": "Sélectionner un réseau"
+  "select_network": "Sélectionner un réseau",
+  "contacts":"Contacts"
 }

@@ -110,5 +110,6 @@
   "mnemonic_error":"Mnemonic error",
   "mnemonic_error_1":"Mnemonic mismatch",
   "network":"Network",
-  "select_network": "Select Network"
+  "select_network": "Select Network",
+  "contacts":"Contacts"
 }

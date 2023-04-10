@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/page/wallet/contacts_page.dart';
 import 'package:xdag/page/wallet/wallet_page.dart';
 import 'package:xdag/page/wallet/wallet_setting.dart';
 import 'package:xdag/widget/nav_button.dart';
@@ -20,6 +21,7 @@ class _WalletHomePageState extends State<WalletHomePage> {
     super.initState();
     _bottomNavPages = [
       const WalletPage(),
+      const ContactsMainPage(),
       const WalletSettingPage(),
     ];
   }
@@ -39,6 +41,7 @@ class _WalletHomePageState extends State<WalletHomePage> {
             children: <Widget>[
               Expanded(child: BottomNavButton(index: _currentIndex, type: 0, onPressed: () => setState(() => _currentIndex = 0))),
               Expanded(child: BottomNavButton(index: _currentIndex, type: 1, onPressed: () => setState(() => _currentIndex = 1))),
+              Expanded(child: BottomNavButton(index: _currentIndex, type: 2, onPressed: () => setState(() => _currentIndex = 2))),
             ],
           ),
         ));
