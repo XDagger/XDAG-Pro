@@ -111,5 +111,11 @@
    "mnemonic_error_1":"ニーモニックが一致しません",
    "network":"ネットワーク",
    "select_network": "ネットワークを選択",
-   "contacts":"連絡先"
+   "contacts":"連絡先",
+   "contact_name":"連絡先名",
+   "add_contact":"連絡先を追加",
+  "edit_contact":"連絡先を編集",
+  "delete_contact":"連絡先を削除しますか？",
+  "contact_name_error":"連絡先名は、英数字とスペースのみがサポートされています",
+  "contact_tips":"連絡先はこのデバイスにのみ保存されます。アプリを削除すると、連絡先は永久に失われ、回復できません。"
 }

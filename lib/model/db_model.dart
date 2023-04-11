@@ -21,6 +21,17 @@ class Wallet extends HiveObject {
   Wallet(this.name, this.amount, this.address, this.isDef, this.isBackup);
 }
 
+// @HiveType(typeId: 2)
+// class ContactsItem extends HiveObject {
+//   @HiveField(0)
+//   String name;
+
+//   @HiveField(1)
+//   String address;
+
+//   ContactsItem(this.name, this.address);
+// }
+
 // @HiveType(typeId: 1)
 // class Transaction {
 //   @HiveField(0)

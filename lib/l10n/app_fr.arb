@@ -111,5 +111,11 @@
   "mnemonic_error_1":"Mnémonique ne correspond pas",
   "network":"Réseau",
   "select_network": "Sélectionner un réseau",
-  "contacts":"Contacts"
+  "contacts":"Contacts",
+  "contact_name":"Nom du contact",
+  "add_contact":"Ajouter un contact",
+  "edit_contact":"Modifier le contact",
+  "delete_contact":"Confirmez-vous la suppression des contacts ?",
+  "contact_name_error":"Le nom de contact ne prend en charge que les lettres, les chiffres et les espaces",
+  "contact_tips":"Veuillez noter que les contacts sont uniquement stockés localement sur cet appareil. Si vous supprimez l'application, vos contacts seront définitivement perdus et ne pourront pas être récupérés."
 }

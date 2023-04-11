@@ -12,6 +12,12 @@ import 'package:bip39/bip39.dart' as bip39;
 
 class Helper {
   static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+  static bool checkName(String name) {
+    // only allow letters, numbers, and spaces
+    RegExp regExp = RegExp(r"^[a-zA-Z0-9 ]+$");
+    return regExp.hasMatch(name);
+  }
+
   static String removeTrailingZeros(String str) {
     double num = double.parse(str);
     String result;
@@ -127,8 +133,8 @@ class Helper {
   }
 
   // show bottom sheet
-  static Future<void> showBottomSheet(BuildContext context, Widget child) async {
-    await showModalBottomSheet(
+  static Future<dynamic> showBottomSheet(BuildContext context, Widget child) async {
+    return await showModalBottomSheet(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),

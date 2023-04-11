@@ -79,7 +79,6 @@ class WalletTransactionItem extends StatelessWidget {
         ),
         onPressed: () {
           if (isSnapshot) return;
-          // var transactionItem = Transaction(time: '', amount: '10.00', address: address, status: '', from: 'CTrTVu717sgCAQuJay5YEdL2NYLqibUN5', to: '6tovNfb1T3MdC9mjEtZoR64Rao786Aa86', type: 0, hash: '', fee: 0, blockAddress: 'KuxR6AJXMPY2MmGi/xhSEcDONxtQ8fh+');
           Helper.showBottomSheet(context, TransactionPage(transaction: transaction, address: address));
         });
   }

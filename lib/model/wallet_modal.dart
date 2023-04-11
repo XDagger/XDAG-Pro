@@ -72,10 +72,11 @@ class WalletModal extends ChangeNotifier {
     }
   }
 
-  deleteWallet(Wallet wallet) async {
+  deleteWallet(Wallet wallet, int index) async {
     bool isDef = wallet.isDef;
     await Global.deleteWallet(wallet.address);
-    await wallet.delete();
+    // await wallet.delete();
+    await walletList.deleteAt(index);
     if (walletList.isNotEmpty && isDef) {
       Wallet? currentWallet = walletList.getAt(0);
       if (currentWallet != null) {

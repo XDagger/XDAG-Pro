@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
@@ -215,10 +216,13 @@ class _SendPageState extends State<SendPage> {
                         minLines: 1,
                         autofocus: true,
                         textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.number,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         keyboardAppearance: Brightness.dark,
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: 'RobotoMono'),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                        ],
                         decoration: const InputDecoration(
                           filled: true,
                           contentPadding: EdgeInsets.fromLTRB(15, 40, 15, 40),

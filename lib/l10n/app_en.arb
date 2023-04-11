@@ -111,5 +111,11 @@
   "mnemonic_error_1":"Mnemonic mismatch",
   "network":"Network",
   "select_network": "Select Network",
-  "contacts":"Contacts"
+  "contacts":"Contacts",
+  "contact_name":"Contact Name",
+  "add_contact":"Add Contact",
+  "edit_contact":"Edit Contact",
+  "delete_contact":"Do you confirm to delete contacts?",
+  "contact_name_error":"Contact name only supports letters, numbers, and spaces",
+  "contact_tips":"Please note that contacts are only stored locally on this device. If you delete the app, your contacts will be permanently lost and cannot be recovered."
 }

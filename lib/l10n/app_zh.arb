@@ -111,5 +111,11 @@
   "mnemonic_error_1":"助记词不匹配",
   "network":"网络",
   "select_network": "选择网络",
-  "contacts":"联系人"
+  "contacts":"联系人",
+  "contact_name":"联系人姓名",
+  "add_contact":"添加联系人",
+  "edit_contact":"编辑联系人",
+  "delete_contact":"确认删除联系人吗？",
+  "contact_name_error":"联系人名称仅支持字母、数字和空格",
+  "contact_tips":"请注意，联系人仅存储在本地设备上。如果您删除应用程序，您的联系人将永久丢失，无法找回。"
 }

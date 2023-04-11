@@ -112,20 +112,24 @@ class TransactionHelper {
   }
 
   static bool checkAddress(String address) {
-    var addrBytes = Helper.base58Decode(address).reversed.toList();
-    if (addrBytes.length != 24) {
-      return false;
-    }
-    final addrBytes20 = addrBytes.sublist(0, 20);
-    final addrBytes4 = addrBytes.sublist(20, 24);
-    var h = sha256.convert(sha256.convert(addrBytes20).bytes).bytes;
-    h = h.sublist(0, 4);
-    // 比较 h 和 addrBytes4
-    for (var i = 0; i < 4; i++) {
-      if (addrBytes4[i] != h[i]) {
+    try {
+      var addrBytes = Helper.base58Decode(address).reversed.toList();
+      if (addrBytes.length != 24) {
         return false;
       }
+      final addrBytes20 = addrBytes.sublist(0, 20);
+      final addrBytes4 = addrBytes.sublist(20, 24);
+      var h = sha256.convert(sha256.convert(addrBytes20).bytes).bytes;
+      h = h.sublist(0, 4);
+      // 比较 h 和 addrBytes4
+      for (var i = 0; i < 4; i++) {
+        if (addrBytes4[i] != h[i]) {
+          return false;
+        }
+      }
+      return true;
+    } catch (e) {
+      return false;
     }
-    return true;
   }
 }

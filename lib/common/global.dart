@@ -7,6 +7,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth_android/local_auth_android.dart';
 import 'package:local_auth_ios/local_auth_ios.dart';
+import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/db_model.dart';
 
 class WalletConfig {
@@ -23,6 +24,7 @@ class WalletConfig {
 class Global {
   static late WalletConfig walletConfig;
   static late Box<Wallet> walletListBox;
+  static late List<ContactsItem> contactsListBox;
   static late int devBiometricsType;
 
   static late SharedPreferences _prefs;
@@ -34,6 +36,7 @@ class Global {
   static const String _biometricsKey = 'biometricsKey';
   static const String _hasRunBeforeKey = 'hasRunBeforeKey';
   static const String walletListKey = 'walletListKey';
+  static const String contactsListKey = 'contactsListKey';
 
   static String version = '';
   static String buildNumber = '';
@@ -42,6 +45,7 @@ class Global {
   static const String explorURL = 'https://testexplorer.xdag.io/api';
   static const bool isTest = false;
 
+  static SharedPreferences get prefs => _prefs;
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
     _storage = Platform.isAndroid ? const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true)) : const FlutterSecureStorage();
@@ -51,6 +55,13 @@ class Global {
     }
     walletConfig = WalletConfig(local: 0, hasSetPassword: false, hasSetBiometrics: false);
     walletListBox = await Hive.openBox<Wallet>(walletListKey);
+    List<String>? contactsList = _prefs.getStringList(contactsListKey);
+    contactsListBox = [];
+    if (contactsList != null) {
+      for (var item in contactsList) {
+        contactsListBox.add(ContactsItem.fromJson(item));
+      }
+    }
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     version = packageInfo.version;
     buildNumber = packageInfo.buildNumber;

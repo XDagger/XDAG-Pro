@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
 import 'package:xdag/model/config_modal.dart';
+import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/about_us.dart';
@@ -59,6 +60,7 @@ class MyWidget extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (_) => ConfigModal()),
           ChangeNotifierProvider(create: (_) => WalletModal()),
+          ChangeNotifierProvider(create: (_) => ContactsModal()),
         ],
         child: Consumer<ConfigModal>(
           builder: (context, configModal, child) => MaterialApp(
