@@ -331,10 +331,11 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                   return Container(
                     margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Button(
                           text: AppLocalizations.of(context).continueText,
-                          width: ScreenHelper.screenWidth - 30,
                           bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                           textColor: Colors.white,
                           disable: !isButtonEnable,

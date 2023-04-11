@@ -71,7 +71,7 @@ class NetWorkSelectPage extends StatelessWidget {
   Widget build(BuildContext context) {
     double screenHeight = ScreenHelper.screenHeight;
     double bottomPadding = ScreenHelper.bottomPadding;
-    ConfigModal config = Provider.of<ConfigModal>(context);
+    // ConfigModal config = Provider.of<ConfigModal>(context);
     //List<String> netWorks = ConfigModal.netWorks;
     List<String> netWorks = ["TestNet"];
     double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * netWorks.length + 10;

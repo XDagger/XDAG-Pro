@@ -36,7 +36,6 @@ class ModalFrame extends StatelessWidget {
   Widget build(BuildContext context) {
     // 获取设备高度
     double screenHeight = ScreenHelper.screenHeight;
-    double screenWidth = ScreenHelper.screenWidth;
     double topPadding = ScreenHelper.topPadding;
     Widget leftButton = isHideLeftDownButton != null && isHideLeftDownButton == true ? const SizedBox(width: 40) : CircleButton(icon: Icons.expand_more, onPressed: () => Navigator.pop(context));
     Widget rightButton = isShowRightCloseButton != null && isShowRightCloseButton == true ? CircleButton(icon: Icons.close_rounded, onPressed: () => Navigator.pop(context)) : const SizedBox(width: 40);
@@ -68,7 +67,7 @@ class ModalFrame extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(child: SizedBox(width: screenWidth, child: child))
+              Expanded(child: child)
             ],
           ),
         ),

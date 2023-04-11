@@ -27,7 +27,6 @@ class BackUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenHelper.initScreen(context);
-    double screenWidth = ScreenHelper.screenWidth;
     double bottomPadding = ScreenHelper.bottomPadding;
     BackUpPageRouteParams args = BackUpPageRouteParams('', 0);
     List<MnemonicItem> mnemonicItemList = [];
@@ -104,10 +103,11 @@ class BackUpPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.fromLTRB(15, 20, 15, bottomPadding > 0 ? bottomPadding : 20),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Button(
                       text: AppLocalizations.of(context).next,
-                      width: screenWidth - 30,
                       bgColor: DarkColors.mainColor,
                       onPressed: () => Navigator.pushNamed(context, '/back_up_test', arguments: BackUpTestPageRouteParams(args.data)),
                     ),

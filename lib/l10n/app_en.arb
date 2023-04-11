@@ -117,5 +117,6 @@
   "edit_contact":"Edit Contact",
   "delete_contact":"Do you confirm to delete contacts?",
   "contact_name_error":"Contact name only supports letters, numbers, and spaces",
-  "contact_tips":"Please note that contacts are only stored locally on this device. If you delete the app, your contacts will be permanently lost and cannot be recovered."
+  "contact_tips":"Please note that contacts are only stored locally on this device. If you delete the app, your contacts will be permanently lost and cannot be recovered.",
+  "no_contacts":"No contacts"
 }

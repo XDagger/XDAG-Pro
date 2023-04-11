@@ -32,7 +32,7 @@ class HomeHeaderButton extends StatelessWidget {
               Row(
                 children: [
                   const Spacer(),
-                  Text(title, style: const TextStyle(fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white)),
+                  Text(title, style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white)),
                 ],
               )
             ]),

@@ -65,6 +65,7 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
             Container(
               margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Button(
                     text: AppLocalizations.of(context).continueText,

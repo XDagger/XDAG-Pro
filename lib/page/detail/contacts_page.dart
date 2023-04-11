@@ -180,7 +180,7 @@ class ContactsStatePage extends State<ContactsPage> {
             ),
             Expanded(
               child: ListView.builder(
-                itemCount: contacts.contactsList.length + 1,
+                itemCount: contacts.contactsList.isEmpty ? 2 : contacts.contactsList.length + 1,
                 padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
                 itemBuilder: (BuildContext buildContext, int index) {
                   if (index == 0) {
@@ -196,6 +196,13 @@ class ContactsStatePage extends State<ContactsPage> {
                       ],
                     );
                   } else {
+                    if (contacts.contactsList.isEmpty) {
+                      return Column(children: [
+                        const SizedBox(height: 20),
+                        const Icon(Icons.crop_landscape, size: 70, color: Colors.white),
+                        Text(AppLocalizations.of(context).no_contacts, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                      ]);
+                    }
                     int pos = index - 1;
                     ContactsItem item = contacts.contactsList[pos];
                     return CupertinoButton(
@@ -247,6 +254,7 @@ class ContactsStatePage extends State<ContactsPage> {
             Container(
               margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Button(
                     text: AppLocalizations.of(context).continueText,

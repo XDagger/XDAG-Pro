@@ -9,7 +9,6 @@ class SecureWalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenHelper.initScreen(context);
-    double screenWidth = ScreenHelper.screenWidth;
     var bottomPadding = ScreenHelper.bottomPadding;
     const titleStyle = TextStyle(
       decoration: TextDecoration.none,
@@ -58,12 +57,12 @@ class SecureWalletPage extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.fromLTRB(15, 20, 15, bottomPadding > 0 ? bottomPadding : 20),
                   child: Column(
-                    children: [
-                      Button(text: "Start", width: screenWidth - 30, bgColor: DarkColors.mainColor),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Button(text: "Remind Me Later", width: screenWidth - 30, bgColor: DarkColors.lineColor),
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: const [
+                      Button(text: "Start", bgColor: DarkColors.mainColor),
+                      SizedBox(height: 20),
+                      Button(text: "Remind Me Later", bgColor: DarkColors.lineColor),
                     ],
                   ),
                 )

@@ -20,7 +20,6 @@ class BackUpStartPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = ScreenHelper.screenWidth;
     double bottomPadding = ScreenHelper.bottomPadding;
     WalletModal walletModal = Provider.of<WalletModal>(context);
     Wallet wallet = walletModal.getWallet();
@@ -58,10 +57,11 @@ class BackUpStartPage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.fromLTRB(15, 20, 15, bottomPadding > 0 ? bottomPadding : 20),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Button(
                       text: AppLocalizations.of(context).start,
-                      width: screenWidth - 30,
                       bgColor: DarkColors.mainColor,
                       onPressed: () async {
                         await showModalBottomSheet(
@@ -298,10 +298,11 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                   return Container(
                     margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
                     child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Button(
                           text: AppLocalizations.of(context).continueText,
-                          width: ScreenHelper.screenWidth - 30,
                           bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                           textColor: Colors.white,
                           disable: !isButtonEnable,
@@ -345,13 +346,17 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                                         ],
                                       ),
                                       actions: <Widget>[
-                                        Button(
-                                          text: AppLocalizations.of(context).continueText,
-                                          width: ScreenHelper.screenWidth - 60,
-                                          bgColor: DarkColors.mainColor,
-                                          onPressed: () => Navigator.pop(context, true),
-                                        ),
-                                        const SizedBox(height: 20),
+                                        Column(
+                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                          children: [
+                                            Button(
+                                              text: AppLocalizations.of(context).continueText,
+                                              width: ScreenHelper.screenWidth - 60,
+                                              bgColor: DarkColors.mainColor,
+                                              onPressed: () => Navigator.pop(context, true),
+                                            )
+                                          ],
+                                        )
                                       ],
                                     );
                                   },

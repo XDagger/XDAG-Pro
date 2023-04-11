@@ -17,25 +17,18 @@ class ReceivePage extends StatelessWidget {
   Widget build(BuildContext context) {
     WalletModal walletModal = Provider.of<WalletModal>(context);
     Wallet wallet = walletModal.getWallet();
-    double screenWidth = ScreenHelper.screenWidth;
-    double screenHeight = ScreenHelper.screenHeight;
-    double topPadding = ScreenHelper.topPadding;
+    ScreenHelper.initScreen(context);
     double marginH = 20;
     double paddingH = 15;
-    double width = screenHeight < 700 ? 280 : screenWidth - marginH * 2;
-    double w = width - paddingH * 2;
     TextStyle titleStyle = const TextStyle(color: Colors.white, fontSize: 16, fontFamily: "RobotoMono", fontWeight: FontWeight.w400);
     TextStyle addressStyle = const TextStyle(color: Colors.white54, fontSize: 16, fontFamily: "RobotoMono", fontWeight: FontWeight.w700);
 
-    Widget icon = (screenHeight - topPadding - 40) - (330 + width) < 0 ? const SizedBox() : Column(children: [const SizedBox(height: 20), Image.asset("images/logo.png", width: 50, height: 50)]);
     return ModalFrame(
         title: '${AppLocalizations.of(context).receive} XDAG',
-        // height: 327 + width,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             ContentBox(
-              width: width,
               marginH: marginH,
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
@@ -44,20 +37,24 @@ class ReceivePage extends StatelessWidget {
                   children: [
                     Text(AppLocalizations.of(context).show_QR, style: titleStyle),
                     const SizedBox(height: 15),
-                    Container(
-                      width: w,
-                      height: w,
-                      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
-                      child: QrImage(data: wallet.address, version: QrVersions.auto),
+                    Center(
+                      child: Container(
+                        width: 250,
+                        height: 250,
+                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                        child: Center(
+                          child: QrImage(data: wallet.address, version: QrVersions.auto),
+                        ),
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             ContentBox(
-              width: width,
               marginH: marginH,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(paddingH, 15, paddingH, 15),
@@ -70,9 +67,8 @@ class ReceivePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(width: width, height: 1, color: DarkColors.bgColor),
+                  Container(height: 1, color: DarkColors.bgColor),
                   SizedBox(
-                    width: width,
                     height: 50,
                     child: Row(
                       children: [
@@ -98,22 +94,20 @@ class ReceivePage extends StatelessWidget {
                 ],
               ),
             ),
-            icon
+            Column(children: [const SizedBox(height: 20), Image.asset("images/logo.png", width: 50, height: 50)])
           ],
         ));
   }
 }
 
 class ContentBox extends StatelessWidget {
-  final double width;
   final double marginH;
   final Widget child;
-  const ContentBox({super.key, required this.width, required this.marginH, required this.child});
+  const ContentBox({super.key, required this.marginH, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
       margin: EdgeInsets.fromLTRB(marginH, 20, marginH, 0),
       decoration: BoxDecoration(
         color: DarkColors.blockColor,

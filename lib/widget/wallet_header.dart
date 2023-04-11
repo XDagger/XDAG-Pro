@@ -31,7 +31,6 @@ class WalletHeader extends StatelessWidget {
                 padding: EdgeInsets.zero,
                 onPressed: () => Navigator.pushNamed(context, '/back_up_test_start'),
                 child: Container(
-                  width: ScreenHelper.screenWidth - 20,
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                   decoration: BoxDecoration(
                     color: DarkColors.redColorMask2,
@@ -73,13 +72,37 @@ class WalletHeader extends StatelessWidget {
                     children: [
                       Image.asset('images/logo.png', width: 40, height: 40),
                       const Spacer(),
-                      Text("${wallet.amount} XDAG",
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontFamily: 'RobotoMono',
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          )),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                            decoration: BoxDecoration(
+                              color: DarkColors.redColorMask,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: const Text(
+                              "TEST",
+                              style: TextStyle(
+                                fontSize: 10,
+                                fontFamily: 'RobotoMono',
+                                fontWeight: FontWeight.w400,
+                                color: Colors.white70,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          Text(
+                            "${wallet.amount} XDAG",
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'RobotoMono',
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),
@@ -89,26 +112,9 @@ class WalletHeader extends StatelessWidget {
                   child: SizedBox(
                       height: 36,
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(10, 3, 10, 5),
-                            decoration: BoxDecoration(
-                              color: DarkColors.redColorMask,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: const Text(
-                              "TEST",
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontFamily: 'RobotoMono',
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white54,
-                              ),
-                            ),
-                          ),
-                          const Spacer(),
                           CupertinoButton(
                             padding: EdgeInsets.zero,
                             child: Row(
@@ -121,11 +127,7 @@ class WalletHeader extends StatelessWidget {
                                       color: Colors.white54,
                                     )),
                                 const SizedBox(width: 5),
-                                const Icon(
-                                  Icons.copy_rounded,
-                                  size: 12,
-                                  color: Colors.white54,
-                                ),
+                                const Icon(Icons.copy_rounded, size: 12, color: Colors.white54),
                               ],
                             ),
                             onPressed: () {

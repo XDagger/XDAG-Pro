@@ -95,6 +95,7 @@ class _LegalBottomState extends State<LegalBottom> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         MyRadioButton(
           title: AppLocalizations.of(context).accepted_Privacy_Policy,

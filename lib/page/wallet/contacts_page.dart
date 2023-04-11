@@ -76,7 +76,9 @@ class ContactsMainPage extends StatelessWidget {
                 return CupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () async {
+                    Helper.changeAndroidStatusBar(true);
                     String? reslut = (await Helper.showBottomSheet(context, ContactsDetail(item: item))) as String?;
+                    Helper.changeAndroidStatusBar(false);
                     if (reslut == 'delete') {
                       if (context.mounted) {
                         Helper.changeAndroidStatusBarAndNavBar(true);
@@ -122,19 +124,24 @@ class ContactsMainPage extends StatelessWidget {
                                 style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
                               ),
                               actions: <Widget>[
-                                Button(
-                                  text: AppLocalizations.of(context).continueText,
-                                  width: ScreenHelper.screenWidth - 60,
-                                  bgColor: DarkColors.redColor,
-                                  onPressed: () => Navigator.pop(context, true),
-                                ),
-                                const SizedBox(height: 20),
-                                Button(
-                                  text: AppLocalizations.of(context).cancel,
-                                  width: ScreenHelper.screenWidth - 60,
-                                  bgColor: DarkColors.lineColor,
-                                  onPressed: () => Navigator.pop(context, false),
-                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  children: [
+                                    Button(
+                                      text: AppLocalizations.of(context).continueText,
+                                      width: ScreenHelper.screenWidth - 60,
+                                      bgColor: DarkColors.redColor,
+                                      onPressed: () => Navigator.pop(context, true),
+                                    ),
+                                    const SizedBox(height: 20),
+                                    Button(
+                                      text: AppLocalizations.of(context).cancel,
+                                      width: ScreenHelper.screenWidth - 60,
+                                      bgColor: DarkColors.lineColor,
+                                      onPressed: () => Navigator.pop(context, false),
+                                    ),
+                                  ],
+                                )
                               ],
                             );
                           },

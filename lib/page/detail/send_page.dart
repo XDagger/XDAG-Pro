@@ -132,8 +132,6 @@ class _SendPageState extends State<SendPage> {
   Widget build(BuildContext context) {
     WalletModal walletModal = Provider.of<WalletModal>(context);
     Wallet wallet = walletModal.getWallet();
-    // 检测 amount 是一个有效的数字
-
     bool isButtonEnable = false;
     try {
       var a = double.parse(amount.isEmpty ? '0' : amount);
@@ -327,6 +325,7 @@ class _SendPageState extends State<SendPage> {
             Container(
               margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Button(
                     text: AppLocalizations.of(context).continueText,

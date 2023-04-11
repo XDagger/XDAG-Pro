@@ -69,6 +69,8 @@ class FaceIDPage extends StatelessWidget {
                 color: DarkColors.bgColor,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 20),
                     Text(AppLocalizations.of(context).create_faceid_tips, style: descStyle),
@@ -88,7 +90,6 @@ class FaceIDPage extends StatelessWidget {
                       margin: EdgeInsets.fromLTRB(0, 25, 0, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
                       child: Button(
                         text: AppLocalizations.of(context).skip_for_now,
-                        width: ScreenHelper.screenWidth - 30,
                         bgColor: DarkColors.lineColor,
                         textColor: Colors.white,
                         onPressed: () => toCreatePage(context, args),

@@ -117,5 +117,6 @@
   "edit_contact":"Kontakt bearbeiten",
   "delete_contact":"Bestätigen Sie das Löschen der Kontakte?",
   "contact_name_error":"Kontaktname unterstützt nur Buchstaben, Zahlen und Leerzeichen",
-  "contact_tips":"Bitte beachten Sie, dass Kontakte nur lokal auf diesem Gerät gespeichert werden. Wenn Sie die App löschen, gehen Ihre Kontakte dauerhaft verloren und können nicht wiederhergestellt werden."
+  "contact_tips":"Bitte beachten Sie, dass Kontakte nur lokal auf diesem Gerät gespeichert werden. Wenn Sie die App löschen, gehen Ihre Kontakte dauerhaft verloren und können nicht wiederhergestellt werden.",
+  "no_contacts":"Keine Kontakte"
 }

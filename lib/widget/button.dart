@@ -14,7 +14,7 @@ class Button extends StatelessWidget {
   const Button({
     super.key,
     required this.text,
-    required this.width,
+    this.width = 0,
     required this.bgColor,
     this.borderRadius = 10.0,
     this.textColor = Colors.white,
@@ -26,7 +26,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-        width: width,
+        // width: width,
         height: 50.0,
         child: CupertinoButton(
           padding: EdgeInsets.zero,

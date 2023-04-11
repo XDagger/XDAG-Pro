@@ -60,25 +60,29 @@ class HomePage extends StatelessWidget {
             style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
           ),
           actions: <Widget>[
-            Button(
-              text: AppLocalizations.of(context).continueText,
-              width: ScreenHelper.screenWidth - 60,
-              bgColor: DarkColors.mainColor,
-              onPressed: () {
-                Navigator.of(context).pop();
-                callback(true);
-              },
-            ),
-            const SizedBox(height: 20),
-            Button(
-              text: AppLocalizations.of(context).reset_password,
-              width: ScreenHelper.screenWidth - 60,
-              bgColor: DarkColors.lineColor,
-              onPressed: () {
-                Navigator.of(context).pop();
-                callback(false);
-              },
-            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Button(
+                  text: AppLocalizations.of(context).continueText,
+                  bgColor: DarkColors.mainColor,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    callback(true);
+                  },
+                ),
+                const SizedBox(height: 20),
+                Button(
+                  text: AppLocalizations.of(context).reset_password,
+                  bgColor: DarkColors.lineColor,
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                    callback(false);
+                  },
+                ),
+              ],
+            )
           ],
         );
       },
@@ -105,7 +109,6 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ScreenHelper.initScreen(context);
-    double screenWidth = ScreenHelper.screenWidth;
     double bottomPadding = ScreenHelper.bottomPadding;
     ConfigModal config = Provider.of<ConfigModal>(context);
     checkPassword(int type) {
@@ -139,7 +142,6 @@ class HomePage extends StatelessWidget {
       }
     }
 
-    double maxHeight = ScreenHelper.screenHeight - ScreenHelper.topPadding - 55 - 1 - 20 - (bottomPadding > 0 ? bottomPadding : 20) - 100;
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
       body: Column(
@@ -166,11 +168,8 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          Expanded(
-            child: OverflowBox(
-              maxHeight: maxHeight,
-              child: const HomeMain(),
-            ),
+          const Expanded(
+            child: HomeMain(),
           ),
           Column(
             children: [
@@ -182,10 +181,12 @@ class HomePage extends StatelessWidget {
               Container(
                 margin: EdgeInsets.fromLTRB(15, 20, 15, bottomPadding > 0 ? bottomPadding : 20),
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Button(text: AppLocalizations.of(context).createWallet, width: screenWidth - 30, bgColor: DarkColors.mainColor, onPressed: () => checkPassword(0)),
+                    Button(text: AppLocalizations.of(context).createWallet, bgColor: DarkColors.mainColor, onPressed: () => checkPassword(0)),
                     const SizedBox(height: 20),
-                    Button(text: AppLocalizations.of(context).importWallet, width: screenWidth - 30, bgColor: DarkColors.lineColor, onPressed: () => checkPassword(1)),
+                    Button(text: AppLocalizations.of(context).importWallet, bgColor: DarkColors.lineColor, onPressed: () => checkPassword(1)),
                   ],
                 ),
               )

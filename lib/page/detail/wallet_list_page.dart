@@ -103,6 +103,7 @@ class _WalletListPageState extends State<WalletListPage> {
           Container(
             margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Button(
                   text: AppLocalizations.of(context).createWallet,
@@ -188,19 +189,24 @@ class Item extends StatelessWidget {
                     style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
                   ),
                   actions: <Widget>[
-                    Button(
-                      text: AppLocalizations.of(context).continueText,
-                      width: ScreenHelper.screenWidth - 60,
-                      bgColor: DarkColors.redColor,
-                      onPressed: () => Navigator.pop(context, true),
-                    ),
-                    const SizedBox(height: 20),
-                    Button(
-                      text: AppLocalizations.of(context).cancel,
-                      width: ScreenHelper.screenWidth - 60,
-                      bgColor: DarkColors.lineColor,
-                      onPressed: () => Navigator.pop(context, false),
-                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Button(
+                          text: AppLocalizations.of(context).continueText,
+                          width: ScreenHelper.screenWidth - 60,
+                          bgColor: DarkColors.redColor,
+                          onPressed: () => Navigator.pop(context, true),
+                        ),
+                        const SizedBox(height: 20),
+                        Button(
+                          text: AppLocalizations.of(context).cancel,
+                          width: ScreenHelper.screenWidth - 60,
+                          bgColor: DarkColors.lineColor,
+                          onPressed: () => Navigator.pop(context, false),
+                        ),
+                      ],
+                    )
                   ],
                 );
               },
