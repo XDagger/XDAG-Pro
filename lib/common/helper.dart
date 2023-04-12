@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,7 @@ import 'package:xdag/widget/button.dart';
 import 'dart:typed_data';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:bip39/bip39.dart' as bip39;
+import 'package:fast_base58/fast_base58.dart';
 
 class Helper {
   static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
@@ -170,22 +172,8 @@ class Helper {
   }
 
   static List<int> base58Decode(String input) {
-    var alphabet = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz';
-    var base58 = input.split('').reversed.join();
-    var value = BigInt.zero;
-    for (var i = 0; i < base58.length; i++) {
-      var index = alphabet.indexOf(base58[i]);
-      value += BigInt.from(index) * BigInt.from(58).pow(i);
-    }
-    var hex = value.toRadixString(16).padLeft(2, '0');
-    var bytes = <int>[];
-    for (var i = 0; i < hex.length; i += 2) {
-      bytes.add(int.parse(hex.substring(i, i + 2), radix: 16));
-    }
-    for (var i = 0; i < input.length && input[i] == alphabet[0]; i++) {
-      bytes.add(0);
-    }
-    return bytes.reversed.toList();
+    var decodedRaw = Base58Decode(input);
+    return decodedRaw.reversed.toList();
   }
 
   static String getAddressByWallet(bip32.BIP32 hdWallet) {
