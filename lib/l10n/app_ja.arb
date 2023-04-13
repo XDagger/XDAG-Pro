@@ -16,7 +16,7 @@
   "repeat_password": "パスワードを繰り返す",
   "security": "セキュリティ",
   "walletName": "ウォレット名",
-  "createWalletTips": "XDAGウォレットはパスワードを回復できないことを理解しています",
+  "createWalletTips": "XDAG-Pro は私のパスワードを回復できないことを理解しています。",
   "continueText": "続行",
   "mnemonic": "ニーモニック",
   "privateKey":"プライベートキー",
@@ -75,8 +75,8 @@
   "fee":"手数料",
   "cancel":"キャンセル",
   "verify_protect_wallet":"ウォレットを保護するために確認してください",
-  "review_Privacy_Policy": "XDAGウォレットの利用規約とプライバシーポリシーをご確認ください。",
-  "accepted_Privacy_Policy": "利用規約とプライバシーポリシーを読み、同意します。",
+  "review_Privacy_Policy": "XDAG-Proのプライバシーポリシーと利用規約を確認してください。",
+  "accepted_Privacy_Policy":"プライバシーポリシーと利用規約を読んで同意します。",
   "snapshot": "スナップショット",
   "walletAddress": "ウォレットアドレス",
   "to": "宛先",
@@ -99,7 +99,7 @@
   "confirm_Mnemonic":"ニーモニックの確認",
   "successful":"成功しました。",
   "backup_test_tips_4":"ウォレット保護テストに合格しました。ヘルパーワードを保存する必要があることを覚えておいてください。",
-  "backup_test_tips_5":"紛失した場合、XDAGウォレットではウォレットを回復できません。",
+  "backup_test_tips_5":"シードフレーズを紛失した場合、XDAG-Proはあなたのウォレットを復旧できません。",
   "secure_wallet":"あなたのウォレットを安全に保ちます",
   "start":"開始",
   "next":"次へ",
@@ -118,5 +118,8 @@
   "delete_contact":"連絡先を削除しますか？",
   "contact_name_error":"連絡先名は、英数字とスペースのみがサポートされています",
   "contact_tips":"連絡先はこのデバイスにのみ保存されます。アプリを削除すると、連絡先は永久に失われ、回復できません。",
-  "no_contacts":"連絡先がありません"
+  "no_contacts":"連絡先がありません",
+  "tips":"ヒント",
+  "wallet_tips":"ウォレットを削除するには、アイテムを右にスワイプしてください。",
+  "hide_balance":"残高を非表示"
 }

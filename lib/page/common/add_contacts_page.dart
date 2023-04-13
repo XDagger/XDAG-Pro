@@ -66,7 +66,7 @@ class _AddContactsPage extends State<AddContactsPage> {
                         height: 40,
                         child: CupertinoButton(
                           padding: EdgeInsets.zero,
-                          color: DarkColors.blockColor,
+                          color: DarkColors.mainColor,
                           borderRadius: BorderRadius.circular(20),
                           onPressed: () async {
                             setState(() {

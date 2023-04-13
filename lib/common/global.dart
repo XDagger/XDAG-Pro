@@ -17,6 +17,7 @@ class WalletConfig {
   String walletAddress;
   bool hasReadLegal;
   int network = 1;
+  bool lockApp = true;
 
   WalletConfig({this.local = 0, this.hasSetPassword = false, this.hasSetBiometrics = false, this.walletAddress = "", this.hasReadLegal = false});
 }
@@ -25,7 +26,7 @@ class Global {
   static late WalletConfig walletConfig;
   static late Box<Wallet> walletListBox;
   static late List<ContactsItem> contactsListBox;
-  static late int devBiometricsType;
+  static int devBiometricsType = -1;
 
   static late SharedPreferences _prefs;
   static late FlutterSecureStorage _storage;
@@ -103,6 +104,7 @@ class Global {
 
   static checkPassword(String password) async {
     String? savedPassword = await _storage.read(key: _passwordKey);
+    print("savedPassword: $savedPassword and password: $password");
     return savedPassword == password;
   }
 
@@ -167,7 +169,7 @@ class Global {
       if (res != null) {
         throw Exception("address exist");
       }
-      Wallet wallet = Wallet(name, "0.00", address, true, !needBackUp);
+      Wallet wallet = Wallet(name, "0.00", address, true, !needBackUp, false);
       await _storage.write(key: address, value: data);
       await walletListBox.add(wallet);
       return wallet;

@@ -16,7 +16,7 @@ class LabelButton extends StatelessWidget {
     required this.label,
     this.child,
     this.textClolor = Colors.white,
-    this.padding = const EdgeInsets.fromLTRB(15, 0, 15, 0),
+    this.padding = const EdgeInsets.fromLTRB(15, 10, 15, 10),
   });
 
   @override
@@ -43,20 +43,22 @@ class LabelButton extends StatelessWidget {
     );
     Widget? item = child ?? const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16);
     return SizedBox(
-        height: 55,
+        // height: 55,
         child: CupertinoButton(
-          padding: padding,
-          color: DarkColors.blockColor,
-          disabledColor: DarkColors.blockColor,
-          borderRadius: borderRadius,
-          onPressed: onPressed,
-          child: Row(
-            children: [
-              Text(label, style: labelStyle),
-              const Spacer(),
-              item,
-            ],
+      padding: padding,
+      color: DarkColors.blockColor,
+      disabledColor: DarkColors.blockColor,
+      borderRadius: borderRadius,
+      onPressed: onPressed,
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(label, style: labelStyle),
           ),
-        ));
+          const SizedBox(width: 5),
+          item,
+        ],
+      ),
+    ));
   }
 }

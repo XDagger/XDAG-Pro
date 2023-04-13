@@ -31,11 +31,12 @@ class WalletTransactionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isSend = transaction.from == address;
     bool isSnapshot = transaction.type == 1;
+    var amount = Helper.formatDouble(transaction.amount);
     return CupertinoButton(
         padding: EdgeInsets.zero,
         child: Container(
-          height: 60,
-          padding: EdgeInsets.zero,
+          // height: 60,
+          padding: const EdgeInsets.fromLTRB(0, 10, 0, 10),
           margin: const EdgeInsets.fromLTRB(15, 10, 15, 0),
           decoration: BoxDecoration(
             color: DarkColors.blockColor,
@@ -61,7 +62,6 @@ class WalletTransactionItem extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: SizedBox(
-                  height: 40,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -72,7 +72,10 @@ class WalletTransactionItem extends StatelessWidget {
                   ),
                 ),
               ),
-              Text(isSnapshot ? '${transaction.amount} XDAG' : (isSend ? '-${transaction.amount} XDAG' : '+${transaction.amount} XDAG'), style: TextStyle(decoration: TextDecoration.none, fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: isSnapshot ? Colors.white54 : (isSend ? DarkColors.bottomNavColor : DarkColors.greenColor))),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(isSnapshot ? '$amount XDAG' : (isSend ? '-$amount XDAG' : '+$amount XDAG'), textAlign: TextAlign.end, style: TextStyle(decoration: TextDecoration.none, fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: isSnapshot ? Colors.white54 : (isSend ? DarkColors.bottomNavColor : DarkColors.greenColor))),
+              ),
               const SizedBox(width: 10),
             ],
           ),

@@ -35,7 +35,7 @@ class WalletModal extends ChangeNotifier {
   }
 
   Wallet getWallet() {
-    return defaultWallet ?? Wallet('', '', '', true, true);
+    return defaultWallet ?? Wallet('', '', '', true, true, false);
   }
 
   createWallet({required String name, required String address, required String data, bool needBackUp = false}) async {
@@ -100,6 +100,15 @@ class WalletModal extends ChangeNotifier {
     Wallet? wallet = defaultWallet;
     if (wallet != null) {
       wallet.isBackup = true;
+      await wallet.save();
+      notifyListeners();
+    }
+  }
+
+  setShowBalance(bool? flag) async {
+    Wallet? wallet = defaultWallet;
+    if (wallet != null) {
+      wallet.hideBalance = flag;
       await wallet.save();
       notifyListeners();
     }

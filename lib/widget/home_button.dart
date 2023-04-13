@@ -21,21 +21,25 @@ class HomeHeaderButton extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 8),
-            child: Column(children: [
-              Row(
-                children: [
-                  Image.asset(icon, width: 20, height: 20),
-                  const Spacer(),
-                ],
-              ),
-              const Spacer(),
-              Row(
-                children: [
-                  const Spacer(),
-                  Text(title, style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white)),
-                ],
-              )
-            ]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Row(
+                  children: [
+                    Image.asset(icon, width: 20, height: 20),
+                    const Spacer(),
+                  ],
+                ),
+                const Spacer(),
+                Text(
+                  title,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  textAlign: TextAlign.end,
+                  style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ));
   }

@@ -83,7 +83,84 @@ class _WalletListPageState extends State<WalletListPage> {
       backgroundColor: DarkColors.bgColor,
       body: Column(
         children: [
-          NavHeader(title: AppLocalizations.of(context).select_Wallet),
+          NavHeader(
+            title: AppLocalizations.of(context).select_Wallet,
+            rightWidget: Row(
+              children: [
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: CupertinoButton(
+                    padding: EdgeInsets.zero,
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(20),
+                    onPressed: () async {
+                      Helper.changeAndroidStatusBarAndNavBar(true);
+                      await showCupertinoModalPopup(
+                        context: context,
+                        barrierColor: Colors.black.withOpacity(0.6),
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            backgroundColor: DarkColors.bgColor,
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                            titlePadding: const EdgeInsets.fromLTRB(12.0, 15.0, 12, 0),
+                            insetPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 0.0),
+                            contentPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 0.0),
+                            actionsPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 20.0),
+                            title: Row(
+                              children: <Widget>[
+                                CupertinoButton(
+                                  padding: EdgeInsets.zero,
+                                  child: Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(color: DarkColors.blockColor, borderRadius: BorderRadius.circular(20.0)),
+                                    child: const Icon(Icons.close, color: Colors.white, size: 24),
+                                  ),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                ),
+                                Expanded(
+                                    flex: 1,
+                                    child: Center(
+                                      child: Text(
+                                        AppLocalizations.of(context).tips,
+                                        style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 20.0, fontWeight: FontWeight.w700),
+                                      ),
+                                    )),
+                                const SizedBox(width: 40)
+                              ],
+                            ),
+                            content: Text(
+                              AppLocalizations.of(context).wallet_tips,
+                              style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
+                            ),
+                            actions: <Widget>[
+                              Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Button(
+                                    text: AppLocalizations.of(context).continueText,
+                                    bgColor: DarkColors.mainColor,
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      );
+                      Helper.changeAndroidStatusBarAndNavBar(false);
+                    },
+                    child: const Icon(Icons.info_outline, color: Colors.white, size: 30),
+                  ),
+                ),
+                const SizedBox(width: 15),
+              ],
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.only(top: 20),

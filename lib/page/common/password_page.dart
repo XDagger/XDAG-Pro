@@ -95,7 +95,7 @@ class _PasswordPageState extends State<PasswordPage> {
                 if (Global.devBiometricsType != -1)
                   LabelButton(
                     type: 1,
-                    padding: const EdgeInsets.fromLTRB(15, 0, 10, 0),
+                    padding: const EdgeInsets.fromLTRB(15, 10, 10, 10),
                     label: title,
                     child: CupertinoSwitch(
                       activeColor: DarkColors.mainColor54,
@@ -103,31 +103,27 @@ class _PasswordPageState extends State<PasswordPage> {
                       thumbColor: isSwitched ? DarkColors.mainColor : Colors.white,
                       value: isSwitched,
                       onChanged: (bool? value) {
+                        bool oldValue = isSwitched;
                         bool newValue = !isSwitched;
                         setState(() {
                           isSwitched = newValue;
                         });
-                        // check password
-                        if (newValue) {
-                          showModalBottomSheet(
-                            backgroundColor: DarkColors.bgColor,
-                            context: context,
-                            isScrollControlled: true,
-                            builder: (BuildContext buildContext) => CheckPage(
-                                onlyPassword: true,
-                                checkCallback: (bool isCheck) async {
-                                  if (isCheck) {
-                                    config.saveBiometrics(true);
-                                  } else {
-                                    setState(() {
-                                      isSwitched = false;
-                                    });
-                                  }
-                                }),
-                          );
-                        } else {
-                          config.saveBiometrics(false);
-                        }
+                        showModalBottomSheet(
+                          backgroundColor: DarkColors.bgColor,
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (BuildContext buildContext) => CheckPage(
+                              onlyPassword: true,
+                              checkCallback: (bool isCheck) async {
+                                if (isCheck) {
+                                  config.saveBiometrics(newValue);
+                                } else {
+                                  setState(() {
+                                    isSwitched = oldValue;
+                                  });
+                                }
+                              }),
+                        );
                       },
                     ),
                   )

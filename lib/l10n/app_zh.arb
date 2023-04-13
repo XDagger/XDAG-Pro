@@ -16,7 +16,7 @@
   "repeat_password": "重复密码",
   "security": "安全",
   "walletName": "钱包名称",
-  "createWalletTips": "我明白 XDAG 钱包无法恢复我的密码",
+  "createWalletTips": "我了解 XDAG-Pro 无法恢复我的密码。",
   "continueText": "继续",
   "mnemonic": "助记词",
   "privateKey": "私钥",
@@ -75,8 +75,8 @@
   "fee":"费用",
   "cancel":"取消",
   "verify_protect_wallet": "请验证以保护您的钱包",
-  "review_Privacy_Policy": "请查看 XDAG 钱包的服务条款和隐私政策。",
-  "accepted_Privacy_Policy": "我已阅读并接受服务条款和隐私政策。",
+  "review_Privacy_Policy":"请查阅 XDAG-Pro 的隐私政策和服务条款。",
+  "accepted_Privacy_Policy": "我已阅读并接受隐私政策和服务条款。",
   "snapshot": "快照",
   "walletAddress": "钱包地址",
   "to": "到",
@@ -99,7 +99,7 @@
   "confirm_Mnemonic":"确认助记词",
   "successful":"成功",
   "backup_test_tips_4":"您已通过钱包保护测试，请记住需要保存助手词。",
-  "backup_test_tips_5":"如果您丢失它，XDAG钱包将无法恢复您的钱包。",
+  "backup_test_tips_5":"如果您丢失了助记词，XDAG-Pro将无法恢复您的钱包。",
   "secure_wallet":"保护你的钱包安全",
   "start":"开始",
   "next":"下一步",
@@ -118,5 +118,8 @@
   "delete_contact":"确认删除联系人吗？",
   "contact_name_error":"联系人名称仅支持字母、数字和空格",
   "contact_tips":"请注意，联系人仅存储在本地设备上。如果您删除应用程序，您的联系人将永久丢失，无法找回。",
-  "no_contacts":"没有联系人"
+  "no_contacts":"没有联系人",
+  "tips":"提示",
+  "wallet_tips":"向右滑动该项以删除钱包。",
+  "hide_balance":"隐藏余额"
 }

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
@@ -59,7 +62,12 @@ class LegalPage extends StatelessWidget {
                 LabelButton(
                   label: AppLocalizations.of(context).privacy_Policy,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/privacy_policy.html", title: AppLocalizations.of(context).privacy_Policy));
+                    var url = "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/privacy_policy.html";
+                    if (Platform.isAndroid || Platform.isIOS) {
+                      Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
+                    } else {
+                      launchUrlString(url, mode: LaunchMode.externalApplication);
+                    }
                   },
                 ),
                 const SizedBox(height: 1),
@@ -67,7 +75,12 @@ class LegalPage extends StatelessWidget {
                   type: 1,
                   label: AppLocalizations.of(context).terms_of_Use,
                   onPressed: () {
-                    Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/terms_of_use.html", title: AppLocalizations.of(context).terms_of_Use));
+                    var url = "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/terms_of_use.html";
+                    if (Platform.isAndroid || Platform.isIOS) {
+                      Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
+                    } else {
+                      launchUrlString(url, mode: LaunchMode.externalApplication);
+                    }
                   },
                 ),
                 const Spacer(),

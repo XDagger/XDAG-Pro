@@ -16,7 +16,7 @@
   "repeat_password": "Passwort wiederholen",
   "security": "Sicherheit",
   "walletName": "Wallet-Name",
-  "createWalletTips": "Ich verstehe, dass das XDAG Wallet mein Passwort nicht wiederherstellen kann",
+  "createWalletTips": "Ich verstehe, dass XDAG-Pro mein Passwort nicht wiederherstellen kann。",
   "continueText": "Fortfahren",
   "mnemonic": "Mnemonic",
   "privateKey": "Privater Schlüssel",
@@ -75,8 +75,8 @@
   "fee":"Gebühr",
   "cancel": "Abbrechen",
   "verify_protect_wallet": "Bitte verifizieren Sie, um Ihre Brieftasche zu schützen",
-  "review_Privacy_Policy": "Bitte lesen Sie die Nutzungsbedingungen und Datenschutzbestimmungen der XDAG Wallet.",
-  "accepted_Privacy_Policy": "Ich habe die Nutzungsbedingungen und Datenschutzbestimmungen gelesen und akzeptiert.",
+  "review_Privacy_Policy": "Bitte überprüfen Sie die Datenschutzrichtlinien und Nutzungsbedingungen von XDAG-Pro.",
+  "accepted_Privacy_Policy":"Ich habe die Datenschutzrichtlinien und Nutzungsbedingungen gelesen und akzeptiert.",
   "snapshot": "Snapshot",
   "walletAddress": "Wallet-Adresse",
   "to": "An",
@@ -99,7 +99,7 @@
   "confirm_Mnemonic":"Mnemonic bestätigen",
   "successful":"Erfolgreich",
   "backup_test_tips_4":"Sie haben den Wallet-Schutztest bestanden. Bitte denken Sie daran, dass Helferwörter gespeichert werden müssen.",
-  "backup_test_tips_5":"Wenn Sie sie verlieren, kann die XDAG-Brieftasche Ihre Brieftasche nicht wiederherstellen.",
+  "backup_test_tips_5":"Wenn Sie es verlieren, kann XDAG-Pro Ihre Brieftasche nicht wiederherstellen.",
   "secure_wallet":"Schützen Sie Ihre Geldbörse",
   "start":"Starten",
   "next":"Weiter",
@@ -118,5 +118,8 @@
   "delete_contact":"Bestätigen Sie das Löschen der Kontakte?",
   "contact_name_error":"Kontaktname unterstützt nur Buchstaben, Zahlen und Leerzeichen",
   "contact_tips":"Bitte beachten Sie, dass Kontakte nur lokal auf diesem Gerät gespeichert werden. Wenn Sie die App löschen, gehen Ihre Kontakte dauerhaft verloren und können nicht wiederhergestellt werden.",
-  "no_contacts":"Keine Kontakte"
+  "no_contacts":"Keine Kontakte",
+  "tips":"Tipps",
+  "wallet_tips":"Wischen Sie den Eintrag nach rechts, um das Wallet zu löschen。",
+  "hide_balance":"Guthaben ausblenden"
 }

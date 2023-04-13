@@ -38,19 +38,14 @@ class WalletHeader extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      SizedBox(
-                        width: ScreenHelper.screenWidth - 70,
+                      Expanded(
                         child: Text(
                           AppLocalizations.of(context).backup_your_wallet,
                           style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white),
                         ),
                       ),
-                      const Spacer(),
-                      const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 12,
-                        color: Colors.white,
-                      ),
+                      const SizedBox(width: 5),
+                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.white),
                     ],
                   ),
                 ),
@@ -59,7 +54,6 @@ class WalletHeader extends StatelessWidget {
           else
             const SizedBox(),
           Container(
-            height: 120,
             decoration: BoxDecoration(
               color: DarkColors.blockColor,
               borderRadius: BorderRadius.circular(10),
@@ -93,7 +87,7 @@ class WalletHeader extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Text(
-                            "${wallet.amount} XDAG",
+                            wallet.hideBalance == true ? "****" : "${wallet.amount} XDAG",
                             style: const TextStyle(
                               fontSize: 16,
                               fontFamily: 'RobotoMono',
@@ -106,37 +100,29 @@ class WalletHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 0, 15, 5),
-                  child: SizedBox(
-                      height: 36,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CupertinoButton(
-                            padding: EdgeInsets.zero,
-                            child: Row(
-                              children: [
-                                Text(wallet.address,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontFamily: 'RobotoMono',
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white54,
-                                    )),
-                                const SizedBox(width: 5),
-                                const Icon(Icons.copy_rounded, size: 12, color: Colors.white54),
-                              ],
-                            ),
-                            onPressed: () {
-                              Clipboard.setData(ClipboardData(text: wallet.address));
-                              Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
-                            },
+                CupertinoButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: wallet.address));
+                    Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                    // color: Colors.amber,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            wallet.address,
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54),
                           ),
-                        ],
-                      )),
+                        ),
+                        const SizedBox(width: 8),
+                        const Icon(Icons.copy_rounded, size: 12, color: Colors.white),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

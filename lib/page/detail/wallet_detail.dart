@@ -71,31 +71,48 @@ class WalletDetailPage extends StatelessWidget {
               ),
               const SizedBox(height: 1),
               LabelButton(
-                  type: 1,
-                  onPressed: () async {
-                    Helper.changeAndroidStatusBar(false);
-                    await showModalBottomSheet(
-                      backgroundColor: DarkColors.bgColor,
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (BuildContext buildContext) => CheckPage(checkCallback: (bool isCheck) async {
-                        if (isCheck) {
-                          String? data = await Global.getWalletDataByAddress(wallet.address);
-                          if (data != null && context.mounted) {
-                            Helper.changeAndroidStatusBar(false);
-                            if (data.contains(" ")) {
-                              await Navigator.pushNamed(context, "/back_up", arguments: BackUpPageRouteParams(data, 0));
-                            } else {
-                              await Navigator.pushNamed(context, "/back_up", arguments: BackUpPageRouteParams(data, 1));
-                            }
-                            Helper.changeAndroidStatusBar(true);
-                          }
-                        }
-                      }),
-                    );
-                    Helper.changeAndroidStatusBar(true);
+                type: 2,
+                padding: const EdgeInsets.fromLTRB(15, 10, 10, 10),
+                onPressed: () async {},
+                label: AppLocalizations.of(context).hide_balance,
+                child: CupertinoSwitch(
+                  activeColor: DarkColors.mainColor54,
+                  trackColor: DarkColors.transactionColor,
+                  thumbColor: wallet.hideBalance == true ? DarkColors.mainColor : Colors.white,
+                  value: wallet.hideBalance == true,
+                  onChanged: (bool? value) {
+                    walletModal.setShowBalance(value!);
                   },
-                  label: AppLocalizations.of(context).backup),
+                ),
+              ),
+              const SizedBox(height: 1),
+              LabelButton(
+                type: 1,
+                onPressed: () async {
+                  Helper.changeAndroidStatusBar(false);
+                  await showModalBottomSheet(
+                    backgroundColor: DarkColors.bgColor,
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (BuildContext buildContext) => CheckPage(checkCallback: (bool isCheck) async {
+                      if (isCheck) {
+                        String? data = await Global.getWalletDataByAddress(wallet.address);
+                        if (data != null && context.mounted) {
+                          Helper.changeAndroidStatusBar(false);
+                          if (data.contains(" ")) {
+                            await Navigator.pushNamed(context, "/back_up", arguments: BackUpPageRouteParams(data, 0));
+                          } else {
+                            await Navigator.pushNamed(context, "/back_up", arguments: BackUpPageRouteParams(data, 1));
+                          }
+                          Helper.changeAndroidStatusBar(true);
+                        }
+                      }
+                    }),
+                  );
+                  Helper.changeAndroidStatusBar(true);
+                },
+                label: AppLocalizations.of(context).backup,
+              ),
             ],
           ),
         ));

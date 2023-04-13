@@ -18,7 +18,10 @@ class Wallet extends HiveObject {
   @HiveField(4)
   bool isBackup;
 
-  Wallet(this.name, this.amount, this.address, this.isDef, this.isBackup);
+  @HiveField(5)
+  bool? hideBalance;
+
+  Wallet(this.name, this.amount, this.address, this.isDef, this.isBackup, this.hideBalance);
 }
 
 // @HiveType(typeId: 2)

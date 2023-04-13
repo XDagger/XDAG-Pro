@@ -180,7 +180,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
               onPressed: () => Navigator.pop(context),
             ),
             Expanded(
-              child: Padding(
+              child: SingleChildScrollView(
                 padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
                 child: Column(
                   children: [

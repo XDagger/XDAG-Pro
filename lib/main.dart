@@ -15,7 +15,6 @@ import 'package:xdag/page/common/change_name_page.dart';
 import 'package:xdag/page/common/face_id_page.dart';
 import 'package:xdag/page/common/legal_page.dart';
 import 'package:xdag/page/common/password_page.dart';
-import 'package:xdag/page/common/secure_wallet_page.dart';
 import 'package:xdag/page/common/security_page.dart';
 import 'package:xdag/page/common/create_wallet_page.dart';
 import 'package:xdag/page/common/webview.dart';
@@ -72,6 +71,7 @@ class MyWidget extends StatelessWidget {
               fontFamily: "RobotoMono",
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
+                  TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
                   TargetPlatform.android: CupertinoPageTransitionsBuilder(),
                   TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
                 },
@@ -82,7 +82,7 @@ class MyWidget extends StatelessWidget {
               "/create": (context) => const CreateWalletPage(),
               "/faceid": (context) => const FaceIDPage(),
               "/select": (context) => const WalletListPage(),
-              "/security_wallet": (context) => const SecureWalletPage(),
+              // "/security_wallet": (context) => const SecureWalletPage(),
               "/wallet": (context) => const WalletHomePage(),
               "/security": (context) => const SecurityPage(),
               "/legal": (context) => const LegalPage(),

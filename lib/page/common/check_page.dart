@@ -13,7 +13,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class CheckPage extends StatefulWidget {
   final void Function(bool) checkCallback;
   final bool onlyPassword;
-  const CheckPage({super.key, required this.checkCallback, this.onlyPassword = false});
+  final bool canClose;
+  const CheckPage({super.key, required this.checkCallback, this.onlyPassword = false, this.canClose = true});
   @override
   State<CheckPage> createState() => _CheckPageState();
 }
@@ -53,75 +54,86 @@ class _CheckPageState extends State<CheckPage> {
     // print(Global.devBiometricsType != -1 && !widget.onlyPassword);
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.only(top: ScreenHelper.topPadding),
-            height: 50 + ScreenHelper.topPadding,
-            child: Row(
-              children: [
-                const SizedBox(width: 15),
-                SizedBox(
-                  width: 40,
-                  height: 40,
-                  child: CupertinoButton(
-                    padding: EdgeInsets.zero,
-                    color: DarkColors.blockColor,
-                    borderRadius: BorderRadius.circular(20),
-                    onPressed: () {
-                      Navigator.of(context).pop(false);
-                      widget.checkCallback(false);
-                    },
-                    child: const Icon(Icons.close, color: Colors.white, size: 16),
-                  ),
-                ),
-                const Spacer(),
-                (Global.devBiometricsType != -1 && !widget.onlyPassword) && config.walletConfig.hasSetBiometrics
-                    ? CupertinoButton(
+      body: WillPopScope(
+        onWillPop: () async {
+          return widget.canClose;
+        },
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(top: ScreenHelper.topPadding),
+              height: 50 + ScreenHelper.topPadding,
+              child: Row(
+                children: [
+                  const SizedBox(width: 15),
+                  if (widget.canClose)
+                    SizedBox(
+                      width: 40,
+                      height: 40,
+                      child: CupertinoButton(
                         padding: EdgeInsets.zero,
                         color: DarkColors.blockColor,
                         borderRadius: BorderRadius.circular(20),
                         onPressed: () {
-                          setState(() {
-                            type = type == -1 ? Global.devBiometricsType : -1;
-                          });
+                          Navigator.of(context).pop(false);
+                          widget.checkCallback(false);
                         },
-                        child: Container(
-                          height: 40,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Center(
-                            child: Text(AppLocalizations.of(context).use_password, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
-                          ),
-                        ),
-                      )
-                    : Container(),
-                const SizedBox(width: 15),
-              ],
-            ),
-          ),
-          Expanded(
-            child: type == -1
-                ? InputPassCode(
-                    code: '',
-                    nextPage: 1,
-                    checkCallback: () {
-                      Navigator.of(context).pop(true);
-                      widget.checkCallback(true);
-                    },
-                  )
-                : CupertinoButton(
-                    onPressed: check,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (type == 0) Image.asset('images/face_id.png') else Image.asset('images/biometrics.png'),
-                        const SizedBox(height: 30),
-                        Text(tipsText, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
-                      ],
+                        child: const Icon(Icons.close, color: Colors.white, size: 16),
+                      ),
+                    )
+                  else
+                    const SizedBox(
+                      width: 40,
+                      height: 40,
                     ),
-                  ),
-          )
-        ],
+                  const Spacer(),
+                  (Global.devBiometricsType != -1 && !widget.onlyPassword) && config.walletConfig.hasSetBiometrics
+                      ? CupertinoButton(
+                          padding: EdgeInsets.zero,
+                          color: DarkColors.blockColor,
+                          borderRadius: BorderRadius.circular(20),
+                          onPressed: () {
+                            setState(() {
+                              type = type == -1 ? Global.devBiometricsType : -1;
+                            });
+                          },
+                          child: Container(
+                            height: 40,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: Center(
+                              child: Text(AppLocalizations.of(context).use_password, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
+                            ),
+                          ),
+                        )
+                      : Container(),
+                  const SizedBox(width: 15),
+                ],
+              ),
+            ),
+            Expanded(
+              child: type == -1
+                  ? InputPassCode(
+                      code: '',
+                      nextPage: 1,
+                      checkCallback: () {
+                        Navigator.of(context).pop(true);
+                        widget.checkCallback(true);
+                      },
+                    )
+                  : CupertinoButton(
+                      onPressed: check,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          if (type == 0) Image.asset('images/face_id.png') else Image.asset('images/biometrics.png'),
+                          const SizedBox(height: 30),
+                          Text(tipsText, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
+                        ],
+                      ),
+                    ),
+            )
+          ],
+        ),
       ),
     );
   }

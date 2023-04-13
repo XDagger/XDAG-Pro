@@ -15,9 +15,9 @@ class LangsSelectPage extends StatelessWidget {
     double screenHeight = ScreenHelper.screenHeight;
     double bottomPadding = ScreenHelper.bottomPadding;
     ConfigModal config = Provider.of<ConfigModal>(context);
-    double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * ConfigModal.langs.length + 10;
+    // double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * ConfigModal.langs.length + 10;
     return ModalFrame(
-      height: height > screenHeight * 0.8 ? screenHeight * 0.8 : height,
+      height: screenHeight * 0.8,
       title: AppLocalizations.of(context).select_language,
       child: Column(
         children: [
@@ -69,14 +69,12 @@ class NetWorkSelectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = ScreenHelper.screenHeight;
+    // double screenHeight = ScreenHelper.screenHeight;
     double bottomPadding = ScreenHelper.bottomPadding;
-    // ConfigModal config = Provider.of<ConfigModal>(context);
-    //List<String> netWorks = ConfigModal.netWorks;
     List<String> netWorks = ["TestNet"];
     double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * netWorks.length + 10;
     return ModalFrame(
-      height: height > screenHeight * 0.8 ? screenHeight * 0.8 : height,
+      height: height,
       title: AppLocalizations.of(context).select_network,
       child: Column(
         children: [

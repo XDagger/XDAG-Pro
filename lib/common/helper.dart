@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -55,6 +54,18 @@ class Helper {
     DateTime date = DateTime.parse(time);
     // YYYY-MM-dd HH:mm
     return "${date.year}-${date.month < 10 ? "0${date.month}" : date.month}-${date.day < 10 ? "0${date.day}" : date.day} ${date.hour < 10 ? "0${date.hour}" : date.hour}:${date.minute < 10 ? "0${date.minute}" : date.minute}";
+  }
+
+  static String formatDouble(String num) {
+    String result;
+    double number = double.parse(num);
+    if (number == number.toInt()) {
+      result = "${number.toInt()}.00";
+    } else {
+      // 向下保留两位小数
+      result = number.toStringAsFixed(2);
+    }
+    return result;
   }
 
   // show toast

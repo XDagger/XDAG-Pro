@@ -281,7 +281,7 @@ class _SendPageState extends State<SendPage> {
                         minFontSize: 16,
                         maxLines: 10,
                         minLines: 1,
-                        maxLength: 33,
+                        maxLength: 32,
                         autofocus: false,
                         keyboardAppearance: Brightness.dark,
                         contextMenuBuilder: (context, editableTextState) {

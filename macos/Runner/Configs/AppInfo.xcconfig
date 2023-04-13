@@ -11,4 +11,4 @@ PRODUCT_NAME = xdag
 PRODUCT_BUNDLE_IDENTIFIER = com.xdag.io
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2023 com.example. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2023 XDAG-Pro All rights reserved.

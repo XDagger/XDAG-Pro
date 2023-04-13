@@ -21,7 +21,7 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> {
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String _crurrentAddress = "";
-  String lastTime = "";
+  // String lastTime = "";
   List<Transaction> list = [];
   final dio = Dio();
   CancelToken cancelToken = CancelToken();
@@ -63,6 +63,7 @@ class _WalletPageState extends State<WalletPage> {
     WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
     Wallet wallet = walletModal.getWallet();
     try {
+      // DateTime startTime = DateTime.now();
       Response responseBalance = await dio.post(Global.rpcURL, cancelToken: cancelToken, data: {
         "jsonrpc": "2.0",
         "method": "xdag_getBalance",
@@ -70,17 +71,15 @@ class _WalletPageState extends State<WalletPage> {
         "id": 1
       });
       walletModal.setBlance(responseBalance.data['result']);
-      // print("${Global.explorURL}/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=200");
       Response response = await dio.get(
         "${Global.explorURL}/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=200",
         cancelToken: cancelToken,
       );
+      // DateTime endTime = DateTime.now();
+      // print("request Time：${endTime.difference(startTime).inMilliseconds}ms");
       if (response.data["addresses_pagination"] != null) {
         totalPage = response.data["addresses_pagination"]["last_page"];
       }
-      // if (response.data["balance"] != null) {
-      //   walletModal.setBlance(response.data["balance"]);
-      // }
       if (response.data["block_as_address"] != null) {
         List<Transaction> newList = [];
         for (var i = 0; i < response.data["block_as_address"].length; i++) {
@@ -100,24 +99,25 @@ class _WalletPageState extends State<WalletPage> {
               fee: 0,
               remark: item["remark"] ?? "",
             ));
-          } catch (e) {
-            // print(e);
+          } catch (e) {}
+        }
+        List<Transaction> allList = currentPage == 1 ? newList : list + newList;
+        allList.where((element) => element.type != 2).toList();
+        List<Transaction> newList2 = [];
+        newList2.addAll(allList);
+        String lastTime = "";
+        for (var i = 0; i < allList.length - 1; i++) {
+          var transaction = allList[i];
+          if (lastTime == "" || lastTime.substring(0, 7) != transaction.time.substring(0, 7)) {
+            lastTime = transaction.time;
+            newList2.insert(i, Transaction(type: 2, time: transaction.time, amount: '', address: '', status: "", from: '', to: '', hash: '', blockAddress: '', fee: 0, remark: ""));
           }
         }
-        // delay 1s
-        // await Future.delayed(const Duration(seconds: 1));
         if (mounted) {
-          if (currentPage == 1) {
-            setState(() {
-              list = newList;
-              loading = false;
-            });
-          } else {
-            setState(() {
-              list.addAll(newList);
-              loading = false;
-            });
-          }
+          setState(() {
+            list = newList2;
+            loading = false;
+          });
         }
       }
     } catch (e) {
@@ -210,6 +210,7 @@ class _WalletPageState extends State<WalletPage> {
                           const SizedBox(height: 50),
                           const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
                           Text(AppLocalizations.of(context).no_transactions, style: const TextStyle(color: Colors.white, fontSize: 16)),
+                          const SizedBox(height: 50),
                         ]);
                       }
                       if (loading) {
@@ -232,25 +233,10 @@ class _WalletPageState extends State<WalletPage> {
                     }
                     int pos = index - 1;
                     Transaction transaction = list[pos];
-                    // print("transaction.type = ${transaction.type} and index = $index");
-                    Widget box = Container();
-                    if (pos == 0) {
-                      lastTime = transaction.time;
-                      box = WalletTransactionDateHeader(time: transaction.time);
-                    } else {
-                      if (lastTime.substring(0, 7) != transaction.time.substring(0, 7)) {
-                        lastTime = transaction.time;
-                        box = WalletTransactionDateHeader(time: transaction.time);
-                      }
+                    if (transaction.type == 2) {
+                      return WalletTransactionDateHeader(time: transaction.time);
                     }
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        box,
-                        WalletTransactionItem(transaction: transaction, address: wallet.address),
-                      ],
-                    );
+                    return WalletTransactionItem(transaction: transaction, address: wallet.address);
                   },
                 ),
               ),

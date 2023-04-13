@@ -16,7 +16,7 @@
   "repeat_password": "Répéter le mot de passe",
   "security": "Sécurité",
   "walletName": "Nom du portefeuille",
-  "createWalletTips": "Je comprends que le portefeuille XDAG ne peut pas récupérer mon mot de passe",
+  "createWalletTips": "Je comprends que XDAG-Pro ne peut pas récupérer mon mot de passe。",
   "continueText": "Continuer",
   "mnemonic": "Mnémonique",
   "privateKey":"Clé privée",
@@ -75,8 +75,8 @@
   "fee": "Frais",
   "cancel": "Annuler",
   "verify_protect_wallet": "Veuillez vérifier pour protéger votre portefeuille",
-  "review_Privacy_Policy": "Veuillez examiner les conditions d'utilisation et la politique de confidentialité du portefeuille XDAG.",
-  "accepted_Privacy_Policy": "J'ai lu et accepté les conditions d'utilisation et la politique de confidentialité.",
+  "review_Privacy_Policy": "Veuillez consulter la politique de confidentialité et les conditions d'utilisation de XDAG-Pro.",
+  "accepted_Privacy_Policy": "J'ai lu et accepté la politique de confidentialité et les conditions d'utilisation.",
   "snapshot": "Instantané",
   "walletAddress": "Adresse du portefeuille",
   "to": "À",
@@ -99,7 +99,7 @@
   "confirm_Mnemonic":"Confirmer le Mnemonic",
   "successful":"Succès",
   "backup_test_tips_4":"Vous avez réussi le test de protection du portefeuille. Veuillez noter que les mots d'aide doivent être enregistrés.",
-  "backup_test_tips_5":"Si vous le perdez, le portefeuille XDAG ne peut pas récupérer votre portefeuille.",
+  "backup_test_tips_5":"Si vous le perdez, XDAG-Pro ne pourra pas récupérer votre portefeuille.",
   "secure_wallet":"Protégez votre portefeuille",
   "start":"Démarrer",
   "next":"Suivant",
@@ -118,5 +118,8 @@
   "delete_contact":"Confirmez-vous la suppression des contacts ?",
   "contact_name_error":"Le nom de contact ne prend en charge que les lettres, les chiffres et les espaces",
   "contact_tips":"Veuillez noter que les contacts sont uniquement stockés localement sur cet appareil. Si vous supprimez l'application, vos contacts seront définitivement perdus et ne pourront pas être récupérés.",
-  "no_contacts":"Pas de contacts"
+  "no_contacts":"Aucun contact",
+  "tips":"Conseils",
+  "wallet_tips":"Balayez l'élément vers la droite pour supprimer le portefeuille.",
+  "hide_balance":"Masquer le solde"
 }

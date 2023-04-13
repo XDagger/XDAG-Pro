@@ -424,6 +424,7 @@ class HeaderItem extends StatelessWidget {
         child: Center(
           child: Text(
             title,
+            textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
