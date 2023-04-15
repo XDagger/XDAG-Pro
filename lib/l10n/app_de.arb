@@ -11,7 +11,7 @@
   "auto": "Automatisch",
   "select_language": "Sprache auswählen",
   "create_password_tips": "Bevor Sie beginnen, müssen Sie ein Geheimcode festlegen, um Ihre Sicherheit zu gewährleisten.",
-  "create_faceid_tips": "Um die Sicherheit Ihres Kontos zu verbessern, aktivieren Sie bitte die biometrische Authentifizierungsfunktion auf Ihrem Telefon, bevor Sie die Wallet-App verwenden.",
+  "create_faceid_tips": "Um die Sicherheit Ihres Kontos zu verbessern, aktivieren Sie bitte die biometrische Authentifizierungsfunktion auf Ihrem Gerät, bevor Sie die Wallet-App verwenden.",
   "create_password": "Geheimcode festlegen",
   "repeat_password": "Geheimcode wiederholen",
   "security": "Sicherheit",

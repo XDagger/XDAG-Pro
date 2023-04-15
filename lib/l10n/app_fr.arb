@@ -11,7 +11,7 @@
   "auto": "Automatique",
   "select_language": "Sélectionnez la langue",
   "create_password_tips": "Avant de commencer à l'utiliser, vous devez définir un code secret pour garantir votre sécurité.",
-  "create_faceid_tips": "Pour améliorer la sécurité de votre compte, veuillez activer la fonction d'authentification biométrique sur votre téléphone avant d'utiliser l'application de portefeuille.",
+  "create_faceid_tips": "Pour améliorer la sécurité de votre compte, veuillez activer la fonction d'authentification biométrique sur votre appareil avant d'utiliser l'application de portefeuille.",
   "create_password": "Définir un code secret",
   "repeat_password": "Répéter le code secret",
   "security": "Sécurité",

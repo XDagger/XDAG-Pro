@@ -11,7 +11,7 @@
   "auto": "Auto",
   "select_language": "Select Language",
   "create_password_tips": "Before starting to use it, you need to set a secret code to ensure your security.",
-  "create_faceid_tips": "To enhance the security of your account, please enable the biometric authentication feature on your phone before using the wallet app.",
+  "create_faceid_tips": "To enhance the security of your account, please enable the biometric authentication feature on your device before using the wallet app.",
   "create_password": "Create secret code",
   "repeat_password": "Repeat secret code",
   "security": "Security",
