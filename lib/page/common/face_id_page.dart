@@ -9,6 +9,7 @@ import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/page/common/create_wallet_page.dart';
 import 'package:xdag/widget/button.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/nav_header.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -75,7 +76,7 @@ class FaceIDPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     Text(AppLocalizations.of(context).create_faceid_tips, style: descStyle),
                     Expanded(
-                      child: CupertinoButton(
+                      child: MyCupertinoButton(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [

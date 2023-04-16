@@ -8,6 +8,7 @@ import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/check_page.dart';
 import 'package:xdag/page/common/create_wallet_page.dart';
 import 'package:xdag/widget/button.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/nav_header.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -90,7 +91,7 @@ class _WalletListPageState extends State<WalletListPage> {
                 SizedBox(
                   width: 40,
                   height: 40,
-                  child: CupertinoButton(
+                  child: MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(20),
@@ -109,7 +110,7 @@ class _WalletListPageState extends State<WalletListPage> {
                             actionsPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 20.0),
                             title: Row(
                               children: <Widget>[
-                                CupertinoButton(
+                                MyCupertinoButton(
                                   padding: EdgeInsets.zero,
                                   child: Container(
                                     width: 40,
@@ -237,7 +238,7 @@ class Item extends StatelessWidget {
                   actionsPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 20.0),
                   title: Row(
                     children: <Widget>[
-                      CupertinoButton(
+                      MyCupertinoButton(
                         padding: EdgeInsets.zero,
                         child: Container(
                           width: 40,
@@ -308,7 +309,7 @@ class Item extends StatelessWidget {
               ],
             ),
           ),
-          child: CupertinoButton(
+          child: MyCupertinoButton(
             padding: EdgeInsets.zero,
             onPressed: () => walletModal.changeSelect(wallet!),
             child: Container(

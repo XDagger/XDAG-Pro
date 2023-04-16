@@ -8,6 +8,7 @@ import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/widget/button.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/input.dart';
 import 'package:xdag/widget/nav_header.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -135,6 +136,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
       body: GestureDetector(
         behavior: HitTestBehavior.opaque,
         onTap: () {
+          if (Helper.isDesktop) return;
           if (FocusScope.of(context).hasFocus) {
             FocusScope.of(context).unfocus();
           }
@@ -412,7 +414,7 @@ class HeaderItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
+    return MyCupertinoButton(
       padding: const EdgeInsets.all(5),
       onPressed: onPressed,
       pressedOpacity: 1,

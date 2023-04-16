@@ -12,6 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:xdag/page/common/create_wallet_page.dart';
 import 'package:xdag/page/common/face_id_page.dart';
 import 'package:xdag/page/common/security_page.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/home_widget.dart';
 
 class InputPassCode extends StatefulWidget {
@@ -241,10 +242,10 @@ class NumberButton extends StatelessWidget {
     fontFamily: 'RobotoMono',
     fontWeight: FontWeight.w500,
   );
-  static double size = ScreenHelper.screenWidth < 400 ? 70 : 80;
+  static double size = ScreenHelper.screenWidth < 400 || Helper.isDesktop ? 64 : 80;
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
+    return MyCupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: () {
         onPressed?.call(index + 1);

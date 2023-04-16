@@ -10,9 +10,11 @@ import 'dart:typed_data';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:bip39/bip39.dart' as bip39;
 import 'package:fast_base58/fast_base58.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class Helper {
   static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+  static bool isDesktop = Platform.isLinux || Platform.isMacOS || Platform.isWindows;
   static bool checkName(String name) {
     // only allow letters, numbers, and spaces
     RegExp regExp = RegExp(r"^[a-zA-Z0-9 ]+$");
@@ -106,7 +108,7 @@ class Helper {
           actionsPadding: const EdgeInsets.fromLTRB(15.0, 15.0, 15.0, 15.0),
           title: Row(
             children: <Widget>[
-              CupertinoButton(
+              MyCupertinoButton(
                 padding: EdgeInsets.zero,
                 child: Container(
                   width: 40,

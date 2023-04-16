@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/wallet_modal.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/modal_frame.dart';
 import 'package:xdag/common/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -121,7 +122,7 @@ class _TransactionPageState extends State<TransactionPage> {
           else
             Column(
               children: [
-                CupertinoButton(
+                MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: TransactionButton(
                       showCopy: true,
@@ -134,7 +135,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
                     }),
                 const SizedBox(height: 1),
-                CupertinoButton(
+                MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: TransactionButton(showCopy: true, title: "Hash", value: hash),
                     onPressed: () {
@@ -142,7 +143,7 @@ class _TransactionPageState extends State<TransactionPage> {
                       Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
                     }),
                 const SizedBox(height: 1),
-                CupertinoButton(
+                MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: TransactionButton(showCopy: true, title: AppLocalizations.of(context).block_address, value: transaction.blockAddress),
                     onPressed: () {

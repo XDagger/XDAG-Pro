@@ -7,6 +7,7 @@ import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/modal_frame.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -94,7 +95,7 @@ class ReceivePage extends StatelessWidget {
                 ],
               ),
             ),
-            Column(children: [const SizedBox(height: 20), Image.asset("images/logo.png", width: 50, height: 50)])
+            //Column(children: [const SizedBox(height: 20), Image.asset("images/logo.png", width: 50, height: 50)])
           ],
         ));
   }
@@ -127,7 +128,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle btnStyle = const TextStyle(color: Colors.white, fontSize: 16, fontFamily: "RobotoMono", fontWeight: FontWeight.w400);
-    return CupertinoButton(
+    return MyCupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: onPressed,
       child: Row(

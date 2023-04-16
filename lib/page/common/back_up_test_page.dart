@@ -128,7 +128,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
   void getMnemonicList(String value) {
     List<String> list = value.trim().split(" ");
     setState(() {
-      mnemonicNumber = list.length;
+      mnemonicNumber = value.isEmpty ? 0 : list.length;
       errorText = "";
     });
     if (list.isNotEmpty && value != "") {

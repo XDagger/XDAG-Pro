@@ -10,6 +10,7 @@ import 'package:scan_qr/scan_qr.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/page/detail/send_page.dart';
 import 'package:xdag/widget/button.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/nav_header.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -53,7 +54,7 @@ class ContactsStatePage extends State<ContactsPage> {
                       SizedBox(
                         width: 40,
                         height: 40,
-                        child: CupertinoButton(
+                        child: MyCupertinoButton(
                           padding: EdgeInsets.zero,
                           color: DarkColors.mainColor,
                           borderRadius: BorderRadius.circular(20),
@@ -205,7 +206,7 @@ class ContactsStatePage extends State<ContactsPage> {
                     }
                     int pos = index - 1;
                     ContactsItem item = contacts.contactsList[pos];
-                    return CupertinoButton(
+                    return MyCupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () async {
                         controller.text = item.address;

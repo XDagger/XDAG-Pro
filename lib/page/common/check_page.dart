@@ -7,6 +7,7 @@ import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/security.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -51,6 +52,8 @@ class _CheckPageState extends State<CheckPage> {
     if (type > 0 && Platform.isAndroid) {
       tipsText = AppLocalizations.of(context).use_biometrics_tips_3;
     }
+    var padding = Helper.isDesktop ? 10.0 : ScreenHelper.topPadding;
+
     // print(Global.devBiometricsType != -1 && !widget.onlyPassword);
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
@@ -61,8 +64,8 @@ class _CheckPageState extends State<CheckPage> {
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(top: ScreenHelper.topPadding),
-              height: 50 + ScreenHelper.topPadding,
+              padding: EdgeInsets.only(top: padding),
+              height: 50 + padding,
               child: Row(
                 children: [
                   const SizedBox(width: 15),
@@ -70,7 +73,7 @@ class _CheckPageState extends State<CheckPage> {
                     SizedBox(
                       width: 40,
                       height: 40,
-                      child: CupertinoButton(
+                      child: MyCupertinoButton(
                         padding: EdgeInsets.zero,
                         color: DarkColors.blockColor,
                         borderRadius: BorderRadius.circular(20),
@@ -88,7 +91,7 @@ class _CheckPageState extends State<CheckPage> {
                     ),
                   const Spacer(),
                   (Global.devBiometricsType != -1 && !widget.onlyPassword) && config.walletConfig.hasSetBiometrics
-                      ? CupertinoButton(
+                      ? MyCupertinoButton(
                           padding: EdgeInsets.zero,
                           color: DarkColors.blockColor,
                           borderRadius: BorderRadius.circular(20),
@@ -120,7 +123,7 @@ class _CheckPageState extends State<CheckPage> {
                         widget.checkCallback(true);
                       },
                     )
-                  : CupertinoButton(
+                  : MyCupertinoButton(
                       onPressed: check,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,

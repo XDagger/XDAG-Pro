@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
@@ -6,6 +5,7 @@ import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/widget/modal_frame.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class LangsSelectPage extends StatelessWidget {
   const LangsSelectPage({super.key});
@@ -27,7 +27,7 @@ class LangsSelectPage extends StatelessWidget {
               itemCount: ConfigModal.langs.length,
               itemBuilder: (context, index) {
                 var item = ConfigModal.langs[index];
-                return CupertinoButton(
+                return MyCupertinoButton(
                   padding: EdgeInsets.zero,
                   child: Container(
                     margin: EdgeInsets.only(top: index == 0 ? 0 : 20, left: 15, right: 15),
@@ -84,7 +84,7 @@ class NetWorkSelectPage extends StatelessWidget {
               itemCount: netWorks.length,
               itemBuilder: (context, index) {
                 var item = netWorks[index];
-                return CupertinoButton(
+                return MyCupertinoButton(
                   padding: EdgeInsets.zero,
                   child: Container(
                     margin: EdgeInsets.only(top: index == 0 ? 0 : 20, left: 15, right: 15),

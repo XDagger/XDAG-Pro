@@ -9,6 +9,7 @@ import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/detail/contacts_page.dart';
 import 'package:xdag/page/detail/receive_page.dart';
 import 'package:xdag/page/detail/wallet_detail.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/home_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -27,7 +28,7 @@ class WalletHeader extends StatelessWidget {
           if (!wallet.isBackup)
             Padding(
               padding: const EdgeInsets.only(bottom: 15),
-              child: CupertinoButton(
+              child: MyCupertinoButton(
                 padding: EdgeInsets.zero,
                 onPressed: () => Navigator.pushNamed(context, '/back_up_test_start'),
                 child: Container(
@@ -100,7 +101,7 @@ class WalletHeader extends StatelessWidget {
                     ],
                   ),
                 ),
-                CupertinoButton(
+                MyCupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: wallet.address));

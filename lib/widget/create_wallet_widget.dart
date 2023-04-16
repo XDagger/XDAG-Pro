@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/home_widget.dart';
 
 class CreateWalletStep extends StatelessWidget {
@@ -24,7 +25,7 @@ class CreateWalletStep extends StatelessWidget {
               SizedBox(
                 width: 40,
                 height: 40,
-                child: CupertinoButton(
+                child: MyCupertinoButton(
                   padding: EdgeInsets.zero,
                   color: DarkColors.blockColor,
                   borderRadius: BorderRadius.circular(20),

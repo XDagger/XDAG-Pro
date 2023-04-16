@@ -5,6 +5,7 @@ import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/detail/transaction_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class WalletTransactionDateHeader extends StatelessWidget {
   final String time;
@@ -32,7 +33,7 @@ class WalletTransactionItem extends StatelessWidget {
     bool isSend = transaction.from == address;
     bool isSnapshot = transaction.type == 1;
     var amount = Helper.formatDouble(transaction.amount);
-    return CupertinoButton(
+    return MyCupertinoButton(
         padding: EdgeInsets.zero,
         child: Container(
           // height: 60,

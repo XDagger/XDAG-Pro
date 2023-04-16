@@ -13,6 +13,7 @@ import 'package:xdag/page/common/security_page.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/home_widget.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -31,7 +32,7 @@ class HomePage extends StatelessWidget {
           actionsPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 20.0),
           title: Row(
             children: <Widget>[
-              CupertinoButton(
+              MyCupertinoButton(
                 padding: EdgeInsets.zero,
                 child: Container(
                   width: 40,
@@ -152,7 +153,7 @@ class HomePage extends StatelessWidget {
             child: Row(
               children: [
                 const Spacer(),
-                CupertinoButton(
+                MyCupertinoButton(
                   padding: EdgeInsets.zero,
                   child: const SizedBox(
                     width: 60,

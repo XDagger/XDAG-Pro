@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:xdag/common/color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class BottomNavButton extends StatelessWidget {
   final int index;
@@ -28,7 +29,7 @@ class BottomNavButton extends StatelessWidget {
         text = AppLocalizations.of(context).wallet;
         break;
     }
-    return CupertinoButton(
+    return MyCupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: onPressed,
         child: Column(

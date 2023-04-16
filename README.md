@@ -7,6 +7,9 @@
 * flutter gen-l10n
 * Recommended use [Android Studio](https://developer.android.com/studio) to run the project, or use [VSCode](https://code.visualstudio.com/) with [Flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) plugin
 
+
+## Window Note
+* No support for ARM and x86 Windows devices, only for x64 devices.
 ## add language
 * app_[locale].arb
 * flutter gen-l10n

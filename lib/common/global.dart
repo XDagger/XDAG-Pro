@@ -54,6 +54,8 @@ class Global {
       await _storage.deleteAll();
       _prefs.setBool(_hasRunBeforeKey, true);
     }
+    //_prefs.clear();
+    //await _storage.deleteAll();
     walletConfig = WalletConfig(local: 0, hasSetPassword: false, hasSetBiometrics: false);
     walletListBox = await Hive.openBox<Wallet>(walletListKey);
     List<String>? contactsList = _prefs.getStringList(contactsListKey);
@@ -104,7 +106,7 @@ class Global {
 
   static checkPassword(String password) async {
     String? savedPassword = await _storage.read(key: _passwordKey);
-    print("savedPassword: $savedPassword and password: $password");
+    //print("savedPassword: $savedPassword and password: $password");
     return savedPassword == password;
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class NavHeader extends StatelessWidget {
   final String title;
@@ -11,7 +12,7 @@ class NavHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var topPadding = ScreenHelper.topPadding;
+    var topPadding = Helper.isDesktop ? 10.0 : ScreenHelper.topPadding;
     return Container(
       color: DarkColors.bgColor,
       // height: 50,
@@ -26,7 +27,7 @@ class NavHeader extends StatelessWidget {
                 SizedBox(
                   width: 40,
                   height: 40,
-                  child: CupertinoButton(
+                  child: MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     color: DarkColors.blockColor,
                     borderRadius: BorderRadius.circular(20),

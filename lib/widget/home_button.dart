@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class HomeHeaderButton extends StatelessWidget {
   final VoidCallback? onPressed;
@@ -10,7 +11,7 @@ class HomeHeaderButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
+    return MyCupertinoButton(
         padding: EdgeInsets.zero,
         onPressed: onPressed,
         child: Container(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class LabelButton extends StatelessWidget {
   final int type;
@@ -44,7 +45,7 @@ class LabelButton extends StatelessWidget {
     Widget? item = child ?? const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16);
     return SizedBox(
         // height: 55,
-        child: CupertinoButton(
+        child: MyCupertinoButton(
       padding: padding,
       color: DarkColors.blockColor,
       disabledColor: DarkColors.blockColor,

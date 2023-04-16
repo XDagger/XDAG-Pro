@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
+import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/db_model.dart';
@@ -25,15 +27,30 @@ import 'package:xdag/page/wallet/main_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/page/wallet/wallet_setting.dart';
+import 'package:window_manager/window_manager.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (Platform.isIOS) {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
   }
-  if (Platform.isLinux || Platform.isMacOS || Platform.isWindows) {
-    // limit window height
-    // WidgetsFlutterBinding.ensureInitialized();
+  if (Helper.isDesktop) {
+    windowManager.ensureInitialized();
+    WindowOptions windowOptions = const WindowOptions(
+      size: Size(375, 667),
+      minimumSize: Size(375, 667),
+      maximumSize: Size(706, 1200),
+      center: true,
+      backgroundColor: DarkColors.bgColor,
+      skipTaskbar: false,
+      titleBarStyle: TitleBarStyle.normal,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      windowManager.setAspectRatio(375 / 667);
+      await windowManager.setResizable(true);
+      await windowManager.show();
+      await windowManager.focus();
+    });
   }
   appInit();
 }
@@ -69,9 +86,19 @@ class MyWidget extends StatelessWidget {
             locale: configModal.local,
             theme: ThemeData(
               fontFamily: "RobotoMono",
+              scrollbarTheme: !Helper.isDesktop
+                  ? null
+                  : ScrollbarThemeData(
+                      thumbVisibility: MaterialStateProperty.all(true),
+                      thickness: MaterialStateProperty.all(3),
+                      thumbColor: MaterialStateProperty.all(DarkColors.mainColor54),
+                      radius: const Radius.circular(5),
+                      minThumbLength: 20,
+                    ),
               pageTransitionsTheme: const PageTransitionsTheme(
                 builders: {
                   TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+                  TargetPlatform.windows: CupertinoPageTransitionsBuilder(),
                   TargetPlatform.android: CupertinoPageTransitionsBuilder(),
                   TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
                 },

@@ -9,6 +9,7 @@ import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/back_up_page.dart';
 import 'package:xdag/page/common/check_page.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/label_button.dart';
 import 'package:xdag/widget/modal_frame.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -34,7 +35,7 @@ class WalletDetailPage extends StatelessWidget {
                 child: Row(
                   children: [
                     const Spacer(),
-                    CupertinoButton(
+                    MyCupertinoButton(
                       padding: EdgeInsets.zero,
                       child: Row(
                         children: [

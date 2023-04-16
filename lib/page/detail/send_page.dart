@@ -15,6 +15,7 @@ import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/check_page.dart';
 import 'package:xdag/page/detail/transaction_page.dart';
 import 'package:xdag/widget/button.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/nav_header.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bip32/bip32.dart' as bip32;
@@ -164,7 +165,7 @@ class _SendPageState extends State<SendPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CupertinoButton(
+                      MyCupertinoButton(
                         padding: EdgeInsets.zero,
                         onPressed: () => Navigator.of(context).pop(),
                         child: Container(
@@ -237,7 +238,7 @@ class _SendPageState extends State<SendPage> {
                         child: Row(
                           children: [
                             const Spacer(),
-                            CupertinoButton(
+                            MyCupertinoButton(
                               padding: EdgeInsets.zero,
                               onPressed: () {
                                 controller.text = wallet.amount;

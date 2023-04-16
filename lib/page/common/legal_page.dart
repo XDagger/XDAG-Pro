@@ -48,48 +48,51 @@ class LegalPage extends StatelessWidget {
             ],
           );
     Widget? bottomBtn = args.isFromSetting ? Container() : LegalBottom(width: screenWidth, type: args.type);
-    return Column(
-      children: [
-        NavHeader(title: AppLocalizations.of(context).legal_documents),
-        Expanded(
-          child: Container(
-            color: DarkColors.bgColor,
-            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                header,
-                LabelButton(
-                  label: AppLocalizations.of(context).privacy_Policy,
-                  onPressed: () {
-                    var url = "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/privacy_policy.html";
-                    if (Platform.isAndroid || Platform.isIOS) {
-                      Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
-                    } else {
-                      launchUrlString(url, mode: LaunchMode.externalApplication);
-                    }
-                  },
-                ),
-                const SizedBox(height: 1),
-                LabelButton(
-                  type: 1,
-                  label: AppLocalizations.of(context).terms_of_Use,
-                  onPressed: () {
-                    var url = "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/terms_of_use.html";
-                    if (Platform.isAndroid || Platform.isIOS) {
-                      Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
-                    } else {
-                      launchUrlString(url, mode: LaunchMode.externalApplication);
-                    }
-                  },
-                ),
-                const Spacer(),
-                bottomBtn,
-              ],
+    return Scaffold(
+      backgroundColor: DarkColors.bgColor,
+      body: Column(
+        children: [
+          NavHeader(title: AppLocalizations.of(context).legal_documents),
+          Expanded(
+            child: Container(
+              color: DarkColors.bgColor,
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  header,
+                  LabelButton(
+                    label: AppLocalizations.of(context).privacy_Policy,
+                    onPressed: () {
+                      var url = "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/privacy_policy.html";
+                      if (Platform.isAndroid || Platform.isIOS) {
+                        Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
+                      } else {
+                        launchUrlString(url, mode: LaunchMode.externalApplication);
+                      }
+                    },
+                  ),
+                  const SizedBox(height: 1),
+                  LabelButton(
+                    type: 1,
+                    label: AppLocalizations.of(context).terms_of_Use,
+                    onPressed: () {
+                      var url = "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/terms_of_use.html";
+                      if (Platform.isAndroid || Platform.isIOS) {
+                        Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
+                      } else {
+                        launchUrlString(url, mode: LaunchMode.externalApplication);
+                      }
+                    },
+                  ),
+                  const Spacer(),
+                  bottomBtn,
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

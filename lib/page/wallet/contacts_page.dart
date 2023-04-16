@@ -8,6 +8,7 @@ import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/page/common/add_contacts_page.dart';
 import 'package:xdag/page/detail/send_page.dart';
 import 'package:xdag/widget/button.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/modal_frame.dart';
 
 class ContactsMainPage extends StatelessWidget {
@@ -39,7 +40,7 @@ class ContactsMainPage extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 )),
-                CupertinoButton(
+                MyCupertinoButton(
                   padding: const EdgeInsets.all(0),
                   child: Container(
                     width: 40,
@@ -73,7 +74,7 @@ class ContactsMainPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               itemBuilder: (BuildContext buildContext, int index) {
                 ContactsItem item = contacts.contactsList[index];
-                return CupertinoButton(
+                return MyCupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () async {
                     Helper.changeAndroidStatusBar(true);
@@ -95,7 +96,7 @@ class ContactsMainPage extends StatelessWidget {
                               actionsPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 20.0),
                               title: Row(
                                 children: <Widget>[
-                                  CupertinoButton(
+                                  MyCupertinoButton(
                                     padding: EdgeInsets.zero,
                                     child: Container(
                                       width: 40,
@@ -243,7 +244,7 @@ class ContactsDetail extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CupertinoButton(
+                  MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: Container(
                       width: 60,
@@ -263,7 +264,7 @@ class ContactsDetail extends StatelessWidget {
                       Navigator.of(context).pop("delete");
                     },
                   ),
-                  CupertinoButton(
+                  MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: Container(
                       width: 60,
@@ -283,7 +284,7 @@ class ContactsDetail extends StatelessWidget {
                       Navigator.of(context).pop("edit");
                     },
                   ),
-                  CupertinoButton(
+                  MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: Container(
                       width: 60,

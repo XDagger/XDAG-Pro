@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/widget/desktop.dart';
 
 // 圆形按钮
 class CircleButton extends StatelessWidget {
@@ -11,7 +12,7 @@ class CircleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
+    return MyCupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: onPressed,
       child: Container(

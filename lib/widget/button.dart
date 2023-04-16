@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class Button extends StatelessWidget {
   final double width;
@@ -28,7 +28,7 @@ class Button extends StatelessWidget {
     return SizedBox(
         // width: width,
         height: 50.0,
-        child: CupertinoButton(
+        child: MyCupertinoButton(
           padding: EdgeInsets.zero,
           color: bgColor,
           disabledColor: bgColor,

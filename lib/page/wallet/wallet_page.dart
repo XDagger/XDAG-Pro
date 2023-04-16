@@ -7,6 +7,7 @@ import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/home_transaction_item.dart';
 import 'package:xdag/widget/wallet_header.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -144,7 +145,7 @@ class _WalletPageState extends State<WalletPage> {
         color: DarkColors.bgColor,
         child: Column(
           children: [
-            SizedBox(height: ScreenHelper.topPadding),
+            SizedBox(height: Helper.isDesktop ? 10 : ScreenHelper.topPadding),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
               child: Row(
@@ -164,7 +165,7 @@ class _WalletPageState extends State<WalletPage> {
                   SizedBox(
                     width: 40,
                     height: 40,
-                    child: CupertinoButton(
+                    child: MyCupertinoButton(
                       padding: EdgeInsets.zero,
                       child: Image.asset("images/switch.png", width: 25, height: 25),
                       onPressed: () async {

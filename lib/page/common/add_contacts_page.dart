@@ -9,6 +9,7 @@ import 'package:xdag/common/transaction.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/nav_header.dart';
 import 'package:scan_qr/scan_qr.dart';
 
@@ -64,7 +65,7 @@ class _AddContactsPage extends State<AddContactsPage> {
                       SizedBox(
                         width: 40,
                         height: 40,
-                        child: CupertinoButton(
+                        child: MyCupertinoButton(
                           padding: EdgeInsets.zero,
                           color: DarkColors.mainColor,
                           borderRadius: BorderRadius.circular(20),

@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.8+9
+version: 1.0.9+10
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -38,6 +38,7 @@ dependencies:
   provider: ^6.0.5
   auto_size_text_field: ^2.2.1
   flutter_keyboard_visibility: ^5.4.0
+  window_manager: ^0.3.2
   scan_qr:
     git:
       url: https://github.com/amazingCoding/flutter-scan-qr.git
