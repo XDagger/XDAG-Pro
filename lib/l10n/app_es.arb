@@ -1,5 +1,5 @@
 {
-  "@@locale": "sp", 
+  "@@locale": "es", 
   "createWallet": "Crear cartera",
   "importWallet": "Importar Cartera",
   "welcomeTitle_1": "Privado y seguro",
@@ -78,7 +78,8 @@
   "review_Privacy_Policy":"Revise la Política de privacidad y los Términos de servicio de XDAG-Pro.",
   "accepted_Privacy_Policy":"He leído y acepto la Política de privacidad y los Términos de servicio.",
   "snapshot":"Instantánea",
-  "walletAddress":"Dirección de cartera",  "to":"To",
+  "walletAddress":"Dirección de cartera",
+  "to":"To",
   "amount": "Monto",
   "all": "Todo",
   "send_Success": "Enviado con éxito",
@@ -120,5 +121,6 @@
   "no_contacts": "Cualquier contacto",
   "tips": "Consejos",
   "wallet_tips": "Desliza el elemento hacia la derecha para eliminar la billetera.",
-  "hide_balance": "Ocultar saldo"
+  "hide_balance": "Ocultar saldo",
+  "contact_address_repeat": "La dirección del contacto ya existe"
 }

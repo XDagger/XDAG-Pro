@@ -21,6 +21,8 @@ class ConfigModal extends ChangeNotifier {
     LangItem('Français', const Locale('fr', 'FR')),
     LangItem('Русский', const Locale('ru', 'RU')),
     LangItem('Deutsch', const Locale('de', 'DE')),
+    LangItem('Spanish', const Locale('es', 'ES')),
+    LangItem('Italy', const Locale('it', 'IT')),
   ];
   static final List<String> netWorks = ["MainNet", "TestNet"];
 

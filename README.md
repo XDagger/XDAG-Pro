@@ -11,8 +11,9 @@
 ## Window Note
 * No support for ARM and x86 Windows devices, only for x64 devices.
 ## add language
-* app_[locale].arb
+* app_[locale].arb，example: app_zh.arb
 * flutter gen-l10n
 * change `lib/model/config_modal.dart` langs
+* [localization](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
 
 
