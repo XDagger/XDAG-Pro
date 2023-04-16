@@ -121,5 +121,6 @@
   "no_contacts":"連絡先がありません",
   "tips":"ヒント",
   "wallet_tips":"ウォレットを削除するには、アイテムを右にスワイプしてください。",
-  "hide_balance":"残高を非表示"
+  "hide_balance":"残高を非表示",
+  "contact_address_repeat": "連絡先がすでに存在しています"
 }

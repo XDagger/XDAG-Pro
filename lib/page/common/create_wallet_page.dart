@@ -1,6 +1,5 @@
 import 'dart:isolate';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +105,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
       args = ModalRoute.of(context)!.settings.arguments as CreateWalletPageRouteParams;
     }
     int selectIndex = isPrivateKey ? 1 : 0;
-    bool isButtonEnable = walletName.isNotEmpty && isAgree;
+    bool isButtonEnable = walletName.trim().isNotEmpty && isAgree;
     if (args.isImport) {
       if (isPrivateKey) {
         isButtonEnable = isButtonEnable && importContent.length == 64;

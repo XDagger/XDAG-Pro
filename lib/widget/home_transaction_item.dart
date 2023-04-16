@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
@@ -68,7 +67,7 @@ class WalletTransactionItem extends StatelessWidget {
                     children: [
                       Text(isSnapshot ? AppLocalizations.of(context).snapshot : (isSend ? AppLocalizations.of(context).send : AppLocalizations.of(context).receive), style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white)),
                       const SizedBox(height: 3),
-                      Text(Helper.formatTime(transaction.time), style: const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54)),
+                      Text('${Helper.formatTime(transaction.time)} UTC', style: const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54)),
                     ],
                   ),
                 ),

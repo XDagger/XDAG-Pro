@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:extended_text/extended_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/wallet_modal.dart';
+import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/modal_frame.dart';
 import 'package:xdag/common/global.dart';
@@ -25,6 +25,7 @@ class _TransactionPageState extends State<TransactionPage> {
   String otherAddress = "";
   String fee = "";
   String hash = "";
+  String transactionState = 'Pending';
   double height = 430;
 
   final dio = Dio();
@@ -49,7 +50,11 @@ class _TransactionPageState extends State<TransactionPage> {
       bool isSend = transaction.from == address;
       Response response = await dio.get("${Global.explorURL}/block/${widget.transaction.blockAddress}", cancelToken: cancelToken);
       String newFee = "";
+      String newTransactionState = "Pending";
       String newOtherAddress = "";
+      if (response.data['state'] != null) {
+        newTransactionState = response.data['state'];
+      }
       if (response.data['block_as_transaction'] != null) {
         for (var i = 0; i < response.data["block_as_transaction"].length; i++) {
           var item = response.data["block_as_transaction"][i];
@@ -73,7 +78,9 @@ class _TransactionPageState extends State<TransactionPage> {
         otherAddress = newOtherAddress;
         fee = Helper.removeTrailingZeros(newFee.toString());
         hash = response.data['hash'];
+        transactionState = newTransactionState;
       });
+      // ignore: empty_catches
     } catch (e) {}
   }
 
@@ -85,7 +92,15 @@ class _TransactionPageState extends State<TransactionPage> {
     return ModalFrame(
       height: height,
       title: isSend ? AppLocalizations.of(context).send : AppLocalizations.of(context).receive,
-      isHideLeftDownButton: true,
+      rightBtn: CircleButton(
+          icon: Icons.refresh,
+          onPressed: () {
+            if (isLoading) return;
+            setState(() {
+              isLoading = true;
+            });
+            fetchData();
+          }),
       isShowRightCloseButton: true,
       child: Column(
         children: [
@@ -93,8 +108,14 @@ class _TransactionPageState extends State<TransactionPage> {
           const SizedBox(height: 5),
           if (transaction.status == 'pending')
             Text(
-              "${AppLocalizations.of(context).state}: ${AppLocalizations.of(context).pending}",
-              style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: DarkColors.redColor),
+              "${AppLocalizations.of(context).state}: $transactionState",
+              style: TextStyle(
+                decoration: TextDecoration.none,
+                fontSize: 14,
+                fontFamily: 'RobotoMono',
+                fontWeight: FontWeight.w400,
+                color: transactionState == 'Accepted' ? DarkColors.greenColor : DarkColors.redColor,
+              ),
             )
           else
             const SizedBox(),
@@ -102,7 +123,7 @@ class _TransactionPageState extends State<TransactionPage> {
             const SizedBox()
           else
             Text(
-              "${isSend ? AppLocalizations.of(context).send_on : AppLocalizations.of(context).receive_on} ${Helper.formatFullTime(transaction.time)}",
+              "${isSend ? AppLocalizations.of(context).send_on : AppLocalizations.of(context).receive_on} ${Helper.formatFullTime(transaction.time)} UTC",
               style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54),
             ),
           const SizedBox(height: 25),
@@ -171,17 +192,96 @@ class _TransactionPageState extends State<TransactionPage> {
   }
 }
 
+class TransactionShowDetail extends StatelessWidget {
+  final Transaction transaction;
+  const TransactionShowDetail({super.key, required this.transaction});
+
+  @override
+  Widget build(BuildContext context) {
+    bool isSameAddress = transaction.from == transaction.to;
+    return ModalFrame(
+      height: 430,
+      title: '',
+      isHideLeftDownButton: true,
+      isShowRightCloseButton: true,
+      child: Column(
+        children: [
+          Expanded(
+              child: Column(
+            children: [
+              Text('${transaction.amount} XDAG', textAlign: TextAlign.center, style: const TextStyle(decoration: TextDecoration.none, fontSize: 22, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: DarkColors.greenColor)),
+              const SizedBox(height: 20),
+              TransactionButton(
+                showCopy: false,
+                readFont: isSameAddress,
+                borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                title: AppLocalizations.of(context).receiver,
+                value: transaction.to,
+              ),
+              const SizedBox(height: 1),
+              TransactionButton(
+                showCopy: false,
+                readFont: isSameAddress,
+                borderRadius: BorderRadius.zero,
+                title: AppLocalizations.of(context).sender,
+                value: transaction.from,
+              ),
+              const SizedBox(height: 1),
+              TransactionButton(
+                showCopy: false,
+                title: AppLocalizations.of(context).fee,
+                value: '0.00 XDAG',
+              ),
+              const SizedBox(height: 1),
+              TransactionButton(
+                showCopy: false,
+                title: AppLocalizations.of(context).remark,
+                value: transaction.remark,
+                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+              ),
+            ],
+          )),
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Button(
+                  text: AppLocalizations.of(context).send,
+                  width: ScreenHelper.screenWidth - 30,
+                  bgColor: DarkColors.mainColor,
+                  textColor: Colors.white,
+                  onPressed: () async {
+                    Navigator.of(context).pop(true);
+                  },
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class TransactionButton extends StatelessWidget {
   final String title;
   final String value;
   final BorderRadiusGeometry borderRadius;
   final bool showCopy;
-  const TransactionButton({super.key, required this.title, required this.value, required this.showCopy, this.borderRadius = const BorderRadius.all(Radius.circular(0))});
+  final bool readFont;
+  const TransactionButton({super.key, required this.title, required this.value, required this.showCopy, this.readFont = false, this.borderRadius = const BorderRadius.all(Radius.circular(0))});
 
   @override
   Widget build(BuildContext context) {
     TextStyle titleStyle = const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54);
-    TextStyle valueStyle = const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: Colors.white);
+    TextStyle valueStyle = TextStyle(
+      decoration: TextDecoration.none,
+      fontSize: 12,
+      fontFamily: 'RobotoMono',
+      fontWeight: FontWeight.w700,
+      color: readFont ? DarkColors.redColor : Colors.white,
+    );
     Widget icon = showCopy == true
         ? Container(
             margin: const EdgeInsets.only(left: 5),

@@ -113,6 +113,7 @@ class TransactionHelper {
 
   static bool checkAddress(String address) {
     try {
+      if (address.isEmpty) return false;
       var addrBytes = Helper.base58Decode(address).reversed.toList();
       Helper.base58Decode('4AzP6NX68y854ztnSMuBYLj8KHHAtX5HK').reversed.toList();
       if (addrBytes.length != 24) {

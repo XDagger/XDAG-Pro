@@ -121,5 +121,6 @@
   "no_contacts":"Any contact",
   "tips":"Tips",
   "wallet_tips":"Swipe the item to the right to delete the wallet.",
-  "hide_balance":"Hide Balance"
+  "hide_balance":"Hide Balance",
+  "contact_address_repeat":"Contact address already exists"
 }

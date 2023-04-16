@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"  android:maxSdkVersion="32" />
    <application
+        android:enableOnBackInvokedCallback="true"
         android:label="XDAG-Pro"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

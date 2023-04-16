@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
@@ -23,7 +22,7 @@ class ContactsPage extends StatefulWidget {
 
 class ContactsStatePage extends State<ContactsPage> {
   late TextEditingController controller;
-  String walletAddress = "";
+  bool isButtonEnable = false;
   String error = "";
   @override
   void initState() {
@@ -33,7 +32,7 @@ class ContactsStatePage extends State<ContactsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isButtonEnable = walletAddress.isNotEmpty;
+    // bool isButtonEnable = controller.text.isNotEmpty;
     ContactsModal contacts = Provider.of<ContactsModal>(context);
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
@@ -75,7 +74,8 @@ class ContactsStatePage extends State<ContactsPage> {
                                 bool flag = TransactionHelper.checkAddress(res);
                                 if (flag) {
                                   setState(() {
-                                    walletAddress = res;
+                                    // walletAddress = res;
+                                    isButtonEnable = true;
                                     error = "";
                                   });
                                   controller.text = res;
@@ -84,7 +84,8 @@ class ContactsStatePage extends State<ContactsPage> {
                                   controller.clear();
                                   controller.selection = TextSelection.fromPosition(const TextPosition(offset: 0));
                                   setState(() {
-                                    walletAddress = "";
+                                    // walletAddress = "";
+                                    isButtonEnable = false;
                                     error = AppLocalizations.of(context).walletAddressError;
                                   });
                                 }
@@ -92,10 +93,12 @@ class ContactsStatePage extends State<ContactsPage> {
                                 controller.clear();
                                 controller.selection = TextSelection.fromPosition(const TextPosition(offset: 0));
                                 setState(() {
-                                  walletAddress = "";
+                                  // walletAddress = "";
+                                  isButtonEnable = false;
                                   error = AppLocalizations.of(context).walletAddressError;
                                 });
                               }
+                              // ignore: empty_catches
                             } catch (e) {}
                           },
                           child: Row(
@@ -118,7 +121,7 @@ class ContactsStatePage extends State<ContactsPage> {
                     controller: controller,
                     onChanged: (value) {
                       setState(() {
-                        walletAddress = value;
+                        isButtonEnable = value.isNotEmpty;
                         error = "";
                       });
                     },
@@ -209,13 +212,19 @@ class ContactsStatePage extends State<ContactsPage> {
                     return MyCupertinoButton(
                       padding: EdgeInsets.zero,
                       onPressed: () async {
-                        controller.text = item.address;
-                        controller.selection = TextSelection.fromPosition(TextPosition(offset: item.address.length));
-                        Navigator.pushNamed(
-                          context,
-                          '/send',
-                          arguments: SendPageRouteParams(address: item.address),
-                        );
+                        // controller.text = item.address;
+                        // controller.selection = TextSelection.fromPosition(TextPosition(offset: item.address.length));
+                        // setState(() {
+                        //   isButtonEnable = true;
+                        //   error = "";
+                        // });
+                        if (mounted) {
+                          Navigator.pushNamed(
+                            context,
+                            '/send',
+                            arguments: SendPageRouteParams(address: item.address, name: item.name),
+                          );
+                        }
                       },
                       child: Container(
                         decoration: BoxDecoration(
@@ -265,12 +274,12 @@ class ContactsStatePage extends State<ContactsPage> {
                     disable: !isButtonEnable,
                     onPressed: () async {
                       // to send
-                      bool flag = TransactionHelper.checkAddress(walletAddress);
+                      bool flag = TransactionHelper.checkAddress(controller.text);
                       if (flag) {
                         Navigator.pushNamed(
                           context,
                           '/send',
-                          arguments: SendPageRouteParams(address: walletAddress),
+                          arguments: SendPageRouteParams(address: controller.text),
                         );
                       } else {
                         setState(() {

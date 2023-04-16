@@ -154,9 +154,8 @@ class Global {
             ),
           ],
           options: const AuthenticationOptions(biometricOnly: true, sensitiveTransaction: false));
-    } on PlatformException catch (e) {
-      // print(e);
-    }
+      // ignore: empty_catches
+    } on PlatformException {}
     return authenticated;
   }
 
