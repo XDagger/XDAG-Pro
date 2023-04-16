@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
@@ -31,7 +30,8 @@ class ModalFrame extends StatelessWidget {
   final double? height;
   final bool? isHideLeftDownButton;
   final bool? isShowRightCloseButton;
-  const ModalFrame({super.key, required this.child, required this.title, this.height, this.isHideLeftDownButton, this.isShowRightCloseButton});
+  final Widget? rightBtn;
+  const ModalFrame({super.key, required this.child, required this.title, this.height, this.isHideLeftDownButton, this.isShowRightCloseButton, this.rightBtn});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class ModalFrame extends StatelessWidget {
     double screenHeight = ScreenHelper.screenHeight;
     double topPadding = ScreenHelper.topPadding;
     Widget leftButton = isHideLeftDownButton != null && isHideLeftDownButton == true ? const SizedBox(width: 40) : CircleButton(icon: Icons.expand_more, onPressed: () => Navigator.pop(context));
-    Widget rightButton = isShowRightCloseButton != null && isShowRightCloseButton == true ? CircleButton(icon: Icons.close_rounded, onPressed: () => Navigator.pop(context)) : const SizedBox(width: 40);
+    Widget rightButton = rightBtn ?? (isShowRightCloseButton != null && isShowRightCloseButton == true ? CircleButton(icon: Icons.close_rounded, onPressed: () => Navigator.pop(context)) : const SizedBox(width: 40));
     return Container(
       decoration: const BoxDecoration(
         color: DarkColors.bgColor,

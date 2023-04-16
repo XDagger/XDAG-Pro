@@ -2,7 +2,6 @@ import 'dart:isolate';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_text/extended_text.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +21,8 @@ import 'package:bip32/bip32.dart' as bip32;
 
 class SendPageRouteParams {
   final String address;
-  SendPageRouteParams({required this.address});
+  final String name;
+  SendPageRouteParams({required this.address, this.name = ''});
 }
 
 class SendPage extends StatefulWidget {
@@ -59,7 +59,6 @@ class _SendPageState extends State<SendPage> {
   }
 
   static void isolateFunction(SendPort sendPort) async {
-    //这里是新的线程，不要用外部的变量
     final receivePort = ReceivePort();
     sendPort.send(receivePort.sendPort);
 
@@ -69,7 +68,6 @@ class _SendPageState extends State<SendPage> {
       String amount = data[2] as String;
       String fromAddress = data[3] as String;
       String remark = data[4] as String;
-      // 判断 isPrivate 是否有空格
       bool isPrivateKey = res.trim().split(' ').length == 1;
       bip32.BIP32 wallet = Helper.createWallet(isPrivate: isPrivateKey, content: res);
       String result = TransactionHelper.getTransaction(fromAddress, toAddress, remark, double.parse(amount), wallet);
@@ -90,11 +88,6 @@ class _SendPageState extends State<SendPage> {
         var subSendPort = data;
         subSendPort.send([res, toAddress, amount, fromAddress, remark]);
       } else if (data is List<String>) {
-        setState(() {
-          isLoad = false;
-          amount = '';
-          remark = '';
-        });
         String result = data[1];
         Response response = await dio.post(
           Global.rpcURL,
@@ -111,9 +104,16 @@ class _SendPageState extends State<SendPage> {
           // print(res);
           if (res.length == 32 && res.trim().split(' ').length == 1) {
             var transactionItem = Transaction(time: '', amount: Helper.removeTrailingZeros(sendAmount.toString()), address: fromAddress, status: 'pending', from: fromAddress, to: toAddress, type: 0, hash: '', fee: 0, blockAddress: res, remark: sendRemark);
-            Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
             controller.clear();
             controller2.clear();
+            setState(() {
+              isLoad = false;
+              amount = '';
+              remark = '';
+            });
+            Helper.changeAndroidStatusBar(true);
+            await Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
+            Helper.changeAndroidStatusBar(false);
           } else {
             // snackbar
             setState(() {
@@ -181,7 +181,7 @@ class _SendPageState extends State<SendPage> {
                               const SizedBox(width: 15),
                               Expanded(
                                 child: ExtendedText(
-                                  args.address,
+                                  args.name.isEmpty ? args.address : args.name,
                                   textAlign: TextAlign.center,
                                   maxLines: 1,
                                   style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500),
@@ -344,20 +344,31 @@ class _SendPageState extends State<SendPage> {
                         FocusScope.of(context).unfocus();
                         await Future.delayed(const Duration(milliseconds: 200));
                       }
+                      // 展示当前 from to amount
+
                       if (context.mounted) {
-                        await showModalBottomSheet(
-                          backgroundColor: DarkColors.bgColor,
-                          context: context,
-                          isScrollControlled: true,
-                          builder: (BuildContext buildContext) => CheckPage(checkCallback: (bool isCheck) async {
-                            if (isCheck) {
-                              String? data = await Global.getWalletDataByAddress(wallet.address);
-                              if (data != null && context.mounted) {
-                                send(data, args.address, wallet.address);
-                              }
-                            }
-                          }),
+                        Helper.changeAndroidStatusBar(true);
+                        var transactionItem = Transaction(time: '', amount: Helper.removeTrailingZeros(amount.toString()), address: wallet.address, status: 'pending', from: wallet.address, to: args.address, type: 0, hash: '', fee: 0, blockAddress: "", remark: remark);
+                        bool? flag = await Helper.showBottomSheet(
+                          context,
+                          TransactionShowDetail(transaction: transactionItem),
                         );
+                        Helper.changeAndroidStatusBar(false);
+                        if (context.mounted && flag == true) {
+                          await showModalBottomSheet(
+                            backgroundColor: DarkColors.bgColor,
+                            context: context,
+                            isScrollControlled: true,
+                            builder: (BuildContext buildContext) => CheckPage(checkCallback: (bool isCheck) async {
+                              if (isCheck) {
+                                String? data = await Global.getWalletDataByAddress(wallet.address);
+                                if (data != null && context.mounted) {
+                                  send(data, args.address, wallet.address);
+                                }
+                              }
+                            }),
+                          );
+                        }
                       }
                     },
                   ),

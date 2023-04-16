@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
@@ -53,8 +51,6 @@ class _CheckPageState extends State<CheckPage> {
       tipsText = AppLocalizations.of(context).use_biometrics_tips_3;
     }
     var padding = Helper.isDesktop ? 10.0 : ScreenHelper.topPadding;
-
-    // print(Global.devBiometricsType != -1 && !widget.onlyPassword);
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
       body: WillPopScope(

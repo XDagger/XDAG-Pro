@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
@@ -41,9 +40,9 @@ class _AddContactsPage extends State<AddContactsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isButtonEnable = controller.text.isNotEmpty && controller2.text.isNotEmpty;
+    bool isButtonEnable = controller.text.trim().isNotEmpty && controller2.text.isNotEmpty;
     if (widget.isEdit) {
-      isButtonEnable = controller.text.isNotEmpty && controller2.text.isNotEmpty && (controller.text != widget.item!.address || controller2.text != widget.item!.name);
+      isButtonEnable = controller.text.trim().isNotEmpty && controller2.text.isNotEmpty && (controller.text != widget.item!.address || controller2.text != widget.item!.name);
     }
     ContactsModal contacts = Provider.of<ContactsModal>(context);
     return Scaffold(
@@ -104,6 +103,7 @@ class _AddContactsPage extends State<AddContactsPage> {
                                   error = AppLocalizations.of(context).walletAddressError;
                                 });
                               }
+                              // ignore: empty_catches
                             } catch (e) {}
                           },
                           child: Row(
@@ -259,6 +259,20 @@ class _AddContactsPage extends State<AddContactsPage> {
                         if (widget.isEdit) {
                           await contacts.changeContacts(index: widget.index, name: controller2.text, address: controller.text);
                         } else {
+                          // 检查有没有重复地址
+                          bool hasRepeat = false;
+                          for (var i = 0; i < contacts.contactsList.length; i++) {
+                            if (contacts.contactsList[i].address == controller.text) {
+                              hasRepeat = true;
+                              break;
+                            }
+                          }
+                          if (hasRepeat) {
+                            setState(() {
+                              error = AppLocalizations.of(context).contact_address_repeat;
+                            });
+                            return;
+                          }
                           await contacts.addContacts(name: controller2.text, address: controller.text);
                         }
                         if (mounted) Navigator.pop(context);

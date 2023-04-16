@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:xdag/common/color.dart';
@@ -109,7 +108,6 @@ class MyWidget extends StatelessWidget {
               "/create": (context) => const CreateWalletPage(),
               "/faceid": (context) => const FaceIDPage(),
               "/select": (context) => const WalletListPage(),
-              // "/security_wallet": (context) => const SecureWalletPage(),
               "/wallet": (context) => const WalletHomePage(),
               "/security": (context) => const SecurityPage(),
               "/legal": (context) => const LegalPage(),

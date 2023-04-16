@@ -61,8 +61,6 @@ class ContactsMainPage extends StatelessWidget {
                       isScrollControlled: true,
                       builder: (BuildContext buildContext) => const AddContactsPage(),
                     );
-                    // ContactsItem? item = contacts.contactsList.get(0);
-                    // contacts.changeContacts(item: item!, name: '123', address: '123');
                   },
                 ),
               ],
@@ -172,7 +170,7 @@ class ContactsMainPage extends StatelessWidget {
                         Navigator.pushNamed(
                           context,
                           '/send',
-                          arguments: SendPageRouteParams(address: item.address),
+                          arguments: SendPageRouteParams(address: item.address, name: item.name),
                         );
                       }
                     }

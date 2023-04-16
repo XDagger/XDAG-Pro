@@ -121,5 +121,6 @@
   "no_contacts":"没有联系人",
   "tips":"提示",
   "wallet_tips":"向右滑动该项以删除钱包。",
-  "hide_balance":"隐藏余额"
+  "hide_balance":"隐藏余额",
+  "contact_address_repeat": "联系地址已存在"
 }
