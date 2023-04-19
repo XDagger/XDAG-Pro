@@ -22,4 +22,6 @@ Before running the project, please run `flutter pub get` to get the dependencies
 * change `lib/model/config_modal.dart` langs
 * [localization](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
 
-
+## End
+If you would like to make a donation to support this project, below is the donation address:  
+**4AzP6NX68y854ztnSMuBYLj8KHHAtX5HK**
