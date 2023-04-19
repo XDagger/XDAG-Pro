@@ -39,7 +39,7 @@ class WalletDetailPage extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       child: Row(
                         children: [
-                          Text(wallet.address, style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white)),
+                          Text(wallet.address, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
                           const SizedBox(width: 5),
                           const Icon(Icons.copy_rounded, size: 12, color: Colors.white),
                         ],
@@ -64,7 +64,7 @@ class WalletDetailPage extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Text(wallet.name, style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white54)),
+                    Text(wallet.name, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white54)),
                     const SizedBox(width: 5),
                     const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
                   ],

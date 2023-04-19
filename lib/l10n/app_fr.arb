@@ -122,5 +122,6 @@
   "tips":"Conseils",
   "wallet_tips":"Balayez l'élément vers la droite pour supprimer le portefeuille.",
   "hide_balance":"Masquer le solde",
-  "contact_address_repeat": "L'adresse de contact existe déjà"
+  "contact_address_repeat": "L'adresse de contact existe déjà",
+  "no_wallets": "Aucun portefeuille"
 }

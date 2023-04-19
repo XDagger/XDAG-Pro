@@ -79,7 +79,7 @@ class _PasswordPageState extends State<PasswordPage> {
                                       behavior: SnackBarBehavior.fixed,
                                       content: Text(
                                         AppLocalizations.of(context).change_password_success,
-                                        style: const TextStyle(fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white),
+                                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
                                       ),
                                     ));
                                     // Helper.showSnackBar(AppLocalizations.of(context).change_password_success);

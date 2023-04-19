@@ -219,7 +219,11 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                               );
                             },
                             textInputAction: TextInputAction.next,
-                            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: 'RobotoMono'),
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
                             decoration: InputDecoration(
                               filled: true,
                               contentPadding: const EdgeInsets.all(15),
@@ -229,7 +233,6 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                 decoration: TextDecoration.none,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w500,
-                                fontFamily: 'RobotoMono',
                                 color: Colors.white54,
                               ),
                               enabledBorder: const OutlineInputBorder(
@@ -381,7 +384,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                     behavior: SnackBarBehavior.fixed,
                                     content: Text(
                                       e.toString(),
-                                      style: const TextStyle(fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white),
+                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
                                     ),
                                   ));
                                 }

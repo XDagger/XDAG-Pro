@@ -213,7 +213,11 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                         );
                       },
                       textInputAction: TextInputAction.done,
-                      style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: 'RobotoMono'),
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
                       decoration: InputDecoration(
                         filled: true,
                         contentPadding: const EdgeInsets.all(15),
@@ -223,7 +227,6 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                           decoration: TextDecoration.none,
                           fontSize: 16,
                           fontWeight: FontWeight.w500,
-                          fontFamily: 'RobotoMono',
                           color: Colors.white54,
                         ),
                         enabledBorder: const OutlineInputBorder(
@@ -331,17 +334,17 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                                           const SizedBox(height: 20),
                                           Text(
                                             AppLocalizations.of(context).successful,
-                                            style: const TextStyle(color: DarkColors.mainColor, fontFamily: 'RobotoMono', fontSize: 24.0, fontWeight: FontWeight.w700),
+                                            style: const TextStyle(color: DarkColors.mainColor, fontSize: 24.0, fontWeight: FontWeight.w700),
                                           ),
                                           const SizedBox(height: 20),
                                           Text(
                                             AppLocalizations.of(context).backup_test_tips_4,
-                                            style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 14.0, fontWeight: FontWeight.w500),
+                                            style: const TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500),
                                           ),
                                           const SizedBox(height: 10),
                                           Text(
                                             AppLocalizations.of(context).backup_test_tips_5,
-                                            style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 14.0, fontWeight: FontWeight.w500),
+                                            style: const TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500),
                                           )
                                         ],
                                       ),

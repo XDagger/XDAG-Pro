@@ -35,12 +35,7 @@ class LabelButton extends StatelessWidget {
       borderRadius = const BorderRadius.all(Radius.circular(8));
     }
 
-    var labelStyle = TextStyle(
-      color: textClolor,
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      fontFamily: "RobotoMono",
-    );
+    var labelStyle = TextStyle(color: textClolor, fontSize: 16, fontWeight: FontWeight.w500);
     Widget? item = child ?? const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16);
     return SizedBox(
         // height: 55,

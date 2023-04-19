@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/detail/contacts_page.dart';
@@ -17,6 +18,7 @@ class WalletHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ConfigModal config = Provider.of<ConfigModal>(context);
     WalletModal walletModal = Provider.of<WalletModal>(context);
     Wallet wallet = walletModal.getWallet();
     return Padding(
@@ -41,7 +43,7 @@ class WalletHeader extends StatelessWidget {
                       Expanded(
                         child: Text(
                           AppLocalizations.of(context).backup_your_wallet,
-                          style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white),
+                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white),
                         ),
                       ),
                       const SizedBox(width: 5),
@@ -69,28 +71,33 @@ class WalletHeader extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                            decoration: BoxDecoration(
-                              color: DarkColors.redColorMask,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: const Text(
-                              "TEST",
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontFamily: 'RobotoMono',
-                                fontWeight: FontWeight.w400,
-                                color: Colors.white70,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 8),
+                          if (config.walletConfig.network == 1)
+                            Column(
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                  decoration: BoxDecoration(
+                                    color: DarkColors.redColorMask,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: const Text(
+                                    "TEST",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.w400,
+                                      color: Colors.white70,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                              ],
+                            )
+                          else
+                            const SizedBox(),
                           Text(
                             wallet.hideBalance == true ? "****" : "${wallet.amount} XDAG",
                             style: const TextStyle(
                               fontSize: 16,
-                              fontFamily: 'RobotoMono',
                               fontWeight: FontWeight.w500,
                               color: Colors.white,
                             ),
@@ -115,7 +122,7 @@ class WalletHeader extends StatelessWidget {
                           child: Text(
                             wallet.address,
                             textAlign: TextAlign.right,
-                            style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54),
+                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54),
                           ),
                         ),
                         const SizedBox(width: 8),

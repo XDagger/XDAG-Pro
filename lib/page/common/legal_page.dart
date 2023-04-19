@@ -34,7 +34,6 @@ class LegalPage extends StatelessWidget {
     const descStyle = TextStyle(
       decoration: TextDecoration.none,
       fontSize: 14,
-      fontFamily: 'RobotoMono',
       fontWeight: FontWeight.w500,
       color: Colors.white,
     );

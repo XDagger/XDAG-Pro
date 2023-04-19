@@ -23,7 +23,6 @@ class SecurityPage extends StatelessWidget {
     }
     const descStyle = TextStyle(
       fontSize: 16,
-      fontFamily: 'RobotoMono',
       fontWeight: FontWeight.w500,
       color: Colors.white,
     );

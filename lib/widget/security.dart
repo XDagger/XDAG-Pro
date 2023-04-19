@@ -218,7 +218,7 @@ class _InputPassCodeState extends State<InputPassCode> {
         const Spacer(),
         Text(
           title,
-          style: const TextStyle(fontSize: 22, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: Colors.white),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white),
         ),
         const SizedBox(height: 10),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: renderDot(context)),
@@ -237,7 +237,6 @@ class NumberButton extends StatelessWidget {
   static const numberTextStyle = TextStyle(
     fontSize: 25,
     color: Colors.white,
-    fontFamily: 'RobotoMono',
     fontWeight: FontWeight.w500,
   );
   static double size = ScreenHelper.screenWidth < 400 || Helper.isDesktop ? 64 : 80;

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/widget/desktop.dart';
@@ -21,6 +22,7 @@ class WalletPage extends StatefulWidget {
 class _WalletPageState extends State<WalletPage> {
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String _crurrentAddress = "";
+  int _network = 0;
   // String lastTime = "";
   List<Transaction> list = [];
   final dio = Dio();
@@ -33,10 +35,21 @@ class _WalletPageState extends State<WalletPage> {
   void initState() {
     super.initState();
     _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
+    _network = Provider.of<ConfigModal>(context, listen: false).walletConfig.network;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       _refreshIndicatorKey.currentState?.show();
     });
     _scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    WalletModal walletModal = Provider.of<WalletModal>(context);
+    ConfigModal configModal = Provider.of<ConfigModal>(context);
+    walletModal.addListener(_onWalletModalChange);
+    configModal.addListener(_onConfigModalChange);
   }
 
   @override
@@ -45,7 +58,33 @@ class _WalletPageState extends State<WalletPage> {
     _scrollController.dispose();
     cancelToken.cancel();
     dio.close();
+    WalletModal walletModal = Provider.of<WalletModal>(context);
+    ConfigModal configModal = Provider.of<ConfigModal>(context);
+    walletModal.removeListener(_onWalletModalChange);
+    configModal.removeListener(_onConfigModalChange);
     super.dispose();
+  }
+
+  _onWalletModalChange() {
+    if (_crurrentAddress != Provider.of<WalletModal>(context, listen: false).getWallet().address) {
+      _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
+      setState(() {
+        list = [];
+      });
+      _refreshIndicatorKey.currentState?.show();
+    }
+  }
+
+  _onConfigModalChange() {
+    WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
+    if (_network != Provider.of<ConfigModal>(context, listen: false).walletConfig.network) {
+      _network = Provider.of<ConfigModal>(context, listen: false).walletConfig.network;
+      setState(() {
+        list = [];
+      });
+      walletModal.setBlance("0.00");
+      _refreshIndicatorKey.currentState?.show();
+    }
   }
 
   void _scrollListener() {
@@ -61,10 +100,14 @@ class _WalletPageState extends State<WalletPage> {
       loading = true;
     });
     WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
+    ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
     Wallet wallet = walletModal.getWallet();
     try {
       // DateTime startTime = DateTime.now();
-      Response responseBalance = await dio.post(Global.rpcURL, cancelToken: cancelToken, data: {
+      String rpcURL = config.getCurrentRpc();
+      String explorURL = config.getCurrentExplorer();
+
+      Response responseBalance = await dio.post(rpcURL, cancelToken: cancelToken, data: {
         "jsonrpc": "2.0",
         "method": "xdag_getBalance",
         "params": [wallet.address],
@@ -72,11 +115,9 @@ class _WalletPageState extends State<WalletPage> {
       });
       walletModal.setBlance(responseBalance.data['result']);
       Response response = await dio.get(
-        "${Global.explorURL}/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=200",
+        "$explorURL/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=200",
         cancelToken: cancelToken,
       );
-      // DateTime endTime = DateTime.now();
-      // print("request Time：${endTime.difference(startTime).inMilliseconds}ms");
       if (response.data["addresses_pagination"] != null) {
         totalPage = response.data["addresses_pagination"]["last_page"];
       }
@@ -135,116 +176,103 @@ class _WalletPageState extends State<WalletPage> {
     const titleStyle = TextStyle(
       decoration: TextDecoration.none,
       fontSize: 22,
-      fontFamily: 'RobotoMono',
       fontWeight: FontWeight.w700,
       color: Colors.white,
     );
-    return Consumer<WalletModal>(builder: (context, walletModal, child) {
-      Wallet wallet = walletModal.getWallet();
-      return Container(
-        color: DarkColors.bgColor,
-        child: Column(
-          children: [
-            SizedBox(height: Helper.isDesktop ? 10 : ScreenHelper.topPadding),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-              child: Row(
-                children: [
-                  SizedBox(
-                    height: 40,
-                    child: Center(
-                      child: Text(
-                        wallet.name,
-                        style: titleStyle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+    WalletModal walletModal = Provider.of<WalletModal>(context);
+    Wallet wallet = walletModal.getWallet();
+    return Container(
+      color: DarkColors.bgColor,
+      child: Column(
+        children: [
+          SizedBox(height: Helper.isDesktop ? 10 : ScreenHelper.topPadding),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+            child: Row(
+              children: [
+                SizedBox(
+                  height: 40,
+                  child: Center(
+                    child: Text(
+                      wallet.name,
+                      style: titleStyle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  const Spacer(),
-                  SizedBox(
-                    width: 40,
-                    height: 40,
-                    child: MyCupertinoButton(
-                      padding: EdgeInsets.zero,
-                      child: Image.asset("images/switch.png", width: 25, height: 25),
-                      onPressed: () async {
-                        await Navigator.pushNamed(context, "/select");
-                        if (mounted) {
-                          if (_crurrentAddress != Provider.of<WalletModal>(context, listen: false).getWallet().address) {
-                            _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
-                            setState(() {
-                              list = [];
-                            });
-                            _refreshIndicatorKey.currentState?.show();
-                          }
-                        }
-                      },
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: RefreshIndicator(
-                key: _refreshIndicatorKey,
-                color: DarkColors.mainColor,
-                semanticsLabel: "1123",
-                onRefresh: () async {
-                  cancelToken.cancel();
-                  cancelToken = CancelToken();
-                  loading = false;
-                  currentPage = 1;
-                  await fetchPage();
-                },
-                child: ListView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: EdgeInsets.zero,
-                  itemCount: list.length + 2,
-                  controller: _scrollController,
-                  itemBuilder: (BuildContext buildContext, int index) {
-                    if (index == 0) return const WalletHeader();
-                    if (index == list.length + 1) {
-                      if (list.isEmpty) {
-                        return Column(children: [
-                          const SizedBox(height: 50),
-                          const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                          Text(AppLocalizations.of(context).no_transactions, style: const TextStyle(color: Colors.white, fontSize: 16)),
-                          const SizedBox(height: 50),
-                        ]);
-                      }
-                      if (loading) {
-                        return Column(
-                          children: const [
-                            SizedBox(height: 20),
-                            Center(
-                              child: SizedBox(
-                                width: 30,
-                                height: 30,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(DarkColors.mainColor),
-                                ),
-                              ),
-                            )
-                          ],
-                        );
-                      }
-                      return const SizedBox(height: 20);
-                    }
-                    int pos = index - 1;
-                    Transaction transaction = list[pos];
-                    if (transaction.type == 2) {
-                      return WalletTransactionDateHeader(time: transaction.time);
-                    }
-                    return WalletTransactionItem(transaction: transaction, address: wallet.address);
-                  },
                 ),
+                const Spacer(),
+                SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: MyCupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: Image.asset("images/switch.png", width: 25, height: 25),
+                    onPressed: () => Navigator.pushNamed(context, "/select"),
+                  ),
+                )
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: RefreshIndicator(
+              key: _refreshIndicatorKey,
+              color: DarkColors.mainColor,
+              semanticsLabel: "1123",
+              onRefresh: () async {
+                cancelToken.cancel();
+                cancelToken = CancelToken();
+                loading = false;
+                currentPage = 1;
+                await fetchPage();
+              },
+              child: ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(),
+                padding: EdgeInsets.zero,
+                itemCount: list.length + 2,
+                controller: _scrollController,
+                itemBuilder: (BuildContext buildContext, int index) {
+                  if (index == 0) return const WalletHeader();
+                  if (index == list.length + 1) {
+                    if (list.isEmpty) {
+                      return Column(children: [
+                        const SizedBox(height: 50),
+                        const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
+                        Text(AppLocalizations.of(context).no_transactions, style: const TextStyle(color: Colors.white, fontSize: 16)),
+                        const SizedBox(height: 50),
+                      ]);
+                    }
+                    if (loading) {
+                      return Column(
+                        children: const [
+                          SizedBox(height: 20),
+                          Center(
+                            child: SizedBox(
+                              width: 30,
+                              height: 30,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(DarkColors.mainColor),
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    }
+                    return const SizedBox(height: 20);
+                  }
+                  int pos = index - 1;
+                  Transaction transaction = list[pos];
+                  if (transaction.type == 2) {
+                    return WalletTransactionDateHeader(time: transaction.time);
+                  }
+                  return WalletTransactionItem(transaction: transaction, address: wallet.address);
+                },
               ),
             ),
-          ],
-        ),
-      );
-    });
+          ),
+        ],
+      ),
+    );
   }
 }

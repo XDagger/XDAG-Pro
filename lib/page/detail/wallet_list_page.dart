@@ -125,7 +125,7 @@ class _WalletListPageState extends State<WalletListPage> {
                                     child: Center(
                                       child: Text(
                                         AppLocalizations.of(context).tips,
-                                        style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 20.0, fontWeight: FontWeight.w700),
+                                        style: const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
                                       ),
                                     )),
                                 const SizedBox(width: 40)
@@ -133,7 +133,7 @@ class _WalletListPageState extends State<WalletListPage> {
                             ),
                             content: Text(
                               AppLocalizations.of(context).wallet_tips,
-                              style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
+                              style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
                             ),
                             actions: <Widget>[
                               Column(
@@ -256,7 +256,7 @@ class Item extends StatelessWidget {
                           child: Center(
                             child: Text(
                               AppLocalizations.of(context).attention,
-                              style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 20.0, fontWeight: FontWeight.w700),
+                              style: const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
                             ),
                           )),
                       const SizedBox(width: 40)
@@ -264,7 +264,7 @@ class Item extends StatelessWidget {
                   ),
                   content: Text(
                     AppLocalizations.of(context).delete_tip,
-                    style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
+                    style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
                   ),
                   actions: <Widget>[
                     Column(

@@ -19,7 +19,6 @@ class ContactsMainPage extends StatelessWidget {
     const titleStyle = TextStyle(
       decoration: TextDecoration.none,
       fontSize: 32,
-      fontFamily: 'RobotoMono',
       fontWeight: FontWeight.w700,
       color: Colors.white,
     );
@@ -68,15 +67,30 @@ class ContactsMainPage extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: contacts.contactsList.length,
+              itemCount: contacts.contactsList.isNotEmpty ? contacts.contactsList.length : 1,
               padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               itemBuilder: (BuildContext buildContext, int index) {
+                if (contacts.contactsList.isEmpty) {
+                  return Column(children: [
+                    const SizedBox(height: 50),
+                    const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
+                    Text(AppLocalizations.of(context).no_transactions, style: const TextStyle(color: Colors.white, fontSize: 16)),
+                    const SizedBox(height: 50),
+                  ]);
+                }
+                // var pos = index - 1;
                 ContactsItem item = contacts.contactsList[index];
                 return MyCupertinoButton(
                   padding: EdgeInsets.zero,
                   onPressed: () async {
                     Helper.changeAndroidStatusBar(true);
-                    String? reslut = (await Helper.showBottomSheet(context, ContactsDetail(item: item))) as String?;
+                    String? reslut = (await Helper.showBottomSheet(
+                      context,
+                      ContactsDetail(
+                        item: item,
+                        canEdit: index != 0,
+                      ),
+                    )) as String?;
                     Helper.changeAndroidStatusBar(false);
                     if (reslut == 'delete') {
                       if (context.mounted) {
@@ -112,7 +126,7 @@ class ContactsMainPage extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           AppLocalizations.of(context).attention,
-                                          style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 20.0, fontWeight: FontWeight.w700),
+                                          style: const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
                                         ),
                                       )),
                                   const SizedBox(width: 40)
@@ -120,7 +134,7 @@ class ContactsMainPage extends StatelessWidget {
                               ),
                               content: Text(
                                 AppLocalizations.of(context).delete_contact,
-                                style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
+                                style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
                               ),
                               actions: <Widget>[
                                 Column(
@@ -187,11 +201,11 @@ class ContactsMainPage extends StatelessWidget {
                         Expanded(
                           child: Text(
                             item.name,
-                            style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
+                            style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
                           ),
                         ),
                         const SizedBox(width: 5),
-                        const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
+                        if (index == 0) const Icon(Icons.star, color: DarkColors.yellowColor, size: 16) else const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
                       ],
                     ),
                   ),
@@ -207,7 +221,8 @@ class ContactsMainPage extends StatelessWidget {
 
 class ContactsDetail extends StatelessWidget {
   final ContactsItem item;
-  const ContactsDetail({Key? key, required this.item}) : super(key: key);
+  final bool canEdit;
+  const ContactsDetail({Key? key, required this.item, this.canEdit = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -222,7 +237,7 @@ class ContactsDetail extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Text(item.name, style: const TextStyle(color: Colors.white, fontSize: 16, fontFamily: "RobotoMono", fontWeight: FontWeight.w400)),
+                  Text(item.name, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400)),
                   const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
@@ -230,7 +245,7 @@ class ContactsDetail extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     padding: const EdgeInsets.all(15),
-                    child: Text(item.address, style: const TextStyle(color: Colors.white54, fontSize: 16, fontFamily: "RobotoMono", fontWeight: FontWeight.w700)),
+                    child: Text(item.address, style: const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700)),
                   ),
                 ],
               ),
@@ -240,48 +255,54 @@ class ContactsDetail extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
               // color: Colors.green,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: canEdit ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
                 children: [
-                  MyCupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: DarkColors.redColorMask2,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.delete,
-                          color: Colors.white,
+                  if (canEdit)
+                    MyCupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: DarkColors.redColorMask2,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop("delete");
-                    },
-                  ),
-                  MyCupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: DarkColors.blockColor,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
+                      onPressed: () {
+                        Navigator.of(context).pop("delete");
+                      },
+                    )
+                  else
+                    const SizedBox(),
+                  if (canEdit)
+                    MyCupertinoButton(
+                      padding: EdgeInsets.zero,
+                      child: Container(
+                        width: 60,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          color: DarkColors.blockColor,
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            Icons.edit,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop("edit");
-                    },
-                  ),
+                      onPressed: () {
+                        Navigator.of(context).pop("edit");
+                      },
+                    )
+                  else
+                    const SizedBox(),
                   MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: Container(

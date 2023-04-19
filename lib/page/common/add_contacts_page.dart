@@ -147,7 +147,7 @@ class _AddContactsPage extends State<AddContactsPage> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardAppearance: Brightness.dark,
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: 'RobotoMono'),
+                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
                         decoration: InputDecoration(
                           filled: true,
                           contentPadding: const EdgeInsets.all(15),
@@ -157,7 +157,6 @@ class _AddContactsPage extends State<AddContactsPage> {
                             decoration: TextDecoration.none,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            fontFamily: 'RobotoMono',
                             color: Colors.white54,
                           ),
                           enabledBorder: const OutlineInputBorder(
@@ -193,7 +192,11 @@ class _AddContactsPage extends State<AddContactsPage> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardAppearance: Brightness.dark,
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: 'RobotoMono'),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                         decoration: InputDecoration(
                           filled: true,
                           contentPadding: const EdgeInsets.all(15),
@@ -203,7 +206,6 @@ class _AddContactsPage extends State<AddContactsPage> {
                             decoration: TextDecoration.none,
                             fontSize: 16,
                             fontWeight: FontWeight.w500,
-                            fontFamily: 'RobotoMono',
                             color: Colors.white54,
                           ),
                           enabledBorder: const OutlineInputBorder(

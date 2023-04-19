@@ -47,7 +47,6 @@ class Button extends StatelessWidget {
                     color: textColor,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w500,
-                    fontFamily: 'RobotoMono',
                   ),
                 ),
         ));

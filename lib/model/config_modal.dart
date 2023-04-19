@@ -33,6 +33,19 @@ class ConfigModal extends ChangeNotifier {
     notifyListeners();
   }
 
+  String getCurrentRpc() {
+    return walletConfig.network == 0 ? Global.mainRpcURL : Global.rpcURL;
+  }
+
+  String getCurrentExplorer() {
+    return walletConfig.network == 0 ? Global.mainExplorURL : Global.explorURL;
+  }
+
+  changeNetwork(int pos) async {
+    await Global.saveNetwork(pos);
+    notifyListeners();
+  }
+
   savePassword(String password) async {
     await Global.savePassword(password);
     notifyListeners();

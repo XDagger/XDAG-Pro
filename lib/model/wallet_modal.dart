@@ -38,6 +38,18 @@ class WalletModal extends ChangeNotifier {
     return defaultWallet ?? Wallet('', '', '', true, true, false);
   }
 
+  // 获取去除当前钱包的其他钱包
+  List<Wallet> getOtherWallet() {
+    List<Wallet> list = [];
+    for (var i = 0; i < walletList.length; i++) {
+      Wallet? wallet = walletList.getAt(i);
+      if (wallet != null && wallet.address != defaultWallet?.address) {
+        list.add(wallet);
+      }
+    }
+    return list;
+  }
+
   createWallet({required String name, required String address, required String data, bool needBackUp = false}) async {
     try {
       Wallet newWallet = await Global.createWallet(

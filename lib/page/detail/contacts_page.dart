@@ -7,6 +7,8 @@ import 'package:xdag/common/helper.dart';
 import 'package:xdag/common/transaction.dart';
 import 'package:scan_qr/scan_qr.dart';
 import 'package:xdag/model/contacts_modal.dart';
+import 'package:xdag/model/db_model.dart';
+import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/detail/send_page.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/desktop.dart';
@@ -24,6 +26,8 @@ class ContactsStatePage extends State<ContactsPage> {
   late TextEditingController controller;
   bool isButtonEnable = false;
   String error = "";
+  int nav = 0;
+  final pageController = PageController();
   @override
   void initState() {
     super.initState();
@@ -34,6 +38,8 @@ class ContactsStatePage extends State<ContactsPage> {
   Widget build(BuildContext context) {
     // bool isButtonEnable = controller.text.isNotEmpty;
     ContactsModal contacts = Provider.of<ContactsModal>(context);
+    WalletModal walletModal = Provider.of<WalletModal>(context);
+    List<Wallet> walletList = walletModal.getOtherWallet();
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
       body: GestureDetector(
@@ -128,7 +134,7 @@ class ContactsStatePage extends State<ContactsPage> {
                     minFontSize: 16,
                     maxLines: 10,
                     minLines: 1,
-                    autofocus: true,
+                    autofocus: false,
                     contextMenuBuilder: (context, editableTextState) {
                       final List<ContextMenuButtonItem> buttonItems = editableTextState.contextMenuButtonItems;
                       return AdaptiveTextSelectionToolbar.buttonItems(
@@ -138,7 +144,11 @@ class ContactsStatePage extends State<ContactsPage> {
                     },
                     textInputAction: TextInputAction.next,
                     keyboardAppearance: Brightness.dark,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: 'RobotoMono'),
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
                     decoration: InputDecoration(
                       filled: true,
                       contentPadding: const EdgeInsets.all(15),
@@ -148,7 +158,6 @@ class ContactsStatePage extends State<ContactsPage> {
                         decoration: TextDecoration.none,
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        fontFamily: 'RobotoMono',
                         color: Colors.white54,
                       ),
                       enabledBorder: const OutlineInputBorder(
@@ -182,82 +191,110 @@ class ContactsStatePage extends State<ContactsPage> {
               height: 1,
               color: DarkColors.lineColor,
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(13, 7, 7, 10),
+              child: Row(
+                children: [
+                  MyCupertinoButton(
+                    padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    onPressed: () {
+                      if (nav == 0) return;
+                      setState(() {
+                        nav = 0;
+                      });
+                      pageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context).contacts,
+                      style: TextStyle(color: nav == 0 ? DarkColors.mainColor : Colors.white54, fontSize: 22.0, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  MyCupertinoButton(
+                    padding: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                    onPressed: () {
+                      if (nav == 1) return;
+                      setState(() {
+                        nav = 1;
+                      });
+                      pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                    },
+                    child: Text(
+                      AppLocalizations.of(context).wallet,
+                      style: TextStyle(color: nav == 1 ? DarkColors.mainColor : Colors.white54, fontSize: 22.0, fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ],
+              ),
+            ),
             Expanded(
-              child: ListView.builder(
-                itemCount: contacts.contactsList.isEmpty ? 2 : contacts.contactsList.length + 1,
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-                itemBuilder: (BuildContext buildContext, int index) {
-                  if (index == 0) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 20),
-                        Text(
-                          AppLocalizations.of(context).contacts,
-                          style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 22.0, fontWeight: FontWeight.w700),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
-                    );
-                  } else {
-                    if (contacts.contactsList.isEmpty) {
-                      return Column(children: [
-                        const SizedBox(height: 20),
-                        const Icon(Icons.crop_landscape, size: 70, color: Colors.white),
-                        Text(AppLocalizations.of(context).no_contacts, style: const TextStyle(color: Colors.white, fontSize: 14)),
-                      ]);
-                    }
-                    int pos = index - 1;
-                    ContactsItem item = contacts.contactsList[pos];
-                    return MyCupertinoButton(
-                      padding: EdgeInsets.zero,
-                      onPressed: () async {
-                        // controller.text = item.address;
-                        // controller.selection = TextSelection.fromPosition(TextPosition(offset: item.address.length));
-                        // setState(() {
-                        //   isButtonEnable = true;
-                        //   error = "";
-                        // });
-                        if (mounted) {
-                          Navigator.pushNamed(
-                            context,
-                            '/send',
-                            arguments: SendPageRouteParams(address: item.address, name: item.name),
-                          );
-                        }
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: DarkColors.blockColor,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    item.name,
-                                    style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 16.0, fontWeight: FontWeight.w500),
-                                  ),
-                                  const SizedBox(height: 5),
-                                  Text(
-                                    item.address,
-                                    style: const TextStyle(color: Colors.white54, fontFamily: 'RobotoMono', fontSize: 12.0, fontWeight: FontWeight.w500),
-                                  ),
-                                ],
+              child: PageView.builder(
+                itemCount: 2,
+                controller: pageController,
+                itemBuilder: (context, pos) {
+                  bool isContact = pos == 0;
+                  int len = isContact ? (contacts.contactsList.isEmpty ? 1 : contacts.contactsList.length) : walletList.length;
+                  return ListView.builder(
+                    itemCount: len,
+                    padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                    itemBuilder: (BuildContext buildContext, int index) {
+                      if ((contacts.contactsList.isEmpty && isContact) || (walletList.isEmpty && !isContact)) {
+                        return Column(children: [
+                          const SizedBox(height: 20),
+                          const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
+                          Text(pos == 0 ? AppLocalizations.of(context).no_contacts : AppLocalizations.of(context).no_wallets, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                        ]);
+                      }
+                      ContactsItem item = isContact ? contacts.contactsList[index] : ContactsItem(walletList[index].name, walletList[index].address);
+                      return MyCupertinoButton(
+                        padding: EdgeInsets.zero,
+                        onPressed: () async {
+                          if (mounted) {
+                            Navigator.pushNamed(
+                              context,
+                              '/send',
+                              arguments: SendPageRouteParams(address: item.address, name: item.name),
+                            );
+                          }
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: DarkColors.blockColor,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                          padding: const EdgeInsets.all(15),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      item.name,
+                                      style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Text(
+                                      item.address,
+                                      style: const TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.w500),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                            const SizedBox(width: 5),
-                            const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
-                          ],
+                              const SizedBox(width: 5),
+                              if (isContact && index == 0) const Icon(Icons.star, color: DarkColors.yellowColor, size: 16) else const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16)
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  }
+                      );
+                    },
+                  );
+                },
+                onPageChanged: (index) {
+                  setState(() {
+                    nav = index;
+                  });
                 },
               ),
             ),

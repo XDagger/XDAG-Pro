@@ -49,7 +49,6 @@ class _InputState extends State<Input> {
         decoration: TextDecoration.none,
         fontSize: 16,
         fontWeight: FontWeight.w500,
-        fontFamily: 'RobotoMono',
         color: Colors.white,
       ),
       decoration: InputDecoration(
@@ -61,7 +60,6 @@ class _InputState extends State<Input> {
             decoration: TextDecoration.none,
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            fontFamily: 'RobotoMono',
             color: Colors.white54,
           ),
           focusedBorder: const OutlineInputBorder(
@@ -148,7 +146,6 @@ class MyRadioButton extends StatelessWidget {
                   decoration: TextDecoration.none,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  fontFamily: 'RobotoMono',
                   color: textColor,
                 ),
               ),

@@ -41,7 +41,7 @@ class LangsSelectPage extends StatelessWidget {
                         const SizedBox(width: 15),
                         Text(
                           index == 0 ? AppLocalizations.of(context).auto : item.name,
-                          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700, fontFamily: "RobotoMono"),
+                          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
                         ),
                         const Spacer(),
                         if (config.walletConfig.local == index) Image.asset('images/select.png', width: 20, height: 20) else const SizedBox(width: 20),
@@ -69,9 +69,9 @@ class NetWorkSelectPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // double screenHeight = ScreenHelper.screenHeight;
+    ConfigModal config = Provider.of<ConfigModal>(context);
     double bottomPadding = ScreenHelper.bottomPadding;
-    List<String> netWorks = ["TestNet"];
+    List<String> netWorks = ConfigModal.netWorks;
     double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * netWorks.length + 10;
     return ModalFrame(
       height: height,
@@ -98,18 +98,18 @@ class NetWorkSelectPage extends StatelessWidget {
                         const SizedBox(width: 15),
                         Text(
                           item,
-                          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700, fontFamily: "RobotoMono"),
+                          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
                         ),
                         const Spacer(),
-                        // if (config.walletConfig.local == index) Image.asset('images/select.png', width: 20, height: 20) else const SizedBox(width: 20),
-                        Image.asset('images/select.png', width: 20, height: 20),
+                        if (config.walletConfig.network == index) Image.asset('images/select.png', width: 20, height: 20) else const SizedBox(width: 20),
+                        // Image.asset('images/select.png', width: 20, height: 20),
                         const SizedBox(width: 15),
                       ],
                     ),
                   ),
                   onPressed: () {
-                    // config.changeLocal(index);
-                    // Navigator.of(context).pop();
+                    config.changeNetwork(index);
+                    Navigator.of(context).pop();
                   },
                 );
               },

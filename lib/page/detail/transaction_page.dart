@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/desktop.dart';
@@ -48,7 +50,9 @@ class _TransactionPageState extends State<TransactionPage> {
       Transaction transaction = widget.transaction;
       String address = widget.address;
       bool isSend = transaction.from == address;
-      Response response = await dio.get("${Global.explorURL}/block/${widget.transaction.blockAddress}", cancelToken: cancelToken);
+      ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
+      String explorURL = config.getCurrentExplorer();
+      Response response = await dio.get("$explorURL/block/${widget.transaction.blockAddress}", cancelToken: cancelToken);
       String newFee = "";
       String newTransactionState = "Pending";
       String newOtherAddress = "";
@@ -104,7 +108,7 @@ class _TransactionPageState extends State<TransactionPage> {
       isShowRightCloseButton: true,
       child: Column(
         children: [
-          Text(isSend ? '-${transaction.amount} XDAG' : '+${transaction.amount} XDAG', style: TextStyle(decoration: TextDecoration.none, fontSize: 22, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: isSend ? DarkColors.bottomNavColor : DarkColors.greenColor)),
+          Text(isSend ? '-${transaction.amount} XDAG' : '+${transaction.amount} XDAG', style: TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: isSend ? DarkColors.bottomNavColor : DarkColors.greenColor)),
           const SizedBox(height: 5),
           if (transaction.status == 'pending')
             Text(
@@ -112,7 +116,6 @@ class _TransactionPageState extends State<TransactionPage> {
               style: TextStyle(
                 decoration: TextDecoration.none,
                 fontSize: 14,
-                fontFamily: 'RobotoMono',
                 fontWeight: FontWeight.w400,
                 color: transactionState == 'Accepted' ? DarkColors.greenColor : DarkColors.redColor,
               ),
@@ -124,7 +127,7 @@ class _TransactionPageState extends State<TransactionPage> {
           else
             Text(
               "${isSend ? AppLocalizations.of(context).send_on : AppLocalizations.of(context).receive_on} ${Helper.formatFullTime(transaction.time)} UTC",
-              style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54),
+              style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54),
             ),
           const SizedBox(height: 25),
           if (isLoading)
@@ -160,7 +163,7 @@ class _TransactionPageState extends State<TransactionPage> {
                     padding: EdgeInsets.zero,
                     child: TransactionButton(showCopy: true, title: "Hash", value: hash),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: transaction.hash));
+                      Clipboard.setData(ClipboardData(text: hash));
                       Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
                     }),
                 const SizedBox(height: 1),
@@ -209,7 +212,7 @@ class TransactionShowDetail extends StatelessWidget {
           Expanded(
               child: Column(
             children: [
-              Text('${transaction.amount} XDAG', textAlign: TextAlign.center, style: const TextStyle(decoration: TextDecoration.none, fontSize: 22, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: DarkColors.greenColor)),
+              Text('${transaction.amount} XDAG', textAlign: TextAlign.center, style: const TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: DarkColors.greenColor)),
               const SizedBox(height: 20),
               TransactionButton(
                 showCopy: false,
@@ -274,11 +277,10 @@ class TransactionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle titleStyle = const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54);
+    TextStyle titleStyle = const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54);
     TextStyle valueStyle = TextStyle(
       decoration: TextDecoration.none,
       fontSize: 12,
-      fontFamily: 'RobotoMono',
       fontWeight: FontWeight.w700,
       color: readFont ? DarkColors.redColor : Colors.white,
     );

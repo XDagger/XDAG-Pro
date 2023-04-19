@@ -16,9 +16,10 @@ class Helper {
   static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   static bool isDesktop = Platform.isLinux || Platform.isMacOS || Platform.isWindows;
   static bool checkName(String name) {
-    // only allow letters, numbers, and spaces
-    RegExp regExp = RegExp(r"^[a-zA-Z0-9 ]+$");
-    return regExp.hasMatch(name);
+    // RegExp regExp = RegExp(r"^[a-zA-Z0-9\u4e00-\u9fa5]+$");
+    RegExp regExp2 = RegExp(r",");
+    // print(regExp2.hasMatch(name));
+    return !regExp2.hasMatch(name);
   }
 
   static String removeTrailingZeros(String str) {
@@ -79,7 +80,7 @@ class Helper {
       duration: const Duration(seconds: 1),
       content: Text(
         msg,
-        style: const TextStyle(fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white),
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
       ),
     ));
   }
@@ -90,7 +91,7 @@ class Helper {
       behavior: SnackBarBehavior.floating,
       content: Text(
         msg,
-        style: const TextStyle(fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white),
+        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
       ),
     ));
   }
@@ -126,7 +127,7 @@ class Helper {
                   child: Center(
                     child: Text(
                       title,
-                      style: const TextStyle(color: Colors.white, fontFamily: 'RobotoMono', fontSize: 20.0, fontWeight: FontWeight.w700),
+                      style: const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
                     ),
                   )),
               const SizedBox(width: 40)

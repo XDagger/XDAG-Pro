@@ -33,7 +33,7 @@ class HomeMainContent extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             title,
-            style: const TextStyle(fontSize: 24, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white),
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white),
           ),
         ),
         const SizedBox(height: 5),
@@ -41,7 +41,7 @@ class HomeMainContent extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             subTitle,
-            style: const TextStyle(fontFamily: 'RobotoMono', fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54),
+            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54),
           ),
         ),
         const Spacer(),

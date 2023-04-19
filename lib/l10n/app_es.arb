@@ -122,5 +122,6 @@
   "tips": "Consejos",
   "wallet_tips": "Desliza el elemento hacia la derecha para eliminar la billetera.",
   "hide_balance": "Ocultar saldo",
-  "contact_address_repeat": "La dirección del contacto ya existe"
+  "contact_address_repeat": "La dirección del contacto ya existe",
+  "no_wallets": "Cualquier cartera"
 }

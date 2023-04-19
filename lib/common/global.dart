@@ -44,6 +44,10 @@ class Global {
 
   static const String rpcURL = 'https://testnet-rpc.xdagj.org';
   static const String explorURL = 'https://testexplorer.xdag.io/api';
+
+  static const String mainRpcURL = 'https://mainnet-rpc.xdagj.org';
+  static const String mainExplorURL = 'https://mainnet-explorer.xdagj.org/api';
+
   static const bool isTest = false;
 
   static SharedPreferences get prefs => _prefs;
@@ -59,7 +63,9 @@ class Global {
     walletConfig = WalletConfig(local: 0, hasSetPassword: false, hasSetBiometrics: false);
     walletListBox = await Hive.openBox<Wallet>(walletListKey);
     List<String>? contactsList = _prefs.getStringList(contactsListKey);
-    contactsListBox = [];
+    contactsListBox = [
+      ContactsItem("Community Fund", '4duPWMbYUgAifVYkKDCWxLvRRkSByf5gb'),
+    ];
     if (contactsList != null) {
       for (var item in contactsList) {
         contactsListBox.add(ContactsItem.fromJson(item));
@@ -75,7 +81,7 @@ class Global {
   static updateConfig() async {
     // locale
     int locale = _prefs.getInt(_localeKey) ?? 0;
-    int network = _prefs.getInt(_newWorkKey) ?? 1;
+    int network = _prefs.getInt(_newWorkKey) ?? 0;
     // secure
     bool hasSetPassword = await _storage.containsKey(key: _passwordKey);
     bool hasSetBiometrics = _prefs.getBool(_biometricsKey) ?? false;
@@ -92,6 +98,11 @@ class Global {
   static saveLocale(int index) async {
     await _prefs.setInt(_localeKey, index);
     walletConfig.local = index;
+  }
+
+  static saveNetwork(int index) async {
+    await _prefs.setInt(_newWorkKey, index);
+    walletConfig.network = index;
   }
 
   static savePassword(String password) async {

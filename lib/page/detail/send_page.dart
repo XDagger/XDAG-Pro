@@ -9,6 +9,7 @@ import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/common/transaction.dart';
+import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/check_page.dart';
@@ -80,6 +81,8 @@ class _SendPageState extends State<SendPage> {
       isLoad = true;
     });
     final receivePort = ReceivePort();
+    ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
+    String rpcURL = config.getCurrentRpc();
     isolate = await Isolate.spawn(isolateFunction, receivePort.sendPort);
     receivePort.listen((data) async {
       var sendAmount = amount;
@@ -90,7 +93,7 @@ class _SendPageState extends State<SendPage> {
       } else if (data is List<String>) {
         String result = data[1];
         Response response = await dio.post(
-          Global.rpcURL,
+          rpcURL,
           cancelToken: cancelToken,
           data: {
             "jsonrpc": "2.0",
@@ -218,7 +221,11 @@ class _SendPageState extends State<SendPage> {
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         keyboardAppearance: Brightness.dark,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: 'RobotoMono'),
+                        style: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                         ],
@@ -227,7 +234,7 @@ class _SendPageState extends State<SendPage> {
                           contentPadding: EdgeInsets.fromLTRB(15, 40, 15, 40),
                           fillColor: DarkColors.blockColor,
                           hintText: 'XDAG',
-                          hintStyle: TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w500, fontFamily: 'RobotoMono', color: Colors.white54),
+                          hintStyle: TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white54),
                           enabledBorder: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
                           focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
                         ),
@@ -250,7 +257,7 @@ class _SendPageState extends State<SendPage> {
                               },
                               child: Row(
                                 children: [
-                                  Text('${wallet.amount} XDAG', style: const TextStyle(fontSize: 14, color: Colors.white, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500)),
+                                  Text('${wallet.amount} XDAG', style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500)),
                                   const SizedBox(width: 10),
                                   Container(
                                     //radius: 10,
@@ -261,7 +268,7 @@ class _SendPageState extends State<SendPage> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Center(
-                                      child: Text(AppLocalizations.of(context).all, style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', color: Colors.white, fontWeight: FontWeight.w500)),
+                                      child: Text(AppLocalizations.of(context).all, style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500)),
                                     ),
                                   )
                                 ],
@@ -293,14 +300,22 @@ class _SendPageState extends State<SendPage> {
                           );
                         },
                         textInputAction: TextInputAction.done,
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white, fontFamily: 'RobotoMono'),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
                         decoration: InputDecoration(
                           filled: true,
                           contentPadding: const EdgeInsets.all(15),
                           fillColor: DarkColors.blockColor,
-                          counterStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white, fontFamily: 'RobotoMono'),
+                          counterStyle: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
                           hintText: AppLocalizations.of(context).remark,
-                          hintStyle: const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: 'RobotoMono', color: Colors.white54),
+                          hintStyle: const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54),
                           enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
                           focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
                         ),

@@ -16,7 +16,7 @@ class WalletTransactionDateHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 25, 15, 5),
       child: Text(
         Helper.formatDate(time),
-        style: const TextStyle(decoration: TextDecoration.none, fontSize: 18, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: Colors.white),
+        style: const TextStyle(decoration: TextDecoration.none, fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white),
       ),
     );
   }
@@ -65,16 +65,16 @@ class WalletTransactionItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(isSnapshot ? AppLocalizations.of(context).snapshot : (isSend ? AppLocalizations.of(context).send : AppLocalizations.of(context).receive), style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white)),
+                      Text(isSnapshot ? AppLocalizations.of(context).snapshot : (isSend ? AppLocalizations.of(context).send : AppLocalizations.of(context).receive), style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white)),
                       const SizedBox(height: 3),
-                      Text('${Helper.formatTime(transaction.time)} UTC', style: const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w400, color: Colors.white54)),
+                      Text('${Helper.formatTime(transaction.time)} UTC', style: const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54)),
                     ],
                   ),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(isSnapshot ? '$amount XDAG' : (isSend ? '-$amount XDAG' : '+$amount XDAG'), textAlign: TextAlign.end, style: TextStyle(decoration: TextDecoration.none, fontSize: 14, fontFamily: 'RobotoMono', fontWeight: FontWeight.w700, color: isSnapshot ? Colors.white54 : (isSend ? DarkColors.bottomNavColor : DarkColors.greenColor))),
+                child: Text(isSnapshot ? '$amount XDAG' : (isSend ? '-$amount XDAG' : '+$amount XDAG'), textAlign: TextAlign.end, style: TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w700, color: isSnapshot ? Colors.white54 : (isSend ? DarkColors.bottomNavColor : DarkColors.greenColor))),
               ),
               const SizedBox(width: 10),
             ],

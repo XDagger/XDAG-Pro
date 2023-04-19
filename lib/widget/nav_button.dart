@@ -42,7 +42,6 @@ class BottomNavButton extends StatelessWidget {
               style: TextStyle(
                 decoration: TextDecoration.none,
                 fontSize: 12,
-                fontFamily: 'RobotoMono',
                 fontWeight: FontWeight.w500,
                 color: color,
               ),

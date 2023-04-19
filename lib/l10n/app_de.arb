@@ -122,5 +122,6 @@
   "tips":"Tipps",
   "wallet_tips":"Wischen Sie den Eintrag nach rechts, um das Wallet zu löschen。",
   "hide_balance":"Guthaben ausblenden",
-  "contact_address_repeat": "Kontaktadresse existiert bereits"
+  "contact_address_repeat": "Kontaktadresse existiert bereits",
+  "no_wallets":"Keine Wallet"
 }

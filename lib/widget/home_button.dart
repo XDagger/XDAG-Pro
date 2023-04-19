@@ -36,7 +36,7 @@ class HomeHeaderButton extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   textAlign: TextAlign.end,
-                  style: const TextStyle(fontSize: 12, fontFamily: 'RobotoMono', fontWeight: FontWeight.w500, color: Colors.white),
+                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
                 ),
               ],
             ),

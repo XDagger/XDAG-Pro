@@ -14,19 +14,8 @@ class WalletSettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var topPadding = ScreenHelper.topPadding;
-    const titleStyle = TextStyle(
-      decoration: TextDecoration.none,
-      fontSize: 32,
-      fontFamily: 'RobotoMono',
-      fontWeight: FontWeight.w700,
-      color: Colors.white,
-    );
-    const labelStyle = TextStyle(
-      color: Colors.white,
-      fontSize: 12,
-      fontWeight: FontWeight.w400,
-      fontFamily: "RobotoMono",
-    );
+    const titleStyle = TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white);
+    const labelStyle = TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w400);
     ConfigModal config = Provider.of<ConfigModal>(context);
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
@@ -114,9 +103,9 @@ class WalletSettingPage extends StatelessWidget {
                         const SizedBox(height: 30),
                         Image.asset("images/logo.png", width: 30, height: 30),
                         const SizedBox(height: 5),
-                        const Text("XDAG-Pro", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500, fontFamily: "RobotoMono")),
+                        const Text("XDAG-Pro", style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
                         const SizedBox(height: 5),
-                        Text('Version ${Global.version}(${Global.buildNumber})', style: const TextStyle(color: Colors.white54, fontSize: 12, fontWeight: FontWeight.w400, fontFamily: "RobotoMono")),
+                        Text('Version ${Global.version}(${Global.buildNumber})', style: const TextStyle(color: Colors.white54, fontSize: 12, fontWeight: FontWeight.w400)),
                       ],
                     ))),
           ),

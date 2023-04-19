@@ -48,7 +48,6 @@ class NavHeader extends StatelessWidget {
                     style: const TextStyle(
                       decoration: TextDecoration.none,
                       fontSize: 20,
-                      fontFamily: 'RobotoMono',
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),

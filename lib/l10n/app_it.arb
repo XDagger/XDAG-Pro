@@ -122,5 +122,6 @@
   "tips": "Suggerimenti",
   "wallet_tips": "Scorri l'elemento verso destra per eliminare il portafoglio",
   "hide_balance": "Nascondi saldo",
-  "contact_address_repeat": "L'indirizzo del contatto è già stato aggiunto"
+  "contact_address_repeat": "L'indirizzo del contatto è già stato aggiunto",
+  "no_wallets": "Nessun portafoglio"
 }

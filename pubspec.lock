@@ -153,6 +153,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.2"
+  chinese_font_library:
+    dependency: "direct main"
+    description:
+      name: chinese_font_library
+      sha256: "533c78bab2765476131181e7bc4e53b66ac6be2fed7c8c43ec81c55535ceb7b7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   clock:
     dependency: transitive
     description:
