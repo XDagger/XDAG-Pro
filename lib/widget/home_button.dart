@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/helper.dart';
 import 'package:xdag/widget/desktop.dart';
 
 class HomeHeaderButton extends StatelessWidget {
@@ -36,7 +37,7 @@ class HomeHeaderButton extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
                   textAlign: TextAlign.end,
-                  style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white),
+                  style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white)),
                 ),
               ],
             ),

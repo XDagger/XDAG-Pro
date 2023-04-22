@@ -144,22 +144,13 @@ class ContactsStatePage extends State<ContactsPage> {
                     },
                     textInputAction: TextInputAction.next,
                     keyboardAppearance: Brightness.dark,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                    ),
+                    style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                     decoration: InputDecoration(
                       filled: true,
                       contentPadding: const EdgeInsets.all(15),
                       fillColor: DarkColors.blockColor,
                       hintText: AppLocalizations.of(context).walletAddress,
-                      hintStyle: const TextStyle(
-                        decoration: TextDecoration.none,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white54,
-                      ),
+                      hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -179,7 +170,7 @@ class ContactsStatePage extends State<ContactsPage> {
                         color: DarkColors.redColorMask,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Text(error, style: const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500)),
+                      child: Text(error, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500))),
                     )
                   else
                     const SizedBox(height: 0),
@@ -206,7 +197,7 @@ class ContactsStatePage extends State<ContactsPage> {
                     },
                     child: Text(
                       AppLocalizations.of(context).contacts,
-                      style: TextStyle(color: nav == 0 ? DarkColors.mainColor : Colors.white54, fontSize: 22.0, fontWeight: FontWeight.w700),
+                      style: Helper.fitChineseFont(context, TextStyle(color: nav == 0 ? DarkColors.mainColor : Colors.white54, fontSize: 22.0, fontWeight: FontWeight.w700)),
                     ),
                   ),
                   const SizedBox(width: 10),
@@ -221,7 +212,7 @@ class ContactsStatePage extends State<ContactsPage> {
                     },
                     child: Text(
                       AppLocalizations.of(context).wallet,
-                      style: TextStyle(color: nav == 1 ? DarkColors.mainColor : Colors.white54, fontSize: 22.0, fontWeight: FontWeight.w700),
+                      style: Helper.fitChineseFont(context, TextStyle(color: nav == 1 ? DarkColors.mainColor : Colors.white54, fontSize: 22.0, fontWeight: FontWeight.w700)),
                     ),
                   ),
                 ],
@@ -242,7 +233,7 @@ class ContactsStatePage extends State<ContactsPage> {
                         return Column(children: [
                           const SizedBox(height: 20),
                           const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                          Text(pos == 0 ? AppLocalizations.of(context).no_contacts : AppLocalizations.of(context).no_wallets, style: const TextStyle(color: Colors.white, fontSize: 14)),
+                          Text(pos == 0 ? AppLocalizations.of(context).no_contacts : AppLocalizations.of(context).no_wallets, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14))),
                         ]);
                       }
                       ContactsItem item = isContact ? contacts.contactsList[index] : ContactsItem(walletList[index].name, walletList[index].address);
@@ -272,12 +263,12 @@ class ContactsStatePage extends State<ContactsPage> {
                                   children: [
                                     Text(
                                       item.name,
-                                      style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
+                                      style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500)),
                                     ),
                                     const SizedBox(height: 5),
                                     Text(
                                       item.address,
-                                      style: const TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.w500),
+                                      style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white54, fontSize: 12.0, fontWeight: FontWeight.w500)),
                                     ),
                                   ],
                                 ),

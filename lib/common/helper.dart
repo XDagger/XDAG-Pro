@@ -1,10 +1,13 @@
 import 'dart:io';
+import 'package:chinese_font_library/chinese_font_library.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:hex/hex.dart';
 import 'package:pointycastle/export.dart';
+import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/widget/button.dart';
 import 'dart:typed_data';
 import 'package:bip32/bip32.dart' as bip32;
@@ -13,12 +16,9 @@ import 'package:fast_base58/fast_base58.dart';
 import 'package:xdag/widget/desktop.dart';
 
 class Helper {
-  static final GlobalKey<ScaffoldMessengerState> scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
   static bool isDesktop = Platform.isLinux || Platform.isMacOS || Platform.isWindows;
   static bool checkName(String name) {
-    // RegExp regExp = RegExp(r"^[a-zA-Z0-9\u4e00-\u9fa5]+$");
     RegExp regExp2 = RegExp(r",");
-    // print(regExp2.hasMatch(name));
     return !regExp2.hasMatch(name);
   }
 
@@ -71,6 +71,14 @@ class Helper {
     return result;
   }
 
+  static TextStyle fitChineseFont(BuildContext context, TextStyle textStyle, {listen = true}) {
+    ConfigModal configModal = Provider.of<ConfigModal>(context, listen: listen);
+    if (configModal.local == const Locale("ja") || configModal.local == const Locale("zh")) {
+      return textStyle.useSystemChineseFont();
+    }
+    return textStyle;
+  }
+
   // show toast
   static void showToast(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -80,18 +88,11 @@ class Helper {
       duration: const Duration(seconds: 1),
       content: Text(
         msg,
-        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
-      ),
-    ));
-  }
-
-  static void showSnackBar(String msg) {
-    scaffoldMessengerKey.currentState?.showSnackBar(SnackBar(
-      backgroundColor: DarkColors.mainColor,
-      behavior: SnackBarBehavior.floating,
-      content: Text(
-        msg,
-        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+        style: Helper.fitChineseFont(
+          context,
+          const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+          listen: false,
+        ),
       ),
     ));
   }
@@ -127,7 +128,7 @@ class Helper {
                   child: Center(
                     child: Text(
                       title,
-                      style: const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
+                      style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700)),
                     ),
                   )),
               const SizedBox(width: 40)

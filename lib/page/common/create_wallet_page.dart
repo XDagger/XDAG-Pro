@@ -68,6 +68,13 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
   }
 
   void getMnemonicList(String value) {
+    if (value.endsWith(" ")) {
+      setState(() {
+        mnemonicList = [];
+        errorText = "";
+      });
+      return;
+    }
     List<String> list = value.trim().split(" ");
     setState(() {
       mnemonicNumber = value.isEmpty ? 0 : list.length;
@@ -193,7 +200,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                             ),
                           ),
                           const SizedBox(height: 25),
-                          Text(isPrivateKey ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                          Text(isPrivateKey ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                           const SizedBox(height: 10),
                           AutoSizeTextField(
                             controller: controller,
@@ -219,22 +226,13 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                               );
                             },
                             textInputAction: TextInputAction.next,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
+                            style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                             decoration: InputDecoration(
                               filled: true,
                               contentPadding: const EdgeInsets.all(15),
                               fillColor: DarkColors.blockColor,
                               hintText: isPrivateKey ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic_hint_1,
-                              hintStyle: const TextStyle(
-                                decoration: TextDecoration.none,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white54,
-                              ),
+                              hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide.none,
                                 borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -249,7 +247,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                           Row(
                             children: [
                               const Spacer(),
-                              Text('$mnemonicNumber ${mnemonicNumber > 1 ? AppLocalizations.of(context).words : AppLocalizations.of(context).word}', style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white54)),
+                              Text('$mnemonicNumber ${mnemonicNumber > 1 ? AppLocalizations.of(context).words : AppLocalizations.of(context).word}', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white54))),
                             ],
                           ),
                           if (errorText.isNotEmpty)
@@ -261,7 +259,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                 color: DarkColors.redColorMask,
                                 borderRadius: BorderRadius.circular(10),
                               ),
-                              child: Text(errorText, style: const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500)),
+                              child: Text(errorText, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500))),
                             )
                           else
                             const SizedBox(),
@@ -270,7 +268,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                       )
                     else
                       Container(),
-                    Text(AppLocalizations.of(context).walletName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                    Text(AppLocalizations.of(context).walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                     const SizedBox(height: 10),
                     Input(
                       isFocus: !args.isImport,
@@ -326,7 +324,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                               importContent = controller.text;
                             });
                           },
-                          child: Text(word, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: DarkColors.mainColor)),
+                          child: Text(word, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: DarkColors.mainColor))),
                         );
                       },
                     ),
@@ -384,7 +382,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                     behavior: SnackBarBehavior.fixed,
                                     content: Text(
                                       e.toString(),
-                                      style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+                                      style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white), listen: false),
                                     ),
                                   ));
                                 }
@@ -429,7 +427,7 @@ class HeaderItem extends StatelessWidget {
           child: Text(
             title,
             textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
+            style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white)),
           ),
         ),
       ),

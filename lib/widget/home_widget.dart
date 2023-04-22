@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xdag/common/helper.dart';
 
 class Dot extends StatelessWidget {
   final double size;
@@ -33,7 +34,7 @@ class HomeMainContent extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             title,
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white),
+            style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white))),
           ),
         ),
         const SizedBox(height: 5),
@@ -41,7 +42,7 @@ class HomeMainContent extends StatelessWidget {
           margin: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             subTitle,
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54),
+            style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54))),
           ),
         ),
         const Spacer(),

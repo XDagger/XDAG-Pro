@@ -68,7 +68,10 @@ class Global {
     ];
     if (contactsList != null) {
       for (var item in contactsList) {
-        contactsListBox.add(ContactsItem.fromJson(item));
+        ContactsItem ele = ContactsItem.fromJson(item);
+        if (ele.address != '4duPWMbYUgAifVYkKDCWxLvRRkSByf5gb') {
+          contactsListBox.add(ele);
+        }
       }
     }
     PackageInfo packageInfo = await PackageInfo.fromPlatform();

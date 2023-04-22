@@ -47,11 +47,6 @@ class FaceIDPage extends StatelessWidget {
     if (ModalRoute.of(context)!.settings.arguments != null) {
       args = ModalRoute.of(context)!.settings.arguments as FaceIDPageRouteParams;
     }
-    const descStyle = TextStyle(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      color: Colors.white,
-    );
     ScreenHelper.initScreen(context);
     // String tipsText = AppLocalizations.of(context).create_biometrics_tips_3;
     String tipsText = args.type == 0 ? AppLocalizations.of(context).create_biometrics_tips_1 : AppLocalizations.of(context).create_biometrics_tips_2;
@@ -72,7 +67,7 @@ class FaceIDPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 20),
-                    Text(AppLocalizations.of(context).create_faceid_tips, style: descStyle),
+                    Text(AppLocalizations.of(context).create_faceid_tips, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                     Expanded(
                       child: MyCupertinoButton(
                           child: Column(
@@ -80,7 +75,7 @@ class FaceIDPage extends StatelessWidget {
                             children: [
                               if (args.type == 0) Image.asset('images/face_id.png') else Image.asset('images/biometrics.png'),
                               const SizedBox(height: 20),
-                              Text(tipsText, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
+                              Text(tipsText, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white))),
                             ],
                           ),
                           onPressed: () => _authenticate(config, context, args)),

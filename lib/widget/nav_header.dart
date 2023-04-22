@@ -45,12 +45,7 @@ class NavHeader extends StatelessWidget {
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      decoration: TextDecoration.none,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white,
-                    ),
+                    style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white)),
                   ),
                 ),
                 const SizedBox(width: 10),

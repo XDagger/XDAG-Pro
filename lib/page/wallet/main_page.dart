@@ -30,7 +30,7 @@ class _WalletHomePageState extends State<WalletHomePage> {
   Widget build(BuildContext context) {
     ScreenHelper.initScreen(context);
     return Scaffold(
-        key: Helper.scaffoldMessengerKey,
+        // key: Helper.scaffoldMessengerKey,
         appBar: null,
         body: IndexedStack(index: _currentIndex, children: _bottomNavPages),
         backgroundColor: DarkColors.bgColor,

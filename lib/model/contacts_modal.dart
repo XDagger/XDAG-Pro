@@ -22,7 +22,9 @@ class ContactsModal extends ChangeNotifier {
   updateList() async {
     List<String> list = [];
     for (var i in Global.contactsListBox) {
-      list.add(i.toJsonString());
+      if (i.address != '4duPWMbYUgAifVYkKDCWxLvRRkSByf5gb') {
+        list.add(i.toJsonString());
+      }
     }
     await Global.prefs.setStringList(Global.contactsListKey, list);
     notifyListeners();
@@ -32,7 +34,7 @@ class ContactsModal extends ChangeNotifier {
     try {
       ContactsItem item = ContactsItem(name, address);
       // 插入到第一个
-      Global.contactsListBox.insert(0, item);
+      Global.contactsListBox.insert(1, item);
       updateList();
     } catch (e) {
       rethrow;

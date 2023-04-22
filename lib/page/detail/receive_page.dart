@@ -20,8 +20,8 @@ class ReceivePage extends StatelessWidget {
     ScreenHelper.initScreen(context);
     double marginH = 20;
     double paddingH = 15;
-    TextStyle titleStyle = const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400);
-    TextStyle addressStyle = const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700);
+    TextStyle titleStyle = Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400));
+    TextStyle addressStyle = Helper.fitChineseFont(context, const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700));
 
     return ModalFrame(
         title: '${AppLocalizations.of(context).receive} XDAG',
@@ -126,7 +126,7 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle btnStyle = const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400);
+    TextStyle btnStyle = Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400));
     return MyCupertinoButton(
       padding: EdgeInsets.zero,
       onPressed: onPressed,

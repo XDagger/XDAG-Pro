@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
@@ -7,6 +8,7 @@ import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/check_page.dart';
 import 'package:xdag/page/home_page.dart';
 import 'package:xdag/page/wallet/main_page.dart';
+import 'package:back_to_home/back_to_home.dart';
 
 class StartPage extends StatefulWidget {
   const StartPage({super.key});
@@ -15,7 +17,8 @@ class StartPage extends StatefulWidget {
 }
 
 class _StartPageState extends State<StartPage> {
-  int needCheck = -1; // 0: no check, 1: to check, 2: check ok
+  int needCheck = -1;
+  DateTime? lastPopTime; // 0: no check, 1: to check, 2: check ok
   @override
   void initState() {
     super.initState();
@@ -59,10 +62,15 @@ class _StartPageState extends State<StartPage> {
         body: null,
       );
     }
-    if (wallet == null) {
-      return const HomePage();
-    } else {
-      return const WalletHomePage();
-    }
+    return WillPopScope(
+      onWillPop: () async {
+        if (Platform.isAndroid) {
+          BackToHome.backToPhoneHome();
+          return false;
+        }
+        return true;
+      },
+      child: wallet == null ? const HomePage() : const WalletHomePage(),
+    );
   }
 }

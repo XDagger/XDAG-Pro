@@ -43,7 +43,7 @@ class WalletHeader extends StatelessWidget {
                       Expanded(
                         child: Text(
                           AppLocalizations.of(context).backup_your_wallet,
-                          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white),
+                          style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
                         ),
                       ),
                       const SizedBox(width: 5),
@@ -80,13 +80,9 @@ class WalletHeader extends StatelessWidget {
                                     color: DarkColors.redColorMask,
                                     borderRadius: BorderRadius.circular(5),
                                   ),
-                                  child: const Text(
+                                  child: Text(
                                     "TEST",
-                                    style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.w400,
-                                      color: Colors.white70,
-                                    ),
+                                    style: Helper.fitChineseFont(context, const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: Colors.white70)),
                                   ),
                                 ),
                                 const SizedBox(height: 8),
@@ -96,11 +92,7 @@ class WalletHeader extends StatelessWidget {
                             const SizedBox(),
                           Text(
                             wallet.hideBalance == true ? "****" : "${wallet.amount} XDAG",
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
+                            style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                           ),
                         ],
                       )
@@ -122,7 +114,7 @@ class WalletHeader extends StatelessWidget {
                           child: Text(
                             wallet.address,
                             textAlign: TextAlign.right,
-                            style: const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54),
+                            style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54)),
                           ),
                         ),
                         const SizedBox(width: 8),

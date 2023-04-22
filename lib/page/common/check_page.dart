@@ -100,7 +100,7 @@ class _CheckPageState extends State<CheckPage> {
                             height: 40,
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Center(
-                              child: Text(AppLocalizations.of(context).use_password, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
+                              child: Text(AppLocalizations.of(context).use_password, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white))),
                             ),
                           ),
                         )
@@ -126,7 +126,7 @@ class _CheckPageState extends State<CheckPage> {
                         children: [
                           if (type == 0) Image.asset('images/face_id.png') else Image.asset('images/biometrics.png'),
                           const SizedBox(height: 30),
-                          Text(tipsText, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white)),
+                          Text(tipsText, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white))),
                         ],
                       ),
                     ),

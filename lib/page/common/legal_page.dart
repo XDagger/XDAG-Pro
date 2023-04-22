@@ -31,18 +31,12 @@ class LegalPage extends StatelessWidget {
       args = ModalRoute.of(context)!.settings.arguments as LegalPageRouteParams;
     }
     double screenWidth = ScreenHelper.screenWidth;
-    const descStyle = TextStyle(
-      decoration: TextDecoration.none,
-      fontSize: 14,
-      fontWeight: FontWeight.w500,
-      color: Colors.white,
-    );
     Widget? header = args.isFromSetting
         ? const SizedBox(height: 30)
         : Column(
             children: [
               const SizedBox(height: 40),
-              Text(AppLocalizations.of(context).review_Privacy_Policy, style: descStyle),
+              Text(AppLocalizations.of(context).review_Privacy_Policy, style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
               const SizedBox(height: 28),
             ],
           );

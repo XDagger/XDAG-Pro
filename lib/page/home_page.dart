@@ -50,7 +50,7 @@ class HomePage extends StatelessWidget {
                   child: Center(
                     child: Text(
                       AppLocalizations.of(context).attention,
-                      style: const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
+                      style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700)),
                     ),
                   )),
               const SizedBox(width: 40)
@@ -58,7 +58,7 @@ class HomePage extends StatelessWidget {
           ),
           content: Text(
             AppLocalizations.of(context).reset_password_tips,
-            style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
+            style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500)),
           ),
           actions: <Widget>[
             Column(

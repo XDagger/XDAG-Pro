@@ -10,10 +10,13 @@ import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/common/transaction.dart';
 import 'package:xdag/model/config_modal.dart';
+import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
+import 'package:xdag/page/common/add_contacts_page.dart';
 import 'package:xdag/page/common/check_page.dart';
 import 'package:xdag/page/detail/transaction_page.dart';
+import 'package:xdag/page/wallet/contacts_page.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/nav_header.dart';
@@ -115,8 +118,37 @@ class _SendPageState extends State<SendPage> {
               remark = '';
             });
             Helper.changeAndroidStatusBar(true);
-            await Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
-            Helper.changeAndroidStatusBar(false);
+            ContactsItem? item = await Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
+            if (item == null) {
+              Helper.changeAndroidStatusBar(false);
+              return;
+            }
+            // 延迟一下，等待页面收起
+            await Future.delayed(const Duration(milliseconds: 200));
+            if (item.name.isNotEmpty) {
+              if (context.mounted) {
+                String? reslut = (await Helper.showBottomSheet(
+                  context,
+                  ContactsDetail(item: item),
+                )) as String?;
+                Helper.changeAndroidStatusBar(false);
+                if (reslut == 'send') {
+                  if (context.mounted) {
+                    Navigator.pushNamed(context, '/send', arguments: SendPageRouteParams(address: item.address, name: item.name));
+                  }
+                }
+              }
+            } else {
+              Helper.changeAndroidStatusBar(false);
+              if (context.mounted) {
+                showModalBottomSheet(
+                  backgroundColor: DarkColors.bgColor,
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (BuildContext buildContext) => AddContactsPage(item: item),
+                );
+              }
+            }
           } else {
             // snackbar
             setState(() {
@@ -180,18 +212,18 @@ class _SendPageState extends State<SendPage> {
                           child: Row(
                             children: [
                               const SizedBox(width: 15),
-                              Text(AppLocalizations.of(context).to, style: const TextStyle(fontSize: 16, color: Colors.white54, fontWeight: FontWeight.w500)),
+                              Text(AppLocalizations.of(context).to, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white54, fontWeight: FontWeight.w500))),
                               const SizedBox(width: 15),
                               Expanded(
                                 child: ExtendedText(
                                   args.name.isEmpty ? args.address : args.name,
                                   textAlign: TextAlign.center,
                                   maxLines: 1,
-                                  style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500),
-                                  overflowWidget: const TextOverflowWidget(
+                                  style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500)),
+                                  overflowWidget: TextOverflowWidget(
                                     position: TextOverflowPosition.middle,
                                     align: TextOverflowAlign.center,
-                                    child: Text('...', style: TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500)),
+                                    child: Text('...', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500))),
                                   ),
                                 ),
                               ),
@@ -203,7 +235,7 @@ class _SendPageState extends State<SendPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Text(AppLocalizations.of(context).amount, style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500)),
+                      Text(AppLocalizations.of(context).amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller,
@@ -221,22 +253,18 @@ class _SendPageState extends State<SendPage> {
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         keyboardAppearance: Brightness.dark,
                         textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
+                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white)),
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
                         ],
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           filled: true,
-                          contentPadding: EdgeInsets.fromLTRB(15, 40, 15, 40),
+                          contentPadding: const EdgeInsets.fromLTRB(15, 40, 15, 40),
                           fillColor: DarkColors.blockColor,
                           hintText: 'XDAG',
-                          hintStyle: TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white54),
-                          enabledBorder: OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
-                          focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
+                          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white54)),
+                          enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                          focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
                         ),
                       ),
                       const SizedBox(height: 5),
@@ -257,7 +285,7 @@ class _SendPageState extends State<SendPage> {
                               },
                               child: Row(
                                 children: [
-                                  Text('${wallet.amount} XDAG', style: const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500)),
+                                  Text('${wallet.amount} XDAG', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500))),
                                   const SizedBox(width: 10),
                                   Container(
                                     //radius: 10,
@@ -268,7 +296,7 @@ class _SendPageState extends State<SendPage> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Center(
-                                      child: Text(AppLocalizations.of(context).all, style: const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500)),
+                                      child: Text(AppLocalizations.of(context).all, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500))),
                                     ),
                                   )
                                 ],
@@ -277,7 +305,7 @@ class _SendPageState extends State<SendPage> {
                           ],
                         ),
                       ),
-                      Text(AppLocalizations.of(context).remark, style: const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500)),
+                      Text(AppLocalizations.of(context).remark, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller2,
@@ -300,22 +328,14 @@ class _SendPageState extends State<SendPage> {
                           );
                         },
                         textInputAction: TextInputAction.done,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
+                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                         decoration: InputDecoration(
                           filled: true,
                           contentPadding: const EdgeInsets.all(15),
                           fillColor: DarkColors.blockColor,
-                          counterStyle: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: Colors.white,
-                          ),
+                          counterStyle: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
                           hintText: AppLocalizations.of(context).remark,
-                          hintStyle: const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54),
+                          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                           enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
                           focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
                         ),
@@ -329,7 +349,7 @@ class _SendPageState extends State<SendPage> {
                             color: DarkColors.redColorMask,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Text(error, style: const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500)),
+                          child: Text(error, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500))),
                         )
                       else
                         const SizedBox(height: 20),

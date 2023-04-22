@@ -41,6 +41,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
+  back_to_home:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "0e1bdc76a1d96b149d07a07514d18ba54e044df4"
+      url: "https://github.com/amazingCoding/flutter-back-to-phone-home.git"
+    source: git
+    version: "0.0.1"
   bip32:
     dependency: "direct main"
     description:
@@ -1148,5 +1157,5 @@ packages:
     source: hosted
     version: "3.1.1"
 sdks:
-  dart: ">=2.19.5 <3.0.0"
+  dart: ">=2.19.6 <3.0.0"
   flutter: ">=3.7.0"

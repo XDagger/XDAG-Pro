@@ -41,7 +41,7 @@ class LangsSelectPage extends StatelessWidget {
                         const SizedBox(width: 15),
                         Text(
                           index == 0 ? AppLocalizations.of(context).auto : item.name,
-                          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+                          style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)),
                         ),
                         const Spacer(),
                         if (config.walletConfig.local == index) Image.asset('images/select.png', width: 20, height: 20) else const SizedBox(width: 20),
@@ -98,7 +98,7 @@ class NetWorkSelectPage extends StatelessWidget {
                         const SizedBox(width: 15),
                         Text(
                           item,
-                          style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700),
+                          style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)),
                         ),
                         const Spacer(),
                         if (config.walletConfig.network == index) Image.asset('images/select.png', width: 20, height: 20) else const SizedBox(width: 20),

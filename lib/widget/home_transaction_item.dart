@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/wallet_modal.dart';
+import 'package:xdag/page/common/add_contacts_page.dart';
+import 'package:xdag/page/detail/send_page.dart';
 import 'package:xdag/page/detail/transaction_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xdag/page/wallet/contacts_page.dart';
 import 'package:xdag/widget/desktop.dart';
 
 class WalletTransactionDateHeader extends StatelessWidget {
@@ -16,7 +20,7 @@ class WalletTransactionDateHeader extends StatelessWidget {
       padding: const EdgeInsets.fromLTRB(15, 25, 15, 5),
       child: Text(
         Helper.formatDate(time),
-        style: const TextStyle(decoration: TextDecoration.none, fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white),
+        style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 18, fontWeight: FontWeight.w700, color: Colors.white)),
       ),
     );
   }
@@ -65,24 +69,55 @@ class WalletTransactionItem extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(isSnapshot ? AppLocalizations.of(context).snapshot : (isSend ? AppLocalizations.of(context).send : AppLocalizations.of(context).receive), style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white)),
+                      Text(isSnapshot ? AppLocalizations.of(context).snapshot : (isSend ? AppLocalizations.of(context).send : AppLocalizations.of(context).receive), style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
                       const SizedBox(height: 3),
-                      Text('${Helper.formatTime(transaction.time)} UTC', style: const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54)),
+                      Text('${Helper.formatTime(transaction.time)}  UTC', style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54))),
                     ],
                   ),
                 ),
               ),
               const SizedBox(width: 10),
               Expanded(
-                child: Text(isSnapshot ? '$amount XDAG' : (isSend ? '-$amount XDAG' : '+$amount XDAG'), textAlign: TextAlign.end, style: TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w700, color: isSnapshot ? Colors.white54 : (isSend ? DarkColors.bottomNavColor : DarkColors.greenColor))),
+                child: Text(isSnapshot ? '$amount XDAG' : (isSend ? '-$amount XDAG' : '+$amount XDAG'), textAlign: TextAlign.end, style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w700, color: isSnapshot ? Colors.white54 : (isSend ? DarkColors.bottomNavColor : DarkColors.greenColor)))),
               ),
               const SizedBox(width: 10),
             ],
           ),
         ),
-        onPressed: () {
+        onPressed: () async {
           if (isSnapshot) return;
-          Helper.showBottomSheet(context, TransactionPage(transaction: transaction, address: address));
+          Helper.changeAndroidStatusBar(true);
+          ContactsItem? item = await Helper.showBottomSheet(context, TransactionPage(transaction: transaction, address: address));
+          if (item == null) {
+            Helper.changeAndroidStatusBar(false);
+            return;
+          }
+          // 延迟一下，等待页面收起
+          await Future.delayed(const Duration(milliseconds: 200));
+          if (item.name.isNotEmpty) {
+            if (context.mounted) {
+              String? reslut = (await Helper.showBottomSheet(
+                context,
+                ContactsDetail(item: item),
+              )) as String?;
+              Helper.changeAndroidStatusBar(false);
+              if (reslut == 'send') {
+                if (context.mounted) {
+                  Navigator.pushNamed(context, '/send', arguments: SendPageRouteParams(address: item.address, name: item.name));
+                }
+              }
+            }
+          } else {
+            Helper.changeAndroidStatusBar(false);
+            if (context.mounted) {
+              showModalBottomSheet(
+                backgroundColor: DarkColors.bgColor,
+                context: context,
+                isScrollControlled: true,
+                builder: (BuildContext buildContext) => AddContactsPage(item: item),
+              );
+            }
+          }
         });
   }
 }

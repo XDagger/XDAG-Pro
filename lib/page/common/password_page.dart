@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:xdag/common/global.dart';
+import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/page/common/check_page.dart';
 import 'package:xdag/page/common/security_page.dart';
@@ -79,10 +80,13 @@ class _PasswordPageState extends State<PasswordPage> {
                                       behavior: SnackBarBehavior.fixed,
                                       content: Text(
                                         AppLocalizations.of(context).change_password_success,
-                                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+                                        style: Helper.fitChineseFont(
+                                          context,
+                                          const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),
+                                          listen: false,
+                                        ),
                                       ),
                                     ));
-                                    // Helper.showSnackBar(AppLocalizations.of(context).change_password_success);
                                   },
                                 ),
                               );

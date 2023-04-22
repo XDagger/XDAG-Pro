@@ -6,11 +6,11 @@ import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
+import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/modal_frame.dart';
-import 'package:xdag/common/global.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TransactionPage extends StatefulWidget {
@@ -93,6 +93,12 @@ class _TransactionPageState extends State<TransactionPage> {
     Transaction transaction = widget.transaction;
     String address = widget.address;
     bool isSend = transaction.from == address;
+    // String otherAddress = isSend ? transaction.to : transaction.from;
+    ContactsModal contacts = Provider.of<ContactsModal>(context);
+    // 查询 otherAddress 是否在 contacts.contactsList 中
+    ContactsItem otherContact = contacts.contactsList.firstWhere((element) => element.address == otherAddress, orElse: () => ContactsItem("", otherAddress));
+
+    // if(transaction.amount)
     return ModalFrame(
       height: height,
       title: isSend ? AppLocalizations.of(context).send : AppLocalizations.of(context).receive,
@@ -108,17 +114,12 @@ class _TransactionPageState extends State<TransactionPage> {
       isShowRightCloseButton: true,
       child: Column(
         children: [
-          Text(isSend ? '-${transaction.amount} XDAG' : '+${transaction.amount} XDAG', style: TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: isSend ? DarkColors.bottomNavColor : DarkColors.greenColor)),
+          Text(isSend ? '-${transaction.amount} XDAG' : '+${transaction.amount} XDAG', style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: isSend ? DarkColors.bottomNavColor : DarkColors.greenColor))),
           const SizedBox(height: 5),
           if (transaction.status == 'pending')
             Text(
               "${AppLocalizations.of(context).state}: $transactionState",
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                fontSize: 14,
-                fontWeight: FontWeight.w400,
-                color: transactionState == 'Accepted' ? DarkColors.greenColor : DarkColors.redColor,
-              ),
+              style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: transactionState == 'Accepted' ? DarkColors.greenColor : DarkColors.redColor)),
             )
           else
             const SizedBox(),
@@ -127,7 +128,7 @@ class _TransactionPageState extends State<TransactionPage> {
           else
             Text(
               "${isSend ? AppLocalizations.of(context).send_on : AppLocalizations.of(context).receive_on} ${Helper.formatFullTime(transaction.time)} UTC",
-              style: const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54),
+              style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54)),
             ),
           const SizedBox(height: 25),
           if (isLoading)
@@ -152,11 +153,11 @@ class _TransactionPageState extends State<TransactionPage> {
                       showCopy: true,
                       borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
                       title: isSend ? AppLocalizations.of(context).receiver : AppLocalizations.of(context).sender,
-                      value: otherAddress,
+                      value: otherContact.name.isEmpty ? otherContact.address : otherContact.name,
+                      leftIcon: otherContact.name.isEmpty ? const Icon(Icons.add, color: Colors.white, size: 10) : const Icon(Icons.person, color: Colors.white, size: 10),
                     ),
                     onPressed: () {
-                      Clipboard.setData(ClipboardData(text: otherAddress));
-                      Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                      Navigator.of(context).pop(otherContact);
                     }),
                 const SizedBox(height: 1),
                 MyCupertinoButton(
@@ -212,7 +213,7 @@ class TransactionShowDetail extends StatelessWidget {
           Expanded(
               child: Column(
             children: [
-              Text('${transaction.amount} XDAG', textAlign: TextAlign.center, style: const TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: DarkColors.greenColor)),
+              Text('${transaction.amount} XDAG', textAlign: TextAlign.center, style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: DarkColors.greenColor))),
               const SizedBox(height: 20),
               TransactionButton(
                 showCopy: false,
@@ -273,17 +274,13 @@ class TransactionButton extends StatelessWidget {
   final BorderRadiusGeometry borderRadius;
   final bool showCopy;
   final bool readFont;
-  const TransactionButton({super.key, required this.title, required this.value, required this.showCopy, this.readFont = false, this.borderRadius = const BorderRadius.all(Radius.circular(0))});
+  final Icon? leftIcon;
+  const TransactionButton({super.key, this.leftIcon, required this.title, required this.value, required this.showCopy, this.readFont = false, this.borderRadius = const BorderRadius.all(Radius.circular(0))});
 
   @override
   Widget build(BuildContext context) {
-    TextStyle titleStyle = const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54);
-    TextStyle valueStyle = TextStyle(
-      decoration: TextDecoration.none,
-      fontSize: 12,
-      fontWeight: FontWeight.w700,
-      color: readFont ? DarkColors.redColor : Colors.white,
-    );
+    TextStyle titleStyle = Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54));
+    TextStyle valueStyle = Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w700, color: readFont ? DarkColors.redColor : Colors.white));
     Widget icon = showCopy == true
         ? Container(
             margin: const EdgeInsets.only(left: 5),
@@ -293,7 +290,7 @@ class TransactionButton extends StatelessWidget {
               color: DarkColors.bgColor,
               borderRadius: BorderRadius.all(Radius.circular(14)),
             ),
-            child: const Icon(Icons.copy_rounded, size: 10, color: Colors.white))
+            child: leftIcon ?? const Icon(Icons.copy_rounded, size: 10, color: Colors.white))
         : const SizedBox(width: 0);
     return Container(
       height: 50,

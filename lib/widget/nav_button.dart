@@ -39,12 +39,7 @@ class BottomNavButton extends StatelessWidget {
             image,
             Text(
               text,
-              style: TextStyle(
-                decoration: TextDecoration.none,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-                color: color,
-              ),
+              style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w500, color: color)),
             ),
             ScreenHelper.bottomPadding > 0 ? const SizedBox(height: 0) : const SizedBox(height: 5),
           ],

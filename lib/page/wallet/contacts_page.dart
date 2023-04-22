@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
@@ -16,12 +17,6 @@ class ContactsMainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var topPadding = ScreenHelper.topPadding;
-    const titleStyle = TextStyle(
-      decoration: TextDecoration.none,
-      fontSize: 32,
-      fontWeight: FontWeight.w700,
-      color: Colors.white,
-    );
     ContactsModal contacts = Provider.of<ContactsModal>(context);
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
@@ -35,7 +30,7 @@ class ContactsMainPage extends StatelessWidget {
                 Expanded(
                     child: Text(
                   AppLocalizations.of(context).contacts,
-                  style: titleStyle,
+                  style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 )),
@@ -74,7 +69,7 @@ class ContactsMainPage extends StatelessWidget {
                   return Column(children: [
                     const SizedBox(height: 50),
                     const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                    Text(AppLocalizations.of(context).no_transactions, style: const TextStyle(color: Colors.white, fontSize: 16)),
+                    Text(AppLocalizations.of(context).no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
                     const SizedBox(height: 50),
                   ]);
                 }
@@ -126,7 +121,7 @@ class ContactsMainPage extends StatelessWidget {
                                       child: Center(
                                         child: Text(
                                           AppLocalizations.of(context).attention,
-                                          style: const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700),
+                                          style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700)),
                                         ),
                                       )),
                                   const SizedBox(width: 40)
@@ -134,7 +129,7 @@ class ContactsMainPage extends StatelessWidget {
                               ),
                               content: Text(
                                 AppLocalizations.of(context).delete_contact,
-                                style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
+                                style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500)),
                               ),
                               actions: <Widget>[
                                 Column(
@@ -201,7 +196,7 @@ class ContactsMainPage extends StatelessWidget {
                         Expanded(
                           child: Text(
                             item.name,
-                            style: const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500),
+                            style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500)),
                           ),
                         ),
                         const SizedBox(width: 5),
@@ -227,7 +222,7 @@ class ContactsDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModalFrame(
-      title: AppLocalizations.of(context).contacts,
+      title: item.name,
       isHideLeftDownButton: true,
       isShowRightCloseButton: true,
       child: Container(
@@ -237,15 +232,15 @@ class ContactsDetail extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  Text(item.name, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400)),
-                  const SizedBox(height: 15),
+                  // Text(item.name, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400))),
+                  // const SizedBox(height: 15),
                   Container(
                     decoration: BoxDecoration(
                       color: DarkColors.blockColor,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     padding: const EdgeInsets.all(15),
-                    child: Text(item.address, style: const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700)),
+                    child: Text(item.address, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700))),
                   ),
                 ],
               ),
@@ -255,7 +250,7 @@ class ContactsDetail extends StatelessWidget {
               margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
               // color: Colors.green,
               child: Row(
-                mainAxisAlignment: canEdit ? MainAxisAlignment.spaceAround : MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   if (canEdit)
                     MyCupertinoButton(
@@ -277,9 +272,7 @@ class ContactsDetail extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop("delete");
                       },
-                    )
-                  else
-                    const SizedBox(),
+                    ),
                   if (canEdit)
                     MyCupertinoButton(
                       padding: EdgeInsets.zero,
@@ -300,9 +293,7 @@ class ContactsDetail extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop("edit");
                       },
-                    )
-                  else
-                    const SizedBox(),
+                    ),
                   MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: Container(
@@ -321,6 +312,27 @@ class ContactsDetail extends StatelessWidget {
                     ),
                     onPressed: () {
                       Navigator.of(context).pop("send");
+                    },
+                  ),
+                  MyCupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: DarkColors.blockColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.copy,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(text: item.address));
+                      Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
                     },
                   ),
                 ],

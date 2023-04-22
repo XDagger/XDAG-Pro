@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/helper.dart';
 import 'package:xdag/widget/desktop.dart';
 
 class LabelButton extends StatelessWidget {
@@ -35,7 +36,7 @@ class LabelButton extends StatelessWidget {
       borderRadius = const BorderRadius.all(Radius.circular(8));
     }
 
-    var labelStyle = TextStyle(color: textClolor, fontSize: 16, fontWeight: FontWeight.w500);
+    var labelStyle = Helper.fitChineseFont(context, TextStyle(color: textClolor, fontSize: 16, fontWeight: FontWeight.w500));
     Widget? item = child ?? const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16);
     return SizedBox(
         // height: 55,

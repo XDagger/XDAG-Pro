@@ -218,7 +218,7 @@ class _InputPassCodeState extends State<InputPassCode> {
         const Spacer(),
         Text(
           title,
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white),
+          style: Helper.fitChineseFont(context, const TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white)),
         ),
         const SizedBox(height: 10),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: renderDot(context)),
@@ -234,11 +234,6 @@ class NumberButton extends StatelessWidget {
   final int index;
   final void Function(int index)? onPressed;
   const NumberButton({super.key, this.index = 0, required this.onPressed});
-  static const numberTextStyle = TextStyle(
-    fontSize: 25,
-    color: Colors.white,
-    fontWeight: FontWeight.w500,
-  );
   static double size = ScreenHelper.screenWidth < 400 || Helper.isDesktop ? 64 : 80;
   @override
   Widget build(BuildContext context) {
@@ -255,7 +250,7 @@ class NumberButton extends StatelessWidget {
           width: size,
           height: size,
           child: Center(
-            child: index != -2 ? Text("${index + 1}", style: numberTextStyle) : const Icon(Icons.backspace, color: Colors.white),
+            child: index != -2 ? Text("${index + 1}", style: Helper.fitChineseFont(context, const TextStyle(fontSize: 25, color: Colors.white, fontWeight: FontWeight.w500))) : const Icon(Icons.backspace, color: Colors.white),
           )),
     );
   }

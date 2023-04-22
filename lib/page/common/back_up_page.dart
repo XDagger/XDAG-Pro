@@ -56,11 +56,11 @@ class BackUpPage extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
                     child: Column(
                       children: [
-                        Text(args.type == 0 ? AppLocalizations.of(context).write_Down_Mnemonics : AppLocalizations.of(context).write_Down_PrivateKey, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor)),
+                        Text(args.type == 0 ? AppLocalizations.of(context).write_Down_Mnemonics : AppLocalizations.of(context).write_Down_PrivateKey, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor))),
                         const SizedBox(height: 15),
                         Text(
                           args.isBackup ? AppLocalizations.of(context).backup_test_tips_3 : (args.type == 0 ? AppLocalizations.of(context).write_Down_Mnemonics_tips : AppLocalizations.of(context).write_Down_PrivateKey_tips),
-                          style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white),
+                          style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white)),
                         ),
                         const SizedBox(height: 20),
                         Container(
@@ -72,7 +72,7 @@ class BackUpPage extends StatelessWidget {
                           ),
                           // 每两个元素一行
                           child: args.type == 1
-                              ? Text(args.data, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))
+                              ? Text(args.data, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)))
                               : Wrap(
                                   spacing: 20,
                                   runSpacing: 20,
@@ -85,7 +85,7 @@ class BackUpPage extends StatelessWidget {
                                             borderRadius: BorderRadius.circular(25),
                                           ),
                                           child: Center(
-                                            child: Text('${e.index}. ${e.value}', style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                                            child: Text('${e.index}. ${e.value}', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                                           )))
                                       .toList(),
                                 ),

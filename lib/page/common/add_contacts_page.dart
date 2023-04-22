@@ -125,7 +125,7 @@ class _AddContactsPage extends State<AddContactsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AppLocalizations.of(context).contact_name, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                      Text(AppLocalizations.of(context).contact_name, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                       const SizedBox(height: 13),
                       AutoSizeTextField(
                         controller: controller2,
@@ -147,18 +147,13 @@ class _AddContactsPage extends State<AddContactsPage> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardAppearance: Brightness.dark,
-                        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white),
+                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                         decoration: InputDecoration(
                           filled: true,
                           contentPadding: const EdgeInsets.all(15),
                           fillColor: DarkColors.blockColor,
                           hintText: AppLocalizations.of(context).contact_name,
-                          hintStyle: const TextStyle(
-                            decoration: TextDecoration.none,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white54,
-                          ),
+                          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                           enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -170,7 +165,7 @@ class _AddContactsPage extends State<AddContactsPage> {
                         ),
                       ),
                       const SizedBox(height: 25),
-                      Text(AppLocalizations.of(context).walletAddress, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                      Text(AppLocalizations.of(context).walletAddress, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                       const SizedBox(height: 13),
                       AutoSizeTextField(
                         controller: controller,
@@ -192,22 +187,13 @@ class _AddContactsPage extends State<AddContactsPage> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardAppearance: Brightness.dark,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white,
-                        ),
+                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                         decoration: InputDecoration(
                           filled: true,
                           contentPadding: const EdgeInsets.all(15),
                           fillColor: DarkColors.blockColor,
                           hintText: AppLocalizations.of(context).walletAddress,
-                          hintStyle: const TextStyle(
-                            decoration: TextDecoration.none,
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white54,
-                          ),
+                          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                           enabledBorder: const OutlineInputBorder(
                             borderSide: BorderSide.none,
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -227,7 +213,7 @@ class _AddContactsPage extends State<AddContactsPage> {
                             color: DarkColors.redColorMask,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: Text(error, style: const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500)),
+                          child: Text(error, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: DarkColors.redColor, fontWeight: FontWeight.w500))),
                         )
                       else
                         const SizedBox(height: 20),

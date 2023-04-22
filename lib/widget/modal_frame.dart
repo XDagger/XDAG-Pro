@@ -62,14 +62,7 @@ class ModalFrame extends StatelessWidget {
                   children: [
                     leftButton,
                     const SizedBox(width: 10),
-                    Expanded(
-                        child: Text(title,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700,
-                            ))),
+                    Expanded(child: Text(title, textAlign: TextAlign.center, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700)))),
                     const SizedBox(width: 10),
                     rightButton,
                   ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/helper.dart';
 import 'package:xdag/widget/desktop.dart';
 
 class Button extends StatelessWidget {
@@ -43,11 +44,7 @@ class Button extends StatelessWidget {
               : Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: textColor,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: Helper.fitChineseFont(context, TextStyle(color: textColor, fontSize: 16.0, fontWeight: FontWeight.w500)),
                 ),
         ));
   }

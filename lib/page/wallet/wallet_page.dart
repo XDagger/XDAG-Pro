@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
-import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/db_model.dart';
@@ -29,7 +28,7 @@ class _WalletPageState extends State<WalletPage> {
   CancelToken cancelToken = CancelToken();
   int currentPage = 1;
   int totalPage = 1;
-  bool loading = false;
+  bool loading = true;
   final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
@@ -37,7 +36,8 @@ class _WalletPageState extends State<WalletPage> {
     _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
     _network = Provider.of<ConfigModal>(context, listen: false).walletConfig.network;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _refreshIndicatorKey.currentState?.show();
+      // _refreshIndicatorKey.currentState?.show();
+      fetchFristPage();
     });
     _scrollController.addListener(_scrollListener);
   }
@@ -58,44 +58,73 @@ class _WalletPageState extends State<WalletPage> {
     _scrollController.dispose();
     cancelToken.cancel();
     dio.close();
-    WalletModal walletModal = Provider.of<WalletModal>(context);
-    ConfigModal configModal = Provider.of<ConfigModal>(context);
-    walletModal.removeListener(_onWalletModalChange);
-    configModal.removeListener(_onConfigModalChange);
+    try {
+      WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
+      ConfigModal configModal = Provider.of<ConfigModal>(context, listen: false);
+      walletModal.removeListener(_onWalletModalChange);
+      configModal.removeListener(_onConfigModalChange);
+      // ignore: empty_catches
+    } catch (e) {}
     super.dispose();
   }
 
   _onWalletModalChange() {
+    if (!context.mounted) return;
+    Wallet newWallet = Provider.of<WalletModal>(context, listen: false).getWallet();
+    if (newWallet.address.isEmpty) {
+      if (loading) {
+        cancelToken.cancel();
+        cancelToken = CancelToken();
+      }
+      return;
+    }
     if (_crurrentAddress != Provider.of<WalletModal>(context, listen: false).getWallet().address) {
-      _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
+      _refreshIndicatorKey.currentState?.deactivate();
       setState(() {
         list = [];
       });
-      _refreshIndicatorKey.currentState?.show();
+      fetchFristPage();
+      _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
     }
   }
 
   _onConfigModalChange() {
+    if (!context.mounted) return;
     WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
     if (_network != Provider.of<ConfigModal>(context, listen: false).walletConfig.network) {
-      _network = Provider.of<ConfigModal>(context, listen: false).walletConfig.network;
+      _refreshIndicatorKey.currentState?.deactivate();
       setState(() {
         list = [];
       });
+      fetchFristPage();
       walletModal.setBlance("0.00");
-      _refreshIndicatorKey.currentState?.show();
     }
   }
 
   void _scrollListener() {
+    if (loading) return;
     if (!loading && _scrollController.position.pixels > _scrollController.position.maxScrollExtent - 100 && currentPage < totalPage) {
       currentPage += 1;
       fetchPage();
     }
   }
 
+  fetchFristPage() async {
+    if (loading) {
+      cancelToken.cancel();
+      cancelToken = CancelToken();
+    }
+    setState(() {
+      loading = false;
+      currentPage = 1;
+    });
+    // 延迟一下，防止刷新的时候，页面还没加载完
+    await Future.delayed(const Duration(milliseconds: 100));
+    await fetchPage();
+  }
+
   fetchPage() async {
-    if (loading) return;
+    // if (loading) return;
     setState(() {
       loading = true;
     });
@@ -115,9 +144,11 @@ class _WalletPageState extends State<WalletPage> {
       });
       walletModal.setBlance(responseBalance.data['result']);
       Response response = await dio.get(
-        "$explorURL/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=200",
+        "$explorURL/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=100",
         cancelToken: cancelToken,
       );
+      // print("address: ${wallet.address}");
+      // print("fetchPage time: ${DateTime.now().difference(startTime).inMilliseconds}ms");
       if (response.data["addresses_pagination"] != null) {
         totalPage = response.data["addresses_pagination"]["last_page"];
       }
@@ -134,7 +165,7 @@ class _WalletPageState extends State<WalletPage> {
               status: "",
               from: item["direction"] == 'input' ? "" : wallet.address,
               to: item["direction"] != 'input' ? "" : wallet.address,
-              type: item["direction"] != 'snapshot' ? 0 : 1,
+              type: item["direction"] != 'snapshot' && item["direction"] != 'earning' ? 0 : 1,
               hash: '',
               blockAddress: item["address"],
               fee: 0,
@@ -144,7 +175,7 @@ class _WalletPageState extends State<WalletPage> {
           } catch (e) {}
         }
         List<Transaction> allList = currentPage == 1 ? newList : list + newList;
-        allList.where((element) => element.type != 2).toList();
+        allList = allList.where((element) => element.type != 2).toList();
         List<Transaction> newList2 = [];
         newList2.addAll(allList);
         String lastTime = "";
@@ -164,21 +195,18 @@ class _WalletPageState extends State<WalletPage> {
       }
     } catch (e) {
       if (mounted) {
-        setState(() {
-          loading = false;
-        });
+        try {
+          setState(() {
+            loading = false;
+          });
+          // ignore: empty_catches
+        } catch (e) {}
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    const titleStyle = TextStyle(
-      decoration: TextDecoration.none,
-      fontSize: 22,
-      fontWeight: FontWeight.w700,
-      color: Colors.white,
-    );
     WalletModal walletModal = Provider.of<WalletModal>(context);
     Wallet wallet = walletModal.getWallet();
     return Container(
@@ -195,7 +223,7 @@ class _WalletPageState extends State<WalletPage> {
                   child: Center(
                     child: Text(
                       wallet.name,
-                      style: titleStyle,
+                      style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: Colors.white)),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -219,13 +247,8 @@ class _WalletPageState extends State<WalletPage> {
             child: RefreshIndicator(
               key: _refreshIndicatorKey,
               color: DarkColors.mainColor,
-              semanticsLabel: "1123",
               onRefresh: () async {
-                cancelToken.cancel();
-                cancelToken = CancelToken();
-                loading = false;
-                currentPage = 1;
-                await fetchPage();
+                await fetchFristPage();
               },
               child: ListView.builder(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -235,18 +258,18 @@ class _WalletPageState extends State<WalletPage> {
                 itemBuilder: (BuildContext buildContext, int index) {
                   if (index == 0) return const WalletHeader();
                   if (index == list.length + 1) {
-                    if (list.isEmpty) {
+                    if (list.isEmpty && !loading) {
                       return Column(children: [
                         const SizedBox(height: 50),
                         const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                        Text(AppLocalizations.of(context).no_transactions, style: const TextStyle(color: Colors.white, fontSize: 16)),
+                        Text(AppLocalizations.of(context).no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
                         const SizedBox(height: 50),
                       ]);
                     }
                     if (loading) {
                       return Column(
                         children: const [
-                          SizedBox(height: 20),
+                          SizedBox(height: 30),
                           Center(
                             child: SizedBox(
                               width: 30,

@@ -44,7 +44,7 @@ class _ChangeNamePageState extends State<ChangeNamePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppLocalizations.of(context).walletName, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                    Text(AppLocalizations.of(context).walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                     const SizedBox(height: 10),
                     Input(
                       defaultValue: wallet.name,

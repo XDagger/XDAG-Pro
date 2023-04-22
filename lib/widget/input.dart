@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/helper.dart';
 
 class Input extends StatefulWidget {
   final String hintText;
@@ -45,23 +46,13 @@ class _InputState extends State<Input> {
       keyboardAppearance: Brightness.dark,
       autofocus: widget.isFocus,
       cursorColor: DarkColors.mainColor,
-      style: const TextStyle(
-        decoration: TextDecoration.none,
-        fontSize: 16,
-        fontWeight: FontWeight.w500,
-        color: Colors.white,
-      ),
+      style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
       decoration: InputDecoration(
           hintText: widget.hintText,
           filled: true,
           fillColor: DarkColors.blockColor,
           contentPadding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
-          hintStyle: const TextStyle(
-            decoration: TextDecoration.none,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: Colors.white54,
-          ),
+          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: DarkColors.mainColor, width: 1),
             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -142,12 +133,7 @@ class MyRadioButton extends StatelessWidget {
               constraints: const BoxConstraints(minHeight: 22.0),
               child: Text(
                 title,
-                style: TextStyle(
-                  decoration: TextDecoration.none,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: textColor,
-                ),
+                style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: textColor)),
               ),
             ))
           ],
