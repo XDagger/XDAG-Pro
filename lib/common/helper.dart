@@ -73,7 +73,7 @@ class Helper {
 
   static TextStyle fitChineseFont(BuildContext context, TextStyle textStyle, {listen = true}) {
     ConfigModal configModal = Provider.of<ConfigModal>(context, listen: listen);
-    if (configModal.local == const Locale("ja") || configModal.local == const Locale("zh")) {
+    if (configModal.local.languageCode == const Locale("ja").languageCode || configModal.local.languageCode == const Locale("zh").languageCode) {
       return textStyle.useSystemChineseFont();
     }
     return textStyle;

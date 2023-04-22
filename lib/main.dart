@@ -84,7 +84,7 @@ class MyWidget extends StatelessWidget {
             supportedLocales: AppLocalizations.supportedLocales,
             locale: configModal.local,
             theme: ThemeData(
-              fontFamily: configModal.local == const Locale("ja") || configModal.local == const Locale("zh") ? "system-font" : "RobotoMono",
+              fontFamily: configModal.local.languageCode == const Locale("ja").languageCode || configModal.local.languageCode == const Locale("zh").languageCode ? "system-font" : "RobotoMono",
               scrollbarTheme: !Helper.isDesktop
                   ? null
                   : ScrollbarThemeData(
