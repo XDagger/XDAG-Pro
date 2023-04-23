@@ -94,7 +94,6 @@ class ReceivePage extends StatelessWidget {
                 ],
               ),
             ),
-            //Column(children: [const SizedBox(height: 20), Image.asset("images/logo.png", width: 50, height: 50)])
           ],
         ));
   }

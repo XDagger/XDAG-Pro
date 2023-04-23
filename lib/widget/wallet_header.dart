@@ -66,7 +66,7 @@ class WalletHeader extends StatelessWidget {
                   padding: const EdgeInsets.all(15),
                   child: Row(
                     children: [
-                      Image.asset('images/logo.png', width: 40, height: 40),
+                      Image.asset('images/logo40.png', width: 40, height: 40),
                       const Spacer(),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,

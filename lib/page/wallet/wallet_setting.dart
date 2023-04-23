@@ -99,7 +99,7 @@ class WalletSettingPage extends StatelessWidget {
                           child: Image.asset("images/aboutus.png", width: 25, height: 25),
                         ),
                         const SizedBox(height: 30),
-                        Image.asset("images/logo.png", width: 30, height: 30),
+                        Image.asset("images/logo40.png", width: 40, height: 40),
                         const SizedBox(height: 5),
                         Text("XDAG-Pro", style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500))),
                         const SizedBox(height: 5),

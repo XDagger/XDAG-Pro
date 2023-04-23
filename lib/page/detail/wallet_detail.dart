@@ -28,7 +28,7 @@ class WalletDetailPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset("images/logo.png", width: 80, height: 80),
+              Image.asset("images/logo80.png", width: 80, height: 80),
               const SizedBox(height: 5),
               SizedBox(
                 height: 36,
