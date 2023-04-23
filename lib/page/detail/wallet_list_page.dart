@@ -67,7 +67,10 @@ class _WalletListPageState extends State<WalletListPage> {
         checkCallback: (bool isCheck) async {
           if (isCheck) {
             WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
-            walletModal.deleteWallet(walletModal.walletList.getAt(index)!, index);
+            await walletModal.deleteWallet(walletModal.walletList.getAt(index)!, index);
+            if (walletModal.walletList.isEmpty && mounted) {
+              Navigator.of(context).pop(true);
+            }
           }
         },
       ),

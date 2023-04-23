@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:xdag/common/color.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/widget/desktop.dart';
 
 class Dot extends StatelessWidget {
   final double size;
@@ -60,6 +61,7 @@ class HomeMain extends StatefulWidget {
 
 class _HomeMainState extends State<HomeMain> {
   int index = 0;
+  final pageController = PageController();
   @override
   Widget build(BuildContext context) {
     var config = [
@@ -79,39 +81,100 @@ class _HomeMainState extends State<HomeMain> {
         "subTitle": AppLocalizations.of(context).welcomeDesc_3,
       }
     ];
-    return Stack(
-      fit: StackFit.expand,
-      children: [
-        PageView.builder(
-          itemCount: config.length,
-          itemBuilder: (context, index) {
-            return HomeMainContent(
-              image: config[index]["image"]!,
-              title: config[index]["title"]!,
-              subTitle: config[index]["subTitle"]!,
-            );
-          },
-          onPageChanged: (index) {
-            setState(() {
-              this.index = index;
-            });
-          },
-        ),
-        Positioned(
-            bottom: 25,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Dot(color: index == 0 ? DarkColors.mainColor : Colors.white),
-                const SizedBox(width: 18),
-                Dot(color: index == 1 ? DarkColors.mainColor : Colors.white),
-                const SizedBox(width: 18),
-                Dot(color: index == 2 ? DarkColors.mainColor : Colors.white),
-              ],
-            )),
-      ],
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        double screenHeight = MediaQuery.of(context).size.height;
+        double contentHeight = ScreenHelper.topPadding + 55 + 20 + (ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20) + 50 + 20 + 50;
+        double h = (screenHeight - contentHeight) / 2;
+        print(screenHeight);
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            PageView.builder(
+              itemCount: config.length,
+              controller: pageController,
+              itemBuilder: (context, index) {
+                return HomeMainContent(
+                  image: config[index]["image"]!,
+                  title: config[index]["title"]!,
+                  subTitle: config[index]["subTitle"]!,
+                );
+              },
+              onPageChanged: (index) {
+                setState(() {
+                  this.index = index;
+                });
+              },
+            ),
+            if (Helper.isDesktop)
+              Positioned(
+                top: h - 25,
+                left: 10,
+                width: 50,
+                height: 50,
+                child: MyCupertinoButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: index != 0
+                      ? () {
+                          if (index > 0) {
+                            pageController.previousPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+                          }
+                        }
+                      : null,
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Center(
+                        child: Icon(
+                      Icons.arrow_back_ios,
+                      color: index != 0 ? Colors.white : Colors.white54,
+                    )),
+                  ),
+                ),
+              ),
+            if (Helper.isDesktop)
+              Positioned(
+                top: h - 25,
+                right: 10,
+                width: 50,
+                height: 50,
+                child: MyCupertinoButton(
+                  padding: const EdgeInsets.all(0),
+                  onPressed: index != 2
+                      ? () {
+                          if (index < config.length - 1) {
+                            pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.ease);
+                          }
+                        }
+                      : null,
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Center(
+                        child: Icon(
+                      Icons.arrow_forward_ios,
+                      color: index != 2 ? Colors.white : Colors.white54,
+                    )),
+                  ),
+                ),
+              ),
+            Positioned(
+                bottom: 25,
+                left: 0,
+                right: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Dot(color: index == 0 ? DarkColors.mainColor : Colors.white),
+                    const SizedBox(width: 18),
+                    Dot(color: index == 1 ? DarkColors.mainColor : Colors.white),
+                    const SizedBox(width: 18),
+                    Dot(color: index == 2 ? DarkColors.mainColor : Colors.white),
+                  ],
+                )),
+          ],
+        );
+      },
     );
   }
 }

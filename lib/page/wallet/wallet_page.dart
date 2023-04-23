@@ -90,6 +90,7 @@ class _WalletPageState extends State<WalletPage> {
   }
 
   fetchPage() async {
+    if (!mounted) return;
     setState(() {
       loading = true;
     });
