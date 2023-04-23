@@ -16,11 +16,12 @@ class WalletHomePage extends StatefulWidget {
 class _WalletHomePageState extends State<WalletHomePage> {
   List<Widget> _bottomNavPages = [];
   int _currentIndex = 0;
+  final GlobalKey<WalletPageState> walletPageStateKey = GlobalKey();
   @override
   void initState() {
     super.initState();
     _bottomNavPages = [
-      const WalletPage(),
+      WalletPage(key: walletPageStateKey),
       const ContactsMainPage(),
       const WalletSettingPage(),
     ];
@@ -34,6 +35,17 @@ class _WalletHomePageState extends State<WalletHomePage> {
         appBar: null,
         body: IndexedStack(index: _currentIndex, children: _bottomNavPages),
         backgroundColor: DarkColors.bgColor,
+        floatingActionButton: _currentIndex == 0 && Helper.isDesktop
+            ? FloatingActionButton(
+                onPressed: () {
+                  if (walletPageStateKey.currentState?.loading != true) {
+                    walletPageStateKey.currentState?.fetchFristPage();
+                  }
+                },
+                backgroundColor: DarkColors.mainColor,
+                child: const Icon(Icons.refresh),
+              )
+            : null,
         bottomNavigationBar: BottomAppBar(
           color: DarkColors.bgColor,
           child: Row(

@@ -13,12 +13,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class WalletPage extends StatefulWidget {
   const WalletPage({super.key});
-
   @override
-  State<WalletPage> createState() => _WalletPageState();
+  State<WalletPage> createState() => WalletPageState();
 }
 
-class _WalletPageState extends State<WalletPage> {
+class WalletPageState extends State<WalletPage> {
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String _crurrentAddress = "";
   int _network = 0;
