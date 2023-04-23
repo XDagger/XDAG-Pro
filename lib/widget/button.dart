@@ -49,3 +49,25 @@ class Button extends StatelessWidget {
         ));
   }
 }
+
+class CheckDot extends StatelessWidget {
+  final bool check;
+  final Color color;
+  final double size;
+  final double iconSize;
+  const CheckDot({super.key, this.check = true, this.color = DarkColors.mainColor, this.size = 20.0, this.iconSize = 14.0});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: check ? color : Colors.transparent,
+        border: Border.all(color: color, width: 1),
+        borderRadius: BorderRadius.circular(size / 2),
+      ),
+      child: check ? Center(child: Icon(Icons.check, color: Colors.white, size: iconSize)) : null,
+    );
+  }
+}

@@ -214,7 +214,7 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget icon = wallet!.isDef ? Image.asset("images/select.png", width: 16, height: 16) : const SizedBox(width: 20);
+    Widget icon = wallet!.isDef ? const CheckDot(color: DarkColors.mainColor, size: 20) : const SizedBox(width: 20);
     WalletModal walletModal = Provider.of<WalletModal>(context);
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),

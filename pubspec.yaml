@@ -190,10 +190,6 @@ flutter:
     - images/2.0x/key.png
     - images/3.0x/key.png
 
-    - images/select.png
-    - images/2.0x/select.png
-    - images/3.0x/select.png
-
     - images/face_id.png
     - images/2.0x/face_id.png
     - images/3.0x/face_id.png

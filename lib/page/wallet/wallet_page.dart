@@ -29,67 +29,33 @@ class _WalletPageState extends State<WalletPage> {
   int currentPage = 1;
   int totalPage = 1;
   bool loading = true;
+  late ConfigModal? configModal;
   final ScrollController _scrollController = ScrollController();
   @override
   void initState() {
     super.initState();
     _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
+    configModal = Provider.of<ConfigModal>(context, listen: false);
     _network = Provider.of<ConfigModal>(context, listen: false).walletConfig.network;
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // _refreshIndicatorKey.currentState?.show();
       fetchFristPage();
     });
     _scrollController.addListener(_scrollListener);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    WalletModal walletModal = Provider.of<WalletModal>(context);
-    ConfigModal configModal = Provider.of<ConfigModal>(context);
-    walletModal.addListener(_onWalletModalChange);
-    configModal.addListener(_onConfigModalChange);
+    configModal?.addListener(_onConfigModalChange);
   }
 
   @override
   void dispose() {
+    configModal?.removeListener(_onConfigModalChange);
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     cancelToken.cancel();
     dio.close();
-    try {
-      WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
-      ConfigModal configModal = Provider.of<ConfigModal>(context, listen: false);
-      walletModal.removeListener(_onWalletModalChange);
-      configModal.removeListener(_onConfigModalChange);
-      // ignore: empty_catches
-    } catch (e) {}
     super.dispose();
   }
 
-  _onWalletModalChange() {
-    if (!context.mounted) return;
-    Wallet newWallet = Provider.of<WalletModal>(context, listen: false).getWallet();
-    if (newWallet.address.isEmpty) {
-      if (loading) {
-        cancelToken.cancel();
-        cancelToken = CancelToken();
-      }
-      return;
-    }
-    if (_crurrentAddress != Provider.of<WalletModal>(context, listen: false).getWallet().address) {
-      _refreshIndicatorKey.currentState?.deactivate();
-      setState(() {
-        list = [];
-      });
-      fetchFristPage();
-      _crurrentAddress = Provider.of<WalletModal>(context, listen: false).getWallet().address;
-    }
-  }
-
   _onConfigModalChange() {
-    if (!context.mounted) return;
     WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
     if (_network != Provider.of<ConfigModal>(context, listen: false).walletConfig.network) {
       _refreshIndicatorKey.currentState?.deactivate();
@@ -124,12 +90,12 @@ class _WalletPageState extends State<WalletPage> {
   }
 
   fetchPage() async {
-    // if (loading) return;
     setState(() {
       loading = true;
     });
     WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
     ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
+    // print("${config.walletConfig.network}) fetchPage");
     Wallet wallet = walletModal.getWallet();
     try {
       // DateTime startTime = DateTime.now();
@@ -148,7 +114,7 @@ class _WalletPageState extends State<WalletPage> {
         cancelToken: cancelToken,
       );
       // print("address: ${wallet.address}");
-      // print("fetchPage time: ${DateTime.now().difference(startTime).inMilliseconds}ms");
+      // print("${config.walletConfig.network} walletConfig.network,fetchPage time: ${DateTime.now().difference(startTime).inMilliseconds}ms");
       if (response.data["addresses_pagination"] != null) {
         totalPage = response.data["addresses_pagination"]["last_page"];
       }
@@ -236,7 +202,20 @@ class _WalletPageState extends State<WalletPage> {
                   child: MyCupertinoButton(
                     padding: EdgeInsets.zero,
                     child: Image.asset("images/switch.png", width: 25, height: 25),
-                    onPressed: () => Navigator.pushNamed(context, "/select"),
+                    onPressed: () async {
+                      await Navigator.pushNamed(context, "/select");
+                      if (mounted) {
+                        WalletModal newWalletModal = Provider.of<WalletModal>(context, listen: false);
+                        if (newWalletModal.getWallet().address != _crurrentAddress) {
+                          _crurrentAddress = newWalletModal.getWallet().address;
+                          _refreshIndicatorKey.currentState?.deactivate();
+                          setState(() {
+                            list = [];
+                          });
+                          await fetchFristPage();
+                        }
+                      }
+                    },
                   ),
                 )
               ],

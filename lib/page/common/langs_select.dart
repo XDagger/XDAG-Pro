@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
+import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/modal_frame.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:xdag/widget/desktop.dart';
@@ -44,7 +45,7 @@ class LangsSelectPage extends StatelessWidget {
                           style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)),
                         ),
                         const Spacer(),
-                        if (config.walletConfig.local == index) Image.asset('images/select.png', width: 20, height: 20) else const SizedBox(width: 20),
+                        if (config.walletConfig.local == index) const CheckDot(color: DarkColors.mainColor, size: 20) else const SizedBox(width: 20),
                         const SizedBox(width: 15),
                       ],
                     ),
@@ -101,8 +102,7 @@ class NetWorkSelectPage extends StatelessWidget {
                           style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)),
                         ),
                         const Spacer(),
-                        if (config.walletConfig.network == index) Image.asset('images/select.png', width: 20, height: 20) else const SizedBox(width: 20),
-                        // Image.asset('images/select.png', width: 20, height: 20),
+                        if (config.walletConfig.network == index) const CheckDot(color: DarkColors.mainColor, size: 20) else const SizedBox(width: 20),
                         const SizedBox(width: 15),
                       ],
                     ),
