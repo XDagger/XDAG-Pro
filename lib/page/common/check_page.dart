@@ -47,8 +47,12 @@ class _CheckPageState extends State<CheckPage> {
   Widget build(BuildContext context) {
     ConfigModal config = Provider.of<ConfigModal>(context);
     String tipsText = type == 0 ? AppLocalizations.of(context).use_biometrics_tips_1 : AppLocalizations.of(context).use_biometrics_tips_2;
+    String btnTex = type == 0 ? AppLocalizations.of(context).use_biometrics_1 : AppLocalizations.of(context).use_biometrics_2;
     if (type > 0 && Platform.isAndroid) {
       tipsText = AppLocalizations.of(context).use_biometrics_tips_3;
+    }
+    if (Platform.isAndroid) {
+      btnTex = AppLocalizations.of(context).use_biometrics_3;
     }
     var padding = Helper.isDesktop ? 10.0 : ScreenHelper.topPadding;
     return Scaffold(
@@ -95,12 +99,15 @@ class _CheckPageState extends State<CheckPage> {
                             setState(() {
                               type = type == -1 ? Global.devBiometricsType : -1;
                             });
+                            if (type != -1) {
+                              check();
+                            }
                           },
                           child: Container(
                             height: 40,
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Center(
-                              child: Text(AppLocalizations.of(context).use_password, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white))),
+                              child: Text(type == -1 ? btnTex : AppLocalizations.of(context).use_password, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white))),
                             ),
                           ),
                         )

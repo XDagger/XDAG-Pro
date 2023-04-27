@@ -71,25 +71,23 @@ class WalletHeader extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          if (config.walletConfig.network == 1)
-                            Column(
-                              children: [
-                                Container(
-                                  padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
-                                  decoration: BoxDecoration(
-                                    color: DarkColors.redColorMask,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Text(
-                                    "TEST",
-                                    style: Helper.fitChineseFont(context, const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: Colors.white70)),
-                                  ),
+                          // if (config.walletConfig.network == 1)
+                          Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(10, 3, 10, 3),
+                                decoration: BoxDecoration(
+                                  color: config.walletConfig.network == 1 ? DarkColors.redColorMask2 : DarkColors.greenColorMask,
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                const SizedBox(height: 8),
-                              ],
-                            )
-                          else
-                            const SizedBox(),
+                                child: Text(
+                                  config.walletConfig.network == 1 ? "TestNet" : "MainNet",
+                                  style: Helper.fitChineseFont(context, const TextStyle(fontSize: 10, fontWeight: FontWeight.w400, color: Colors.white70)),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                            ],
+                          ),
                           Text(
                             wallet.hideBalance == true ? "****" : "${wallet.amount} XDAG",
                             style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
@@ -156,8 +154,8 @@ class WalletHeader extends StatelessWidget {
               const SizedBox(width: 15),
               Expanded(
                   child: HomeHeaderButton(
-                title: AppLocalizations.of(context).receive,
-                icon: 'images/receive.png',
+                title: AppLocalizations.of(context).qr_code,
+                icon: 'images/qr.png',
                 onPressed: () async {
                   Helper.changeAndroidStatusBar(true);
                   await Helper.showBottomSheet(context, const ReceivePage());

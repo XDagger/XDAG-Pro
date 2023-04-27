@@ -120,8 +120,14 @@
   "contact_tips": "Ten en cuenta que los contactos se almacenan solo localmente en este dispositivo. Si eliminas la aplicación, tus contactos se perderán permanentemente y no se podrán recuperar.",
   "no_contacts": "Cualquier contacto",
   "tips": "Consejos",
-  "wallet_tips": "Desliza el elemento hacia la derecha para eliminar la billetera.",
+  "wallet_tips":"Desliza el elemento hacia la izquierda para eliminar la billetera.",
   "hide_balance": "Ocultar saldo",
   "contact_address_repeat": "La dirección del contacto ya existe",
-  "no_wallets": "Cualquier cartera"
+  "no_wallets": "Cualquier cartera",
+  "view_in_explorer": "Ver en el explorador",
+  "details": "Detalles",
+  "sent": "Enviado",
+  "received": "Recibido",
+  "qr_code": "Código QR",
+  "save_to_album": "Guardar en el álbum"
 }

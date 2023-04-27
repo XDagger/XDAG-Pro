@@ -120,8 +120,14 @@
   "contact_tips":"Bitte beachten Sie, dass Kontakte nur lokal auf diesem Gerät gespeichert werden. Wenn Sie die App löschen, gehen Ihre Kontakte dauerhaft verloren und können nicht wiederhergestellt werden.",
   "no_contacts":"Keine Kontakte",
   "tips":"Tipps",
-  "wallet_tips":"Wischen Sie den Eintrag nach rechts, um das Wallet zu löschen。",
+  "wallet_tips":"Wischen Sie das Element nach links, um die Brieftasche zu löschen.",
   "hide_balance":"Guthaben ausblenden",
   "contact_address_repeat": "Kontaktadresse existiert bereits",
-  "no_wallets":"Keine Wallet"
+  "no_wallets":"Keine Wallet",
+  "view_in_explorer":"Im Explorer anzeigen",
+  "details":"Details",
+  "sent":"Gesendet",
+  "received":"Empfangen",
+  "qr_code":"QR-code",
+  "save_to_album":"In Album speichern"
 }

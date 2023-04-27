@@ -1,13 +1,16 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
-import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/wallet_modal.dart';
+import 'package:xdag/page/common/webview.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/modal_frame.dart';
@@ -28,7 +31,7 @@ class _TransactionPageState extends State<TransactionPage> {
   String fee = "";
   String hash = "";
   String transactionState = 'Pending';
-  double height = 430;
+  // double height = 430;
 
   final dio = Dio();
   CancelToken cancelToken = CancelToken();
@@ -98,10 +101,23 @@ class _TransactionPageState extends State<TransactionPage> {
     // 查询 otherAddress 是否在 contacts.contactsList 中
     ContactsItem otherContact = contacts.contactsList.firstWhere((element) => element.address == otherAddress, orElse: () => ContactsItem("", otherAddress));
 
-    // if(transaction.amount)
+    ConfigModal config = Provider.of<ConfigModal>(context);
     return ModalFrame(
-      height: height,
-      title: isSend ? AppLocalizations.of(context).send : AppLocalizations.of(context).receive,
+      // height: height,
+      title: '',
+      titleWidget: Center(
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          decoration: BoxDecoration(
+            color: config.walletConfig.network == 1 ? DarkColors.redColorMask2 : DarkColors.greenColorMask,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Text(
+            config.walletConfig.network == 1 ? "TestNet" : "MainNet",
+            style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white70)),
+          ),
+        ),
+      ),
       rightBtn: CircleButton(
           icon: Icons.refresh,
           onPressed: () {
@@ -114,82 +130,112 @@ class _TransactionPageState extends State<TransactionPage> {
       isShowRightCloseButton: true,
       child: Column(
         children: [
-          Text(isSend ? '-${transaction.amount} XDAG' : '+${transaction.amount} XDAG', style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: isSend ? DarkColors.bottomNavColor : DarkColors.greenColor))),
-          const SizedBox(height: 5),
-          if (transaction.status == 'pending')
-            Text(
-              "${AppLocalizations.of(context).state}: $transactionState",
-              style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: transactionState == 'Accepted' ? DarkColors.greenColor : DarkColors.redColor)),
-            )
-          else
-            const SizedBox(),
-          if (transaction.time.isEmpty)
-            const SizedBox()
-          else
-            Text(
-              "${isSend ? AppLocalizations.of(context).send_on : AppLocalizations.of(context).receive_on} ${Helper.formatFullTime(transaction.time)} UTC",
-              style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54)),
-            ),
-          const SizedBox(height: 25),
-          if (isLoading)
-            const SizedBox(
-              height: 152,
-              child: Center(
-                child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(DarkColors.mainColor),
-                  ),
-                ),
-              ),
-            )
-          else
-            Column(
+          Expanded(
+              child: SingleChildScrollView(
+            child: Column(
               children: [
-                MyCupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: TransactionButton(
-                      showCopy: true,
-                      borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                      title: isSend ? AppLocalizations.of(context).receiver : AppLocalizations.of(context).sender,
-                      value: otherContact.name.isEmpty ? otherContact.address : otherContact.name,
-                      leftIcon: otherContact.name.isEmpty ? const Icon(Icons.add, color: Colors.white, size: 10) : const Icon(Icons.person, color: Colors.white, size: 10),
+                const SizedBox(height: 10),
+                Text(isSend ? '-${transaction.amount} XDAG' : '+${transaction.amount} XDAG', style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 24, fontWeight: FontWeight.w700, color: isSend ? DarkColors.bottomNavColor : DarkColors.greenColor))),
+                const SizedBox(height: 5),
+                if (transaction.status == 'pending')
+                  Text(
+                    "${AppLocalizations.of(context).state}: $transactionState",
+                    style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: transactionState == 'Accepted' ? DarkColors.greenColor : DarkColors.redColor)),
+                  )
+                else
+                  const SizedBox(),
+                if (transaction.time.isEmpty)
+                  const SizedBox()
+                else
+                  Text(
+                    "${isSend ? AppLocalizations.of(context).send_on : AppLocalizations.of(context).receive_on} ${Helper.formatFullTime(transaction.time)} UTC",
+                    style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54)),
+                  ),
+                const SizedBox(height: 25),
+                if (isLoading)
+                  const SizedBox(
+                    height: 152,
+                    child: Center(
+                      child: SizedBox(
+                        width: 50,
+                        height: 50,
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(DarkColors.mainColor),
+                        ),
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.of(context).pop(otherContact);
-                    }),
-                const SizedBox(height: 1),
-                MyCupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: TransactionButton(showCopy: true, title: "Hash", value: hash),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: hash));
-                      Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
-                    }),
-                const SizedBox(height: 1),
-                MyCupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: TransactionButton(showCopy: true, title: AppLocalizations.of(context).block_address, value: transaction.blockAddress),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: transaction.blockAddress));
-                      Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
-                    }),
-                const SizedBox(height: 1),
-                TransactionButton(
-                  showCopy: false,
-                  title: AppLocalizations.of(context).fee,
-                  value: '$fee XDAG',
-                ),
-                const SizedBox(height: 1),
-                TransactionButton(
-                  showCopy: false,
-                  title: AppLocalizations.of(context).remark,
-                  value: transaction.remark,
-                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                  )
+                else
+                  Column(
+                    children: [
+                      MyCupertinoButton(
+                          padding: EdgeInsets.zero,
+                          child: TransactionButton(
+                            showCopy: true,
+                            borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                            title: isSend ? AppLocalizations.of(context).receiver : AppLocalizations.of(context).sender,
+                            value: otherContact.name.isEmpty ? otherContact.address : otherContact.name,
+                            leftIcon: otherContact.name.isEmpty ? const Icon(Icons.person_add, color: Colors.white, size: 10) : const Icon(Icons.person, color: Colors.white, size: 10),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop(otherContact);
+                          }),
+                      const SizedBox(height: 1),
+                      MyCupertinoButton(
+                          padding: EdgeInsets.zero,
+                          child: TransactionButton(showCopy: true, title: "Hash", value: hash),
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(text: hash));
+                            Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                          }),
+                      const SizedBox(height: 1),
+                      MyCupertinoButton(
+                          padding: EdgeInsets.zero,
+                          child: TransactionButton(showCopy: true, title: AppLocalizations.of(context).block_address, value: transaction.blockAddress),
+                          onPressed: () {
+                            Clipboard.setData(ClipboardData(text: transaction.blockAddress));
+                            Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                          }),
+                      const SizedBox(height: 1),
+                      TransactionButton(showCopy: false, title: AppLocalizations.of(context).fee, value: '$fee XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+                      const SizedBox(height: 1),
+                      if (transaction.remark.isNotEmpty)
+                        TransactionButton(
+                          showCopy: false,
+                          title: AppLocalizations.of(context).remark,
+                          value: transaction.remark,
+                          borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                        ),
+                    ],
+                  ),
+              ],
+            ),
+          )),
+          Container(
+            margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Button(
+                  text: AppLocalizations.of(context).view_in_explorer,
+                  width: ScreenHelper.screenWidth - 30,
+                  bgColor: DarkColors.blockColor,
+                  textColor: Colors.white,
+                  onPressed: () async {
+                    // Navigator.of(context).pop(true);
+                    ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
+                    var url = '${config.getCurrentExplorer(isApi: false)}/block/${transaction.blockAddress}';
+                    if (Platform.isAndroid || Platform.isIOS) {
+                      Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: ""));
+                    } else {
+                      launchUrlString(url, mode: LaunchMode.externalApplication);
+                    }
+                    // print(transaction.blockAddress);
+                  },
                 ),
               ],
-            )
+            ),
+          ),
         ],
       ),
     );
@@ -203,47 +249,61 @@ class TransactionShowDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isSameAddress = transaction.from == transaction.to;
+    ConfigModal config = Provider.of<ConfigModal>(context);
     return ModalFrame(
-      height: 430,
+      height: transaction.remark.isEmpty ? 400 : 450,
       title: '',
+      titleWidget: Center(
+        child: Container(
+          padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+          decoration: BoxDecoration(
+            color: config.walletConfig.network == 1 ? DarkColors.redColorMask2 : DarkColors.greenColorMask,
+            borderRadius: BorderRadius.circular(5),
+          ),
+          child: Text(
+            config.walletConfig.network == 1 ? "TestNet" : "MainNet",
+            style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white70)),
+          ),
+        ),
+      ),
       isHideLeftDownButton: true,
       isShowRightCloseButton: true,
       child: Column(
         children: [
           Expanded(
-              child: Column(
-            children: [
-              Text('${transaction.amount} XDAG', textAlign: TextAlign.center, style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 22, fontWeight: FontWeight.w700, color: DarkColors.greenColor))),
-              const SizedBox(height: 20),
-              TransactionButton(
-                showCopy: false,
-                readFont: isSameAddress,
-                borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                title: AppLocalizations.of(context).receiver,
-                value: transaction.to,
-              ),
-              const SizedBox(height: 1),
-              TransactionButton(
-                showCopy: false,
-                readFont: isSameAddress,
-                borderRadius: BorderRadius.zero,
-                title: AppLocalizations.of(context).sender,
-                value: transaction.from,
-              ),
-              const SizedBox(height: 1),
-              TransactionButton(
-                showCopy: false,
-                title: AppLocalizations.of(context).fee,
-                value: '0.00 XDAG',
-              ),
-              const SizedBox(height: 1),
-              TransactionButton(
-                showCopy: false,
-                title: AppLocalizations.of(context).remark,
-                value: transaction.remark,
-                borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
-              ),
-            ],
+              child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                Text('${transaction.amount} XDAG', textAlign: TextAlign.center, style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 24, fontWeight: FontWeight.w700, color: DarkColors.greenColor))),
+                const SizedBox(height: 20),
+                TransactionButton(
+                  showCopy: false,
+                  readFont: isSameAddress,
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
+                  title: AppLocalizations.of(context).receiver,
+                  value: transaction.to,
+                ),
+                const SizedBox(height: 1),
+                TransactionButton(
+                  showCopy: false,
+                  readFont: isSameAddress,
+                  borderRadius: BorderRadius.zero,
+                  title: AppLocalizations.of(context).sender,
+                  value: transaction.from,
+                ),
+                const SizedBox(height: 1),
+                TransactionButton(showCopy: false, title: AppLocalizations.of(context).fee, value: '0.00 XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+                const SizedBox(height: 1),
+                if (transaction.remark.isNotEmpty)
+                  TransactionButton(
+                    showCopy: false,
+                    title: AppLocalizations.of(context).remark,
+                    value: transaction.remark,
+                    borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
+                  ),
+              ],
+            ),
           )),
           Container(
             margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
@@ -279,49 +339,35 @@ class TransactionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextStyle titleStyle = Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w400, color: Colors.white54));
-    TextStyle valueStyle = Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w700, color: readFont ? DarkColors.redColor : Colors.white));
-    Widget icon = showCopy == true
-        ? Container(
-            margin: const EdgeInsets.only(left: 5),
-            width: 20,
-            height: 20,
-            decoration: const BoxDecoration(
-              color: DarkColors.bgColor,
-              borderRadius: BorderRadius.all(Radius.circular(14)),
-            ),
-            child: leftIcon ?? const Icon(Icons.copy_rounded, size: 10, color: Colors.white))
-        : const SizedBox(width: 0);
+    TextStyle titleStyle = Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w700, color: Colors.white54));
+    TextStyle valueStyle = Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: readFont ? DarkColors.redColor : Colors.white));
     return Container(
-      height: 50,
+      constraints: const BoxConstraints(minHeight: 50.0),
       margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: DarkColors.blockColor,
         borderRadius: borderRadius,
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(width: 10),
           Text(title, style: titleStyle),
-          // const Spacer(),
-          const SizedBox(width: 10),
-          // Text(value, style: valueStyle, maxLines: 2),
-          Expanded(
-            child: ExtendedText(
-              value,
-              textAlign: TextAlign.right,
-              maxLines: 1,
-              style: valueStyle,
-              overflowWidget: TextOverflowWidget(
-                position: TextOverflowPosition.middle,
-                align: TextOverflowAlign.center,
-                child: Text('...', style: valueStyle),
-              ),
-            ),
+          const SizedBox(width: 20),
+          Flexible(
+            fit: FlexFit.tight,
+            child: Text(value, textAlign: TextAlign.right, maxLines: 5, style: valueStyle),
           ),
-
-          icon,
-          const SizedBox(width: 10),
+          if (showCopy == true)
+            Container(
+                margin: const EdgeInsets.only(left: 5),
+                width: 24,
+                height: 24,
+                decoration: const BoxDecoration(
+                  color: DarkColors.bgColor,
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                child: leftIcon ?? const Icon(Icons.copy_rounded, size: 12, color: Colors.white))
         ],
       ),
     );

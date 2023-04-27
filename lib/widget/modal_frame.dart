@@ -27,11 +27,12 @@ class CircleButton extends StatelessWidget {
 class ModalFrame extends StatelessWidget {
   final Widget child;
   final String title;
+  final Widget? titleWidget;
   final double? height;
   final bool? isHideLeftDownButton;
   final bool? isShowRightCloseButton;
   final Widget? rightBtn;
-  const ModalFrame({super.key, required this.child, required this.title, this.height, this.isHideLeftDownButton, this.isShowRightCloseButton, this.rightBtn});
+  const ModalFrame({super.key, this.titleWidget, required this.child, required this.title, this.height, this.isHideLeftDownButton, this.isShowRightCloseButton, this.rightBtn});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +63,7 @@ class ModalFrame extends StatelessWidget {
                   children: [
                     leftButton,
                     const SizedBox(width: 10),
-                    Expanded(child: Text(title, textAlign: TextAlign.center, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700)))),
+                    Expanded(child: titleWidget ?? Text(title, textAlign: TextAlign.center, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, color: Colors.white, fontWeight: FontWeight.w700)))),
                     const SizedBox(width: 10),
                     rightButton,
                   ],

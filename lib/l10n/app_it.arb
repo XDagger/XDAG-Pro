@@ -120,8 +120,14 @@
   "contact_tips": "Si prega di notare che i contatti sono conservati solo localmente su questo dispositivo. Se si elimina l'app, i contatti verranno persi in modo permanente e non saranno recuperabili.",
   "no_contacts": "Nessun contatto",
   "tips": "Suggerimenti",
-  "wallet_tips": "Scorri l'elemento verso destra per eliminare il portafoglio",
+  "wallet_tips": "Scorri l'elemento a sinistra per eliminare il portafoglio.",
   "hide_balance": "Nascondi saldo",
   "contact_address_repeat": "L'indirizzo del contatto è già stato aggiunto",
-  "no_wallets": "Nessun portafoglio"
+  "no_wallets": "Nessun portafoglio",
+  "view_in_explorer": "Visualizza in Explorer",
+  "details":"dettagli",
+  "sent":"Inviato",
+  "received":"Ricevuto",
+  "qr_code":"Codice QR",
+  "save_to_album":"Salva in album"
 }

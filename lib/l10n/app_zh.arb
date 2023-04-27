@@ -120,8 +120,14 @@
   "contact_tips":"请注意，联系人仅存储在本地设备上。如果您删除应用程序，您的联系人将永久丢失，无法找回。",
   "no_contacts":"没有联系人",
   "tips":"提示",
-  "wallet_tips":"向右滑动该项以删除钱包。",
+   "wallet_tips":"向左滑动该项以删除钱包。",
   "hide_balance":"隐藏余额",
   "contact_address_repeat": "联系地址已存在",
-  "no_wallets":"没有钱包"
+  "no_wallets":"没有钱包",
+  "view_in_explorer":"在浏览器中查看",
+  "details":"详情",
+  "sent":"发送",
+  "received":"接收",
+  "qr_code":"二维码",
+  "save_to_album":"保存到相册"
 }

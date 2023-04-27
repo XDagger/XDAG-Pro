@@ -21,81 +21,70 @@ class ReceivePage extends StatelessWidget {
     double marginH = 20;
     double paddingH = 15;
     TextStyle titleStyle = Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400));
-    TextStyle addressStyle = Helper.fitChineseFont(context, const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700));
+    // TextStyle addressStyle = Helper.fitChineseFont(context, const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700));
 
     return ModalFrame(
-        title: '${AppLocalizations.of(context).receive} XDAG',
+      title: AppLocalizations.of(context).qr_code,
+      child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ContentBox(
-              marginH: marginH,
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(AppLocalizations.of(context).show_QR, style: titleStyle),
-                    const SizedBox(height: 15),
-                    Center(
-                      child: Container(
-                        width: 250,
-                        height: 250,
-                        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
-                        child: Center(
-                          child: QrImage(data: wallet.address, version: QrVersions.auto),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             ContentBox(
               marginH: marginH,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.fromLTRB(paddingH, 15, paddingH, 15),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(AppLocalizations.of(context).share_wallet_address, style: titleStyle),
-                        const SizedBox(height: 8),
-                        Text(wallet.address, style: addressStyle),
+                        Text(AppLocalizations.of(context).show_QR, style: titleStyle),
+                        const SizedBox(height: 15),
+                        Center(
+                          child: Container(
+                            width: 250,
+                            height: 250,
+                            decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
+                            child: Center(
+                              child: QrImage(
+                                data: wallet.address,
+                                version: QrVersions.auto,
+                                embeddedImage: const AssetImage('images/logo_b_40.png'),
+                                embeddedImageStyle: QrEmbeddedImageStyle(
+                                  size: const Size(40, 40),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
                       ],
                     ),
                   ),
                   Container(height: 1, color: DarkColors.bgColor),
-                  SizedBox(
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: Button(
-                          icon: Icons.copy_rounded,
-                          onPressed: () {
-                            Clipboard.setData(ClipboardData(text: wallet.address));
-                            Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
-                          },
-                          title: AppLocalizations.of(context).copy,
-                        )),
-                        // Container(width: 1, color: DarkColors.bgColor),
-                        // Expanded(
-                        //     child: Button(
-                        //   icon: Icons.share_rounded,
-                        //   onPressed: () {},
-                        //   title: AppLocalizations.of(context).share,
-                        // )),
-                      ],
-                    ),
-                  ),
+                  // SizedBox(
+                  //   height: 50,
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //           child: Button(
+                  //         icon: Icons.download,
+                  //         onPressed: () {
+                  //           Clipboard.setData(ClipboardData(text: wallet.address));
+                  //           Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                  //         },
+                  //         title: AppLocalizations.of(context).save_to_album,
+                  //       )),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -126,14 +115,6 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle btnStyle = Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400));
-    return MyCupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: onPressed,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [Icon(icon, color: Colors.white, size: 20), const SizedBox(width: 10), Text(title, style: btnStyle)],
-      ),
-    );
+    return MyCupertinoButton(padding: EdgeInsets.zero, onPressed: onPressed, child: Text(title, style: btnStyle));
   }
 }

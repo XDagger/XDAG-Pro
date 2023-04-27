@@ -7,7 +7,8 @@ class HomeHeaderButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String title;
   final String icon;
-  const HomeHeaderButton({super.key, required this.title, required this.icon, this.onPressed});
+  final Widget? iconWidget;
+  const HomeHeaderButton({super.key, this.iconWidget, required this.title, required this.icon, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class HomeHeaderButton extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    Image.asset(icon, width: 20, height: 20),
+                    iconWidget ?? Image.asset(icon, width: 20, height: 20),
                     const Spacer(),
                   ],
                 ),

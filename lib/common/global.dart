@@ -43,10 +43,10 @@ class Global {
   static String buildNumber = '';
 
   static const String rpcURL = 'https://testnet-rpc.xdagj.org';
-  static const String explorURL = 'https://testexplorer.xdag.io/api';
+  static const String explorURL = 'https://testexplorer.xdag.io';
 
   static const String mainRpcURL = 'https://mainnet-rpc.xdagj.org';
-  static const String mainExplorURL = 'https://mainnet-explorer.xdagj.org/api';
+  static const String mainExplorURL = 'https://mainnet-explorer.xdagj.org';
 
   static const bool isTest = false;
 

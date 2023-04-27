@@ -21,8 +21,8 @@ class ConfigModal extends ChangeNotifier {
     LangItem('Français', const Locale('fr', 'FR')),
     LangItem('Русский', const Locale('ru', 'RU')),
     LangItem('Deutsch', const Locale('de', 'DE')),
-    LangItem('Spanish', const Locale('es', 'ES')),
-    LangItem('Italy', const Locale('it', 'IT')),
+    LangItem('Español', const Locale('es', 'ES')),
+    LangItem('Italiano', const Locale('it', 'IT')),
   ];
   static final List<String> netWorks = ["MainNet", "TestNet"];
 
@@ -37,8 +37,9 @@ class ConfigModal extends ChangeNotifier {
     return walletConfig.network == 0 ? Global.mainRpcURL : Global.rpcURL;
   }
 
-  String getCurrentExplorer() {
-    return walletConfig.network == 0 ? Global.mainExplorURL : Global.explorURL;
+  String getCurrentExplorer({isApi = true}) {
+    var url = walletConfig.network == 0 ? Global.mainExplorURL : Global.explorURL;
+    return isApi ? '$url/api' : url;
   }
 
   changeNetwork(int pos) async {

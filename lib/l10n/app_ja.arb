@@ -120,8 +120,14 @@
   "contact_tips":"連絡先はこのデバイスにのみ保存されます。アプリを削除すると、連絡先は永久に失われ、回復できません。",
   "no_contacts":"連絡先がありません",
   "tips":"ヒント",
-  "wallet_tips":"ウォレットを削除するには、アイテムを右にスワイプしてください。",
+  "wallet_tips":"財布を削除するには、アイテムを左にスワイプしてください。",
   "hide_balance":"残高を非表示",
   "contact_address_repeat": "連絡先がすでに存在しています",
-  "no_wallets":"ウォレットがありません"
+  "no_wallets":"ウォレットがありません",
+  "view_in_explorer":"エクスプローラーで表示",
+  "details":"詳細",
+  "sent":"送信",
+  "received":"受け取る",
+  "qr_code":"QRコード",
+  "save_to_album":"アルバムに保存"
 }

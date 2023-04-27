@@ -21,7 +21,6 @@ class WalletPageState extends State<WalletPage> {
   final _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String _crurrentAddress = "";
   int _network = 0;
-  // String lastTime = "";
   List<Transaction> list = [];
   final dio = Dio();
   CancelToken cancelToken = CancelToken();
@@ -56,8 +55,10 @@ class WalletPageState extends State<WalletPage> {
 
   _onConfigModalChange() {
     WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
-    if (_network != Provider.of<ConfigModal>(context, listen: false).walletConfig.network) {
+    var newNetwork = Provider.of<ConfigModal>(context, listen: false).walletConfig.network;
+    if (_network != newNetwork) {
       _refreshIndicatorKey.currentState?.deactivate();
+      _network = newNetwork;
       setState(() {
         list = [];
       });

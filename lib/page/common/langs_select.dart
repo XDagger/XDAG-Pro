@@ -73,7 +73,7 @@ class NetWorkSelectPage extends StatelessWidget {
     ConfigModal config = Provider.of<ConfigModal>(context);
     double bottomPadding = ScreenHelper.bottomPadding;
     List<String> netWorks = ConfigModal.netWorks;
-    double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * netWorks.length + 10;
+    double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * netWorks.length + 10 + 30;
     return ModalFrame(
       height: height,
       title: AppLocalizations.of(context).select_network,

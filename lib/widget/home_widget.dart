@@ -86,7 +86,6 @@ class _HomeMainState extends State<HomeMain> {
         double screenHeight = MediaQuery.of(context).size.height;
         double contentHeight = ScreenHelper.topPadding + 55 + 20 + (ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20) + 50 + 20 + 50;
         double h = (screenHeight - contentHeight) / 2;
-        print(screenHeight);
         return Stack(
           fit: StackFit.expand,
           children: [

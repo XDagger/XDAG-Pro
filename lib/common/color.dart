@@ -12,6 +12,9 @@ class DarkColors {
   static const bottomNavColor = Color(0xCCA0A3BD);
   static const transactionColor = Color(0x4DA0A3BD);
   static const greenColor = Color(0xFF168A3C);
+  // 20% opacity
+  static const greenColorMask = Color(0x66168A3C);
+
   static const redColor = Color(0xFFDD4556);
   // gold
   static const yellowColor = Color(0xFFE8B000);

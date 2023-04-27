@@ -120,8 +120,14 @@
   "contact_tips":"Please note that contacts are only stored locally on this device. If you delete the app, your contacts will be permanently lost and cannot be recovered.",
   "no_contacts":"Any contact",
   "tips":"Tips",
-  "wallet_tips":"Swipe the item to the right to delete the wallet.",
+  "wallet_tips":"Swipe the item to the left to delete the wallet.",
   "hide_balance":"Hide Balance",
   "contact_address_repeat":"Contact address already exists",
-  "no_wallets":"Any wallet"
+  "no_wallets":"Any wallet",
+  "view_in_explorer":"View in explorer",
+  "details":"Details",
+  "sent":"Sent",
+  "received":"Received",
+  "qr_code":"QR Code",
+  "save_to_album":"Save to album"
 }
