@@ -157,9 +157,15 @@ class WalletHeader extends StatelessWidget {
                 title: AppLocalizations.of(context).qr_code,
                 icon: 'images/qr.png',
                 onPressed: () async {
-                  Helper.changeAndroidStatusBar(true);
-                  await Helper.showBottomSheet(context, const ReceivePage());
-                  Helper.changeAndroidStatusBar(false);
+                  // Helper.changeAndroidStatusBar(true);
+                  // await Helper.showBottomSheet(context, const ReceivePage());
+                  // Helper.changeAndroidStatusBar(false);
+                  showModalBottomSheet(
+                    backgroundColor: DarkColors.bgColor,
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (BuildContext buildContext) => const ReceivePage(),
+                  );
                 },
               )),
             ],

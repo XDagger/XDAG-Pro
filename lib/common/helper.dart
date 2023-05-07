@@ -80,10 +80,10 @@ class Helper {
   }
 
   // show toast
-  static void showToast(BuildContext context, String msg) {
+  static void showToast(BuildContext context, String msg, {Color color = DarkColors.mainColor}) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: DarkColors.mainColor,
+      backgroundColor: color,
       behavior: SnackBarBehavior.floating,
       duration: const Duration(seconds: 1),
       content: Text(

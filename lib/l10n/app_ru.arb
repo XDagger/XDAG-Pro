@@ -129,5 +129,9 @@
   "sent":"Отправлено",
   "received":"Получено",
   "qr_code":"QR-код",
-  "save_to_album":"Сохранить в альбом"
+  "save_image":"Сохранить изображение",
+  "payment":"Оплата",
+  "contact":"Контакт",
+  "customize_QR_code":"Настроить QR-код",
+  "name":"Имя"
 }

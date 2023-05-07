@@ -111,6 +111,15 @@ class TransactionHelper {
     };
   }
 
+  static bool isJson(String str) {
+    try {
+      json.decode(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   static bool checkAddress(String address) {
     try {
       if (address.isEmpty) return false;

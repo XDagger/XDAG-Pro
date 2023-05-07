@@ -129,5 +129,9 @@
   "sent":"送信",
   "received":"受け取る",
   "qr_code":"QRコード",
-  "save_to_album":"アルバムに保存"
+  "save_image":"画像を保存",
+  "payment":"支払い",
+  "contact":"連絡先",
+  "customize_QR_code":"カスタマイズQRコード",
+  "name":"名前"
 }

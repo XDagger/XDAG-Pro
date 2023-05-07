@@ -129,5 +129,9 @@
   "sent": "Envoyé",
   "received": "Reçu",
   "qr_code": "Code QR",
-  "save_to_album": "Enregistrer dans l'album"
+  "save_image":"Enregistrer l'image",
+  "payment":"Paiement",
+  "contact":"Contact",
+  "customize_QR_code":"Personnaliser le code QR",
+  "name":"Nom"
 }

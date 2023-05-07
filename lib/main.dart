@@ -120,6 +120,7 @@ class MyWidget extends StatelessWidget {
               "/webview": (context) => const WebViewPage(),
               "/back_up_test_start": (context) => const BackUpStartPage(),
               "/back_up_test": (context) => const BackUpTestPage(),
+              "/customize_qr": (context) => const CustomizeQrPage(),
             },
           ),
         ));

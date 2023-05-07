@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:isolate';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:dio/dio.dart';
@@ -26,7 +27,9 @@ import 'package:bip32/bip32.dart' as bip32;
 class SendPageRouteParams {
   final String address;
   final String name;
-  SendPageRouteParams({required this.address, this.name = ''});
+  final String remark;
+  final String amount;
+  SendPageRouteParams({required this.address, this.name = '', this.remark = '', this.amount = ''});
 }
 
 class SendPage extends StatefulWidget {
@@ -52,6 +55,19 @@ class _SendPageState extends State<SendPage> {
     super.initState();
     controller = TextEditingController();
     controller2 = TextEditingController();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      SendPageRouteParams args = SendPageRouteParams(address: '');
+      if (ModalRoute.of(context)!.settings.arguments != null) {
+        args = ModalRoute.of(context)!.settings.arguments as SendPageRouteParams;
+      }
+      controller.text = args.amount;
+      controller2.text = args.remark;
+      setState(() {
+        amount = args.amount;
+        remark = args.remark;
+      });
+    });
   }
 
   @override
@@ -169,8 +185,10 @@ class _SendPageState extends State<SendPage> {
     WalletModal walletModal = Provider.of<WalletModal>(context);
     Wallet wallet = walletModal.getWallet();
     bool isButtonEnable = false;
+    bool isAmountError = false;
     try {
       var a = double.parse(amount.isEmpty ? '0' : amount);
+      isAmountError = a > double.parse(wallet.amount);
       isButtonEnable = amount.isNotEmpty && a <= double.parse(wallet.amount) && a > 0;
     } catch (e) {
       isButtonEnable = false;
@@ -285,7 +303,7 @@ class _SendPageState extends State<SendPage> {
                               },
                               child: Row(
                                 children: [
-                                  Text('${wallet.amount} XDAG', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500))),
+                                  Text('${wallet.amount} XDAG', style: Helper.fitChineseFont(context, TextStyle(fontSize: 14, color: isAmountError ? DarkColors.redColor : Colors.white, fontWeight: FontWeight.w500))),
                                   const SizedBox(width: 10),
                                   Container(
                                     //radius: 10,
@@ -405,6 +423,211 @@ class _SendPageState extends State<SendPage> {
                           );
                         }
                       }
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomizeQrPageRouteParams {
+  final String amount;
+  final String name;
+  final String remark;
+  CustomizeQrPageRouteParams({required this.amount, required this.name, required this.remark});
+}
+
+class CustomizeQrPage extends StatefulWidget {
+  const CustomizeQrPage({super.key});
+
+  @override
+  State<CustomizeQrPage> createState() => _CustomizeQrPageState();
+}
+
+class _CustomizeQrPageState extends State<CustomizeQrPage> {
+  late TextEditingController controller;
+  late TextEditingController controller2;
+  late TextEditingController controller3;
+  // String amount = "";
+  // String remark = "";
+  // String name = "";
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+    controller2 = TextEditingController();
+    controller3 = TextEditingController();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      CustomizeQrPageRouteParams args = CustomizeQrPageRouteParams(amount: '', name: '', remark: '');
+      if (ModalRoute.of(context)!.settings.arguments != null) {
+        args = ModalRoute.of(context)!.settings.arguments as CustomizeQrPageRouteParams;
+      }
+      controller.text = args.amount;
+      controller3.text = args.name;
+      controller2.text = args.remark;
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: DarkColors.bgColor,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          if (FocusScope.of(context).hasFocus) {
+            FocusScope.of(context).unfocus();
+          }
+        },
+        child: Column(
+          children: [
+            NavHeader(title: AppLocalizations.of(context).customize_QR_code),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(AppLocalizations.of(context).name, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      const SizedBox(height: 15),
+                      AutoSizeTextField(
+                        controller: controller3,
+                        // onChanged: (value) {
+                        //   setState(() {
+                        //     name = value;
+                        //   });
+                        // },
+                        minFontSize: 16,
+                        maxLines: 10,
+                        minLines: 1,
+                        autofocus: true,
+                        keyboardAppearance: Brightness.dark,
+                        contextMenuBuilder: (context, editableTextState) {
+                          final List<ContextMenuButtonItem> buttonItems = editableTextState.contextMenuButtonItems;
+                          return AdaptiveTextSelectionToolbar.buttonItems(
+                            anchors: editableTextState.contextMenuAnchors,
+                            buttonItems: buttonItems,
+                          );
+                        },
+                        textInputAction: TextInputAction.next,
+                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                        decoration: InputDecoration(
+                          filled: true,
+                          contentPadding: const EdgeInsets.all(15),
+                          fillColor: DarkColors.blockColor,
+                          counterStyle: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
+                          hintText: AppLocalizations.of(context).name,
+                          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
+                          enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                          focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(AppLocalizations.of(context).amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      const SizedBox(height: 15),
+                      AutoSizeTextField(
+                        controller: controller,
+                        // onChanged: (value) {
+                        //   setState(() {
+                        //     amount = value;
+                        //   });
+                        // },
+                        minFontSize: 32,
+                        maxFontSize: 40,
+                        maxLines: 1,
+                        minLines: 1,
+                        autofocus: false,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        keyboardAppearance: Brightness.dark,
+                        textAlign: TextAlign.center,
+                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white)),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                        ],
+                        decoration: InputDecoration(
+                          filled: true,
+                          contentPadding: const EdgeInsets.fromLTRB(15, 40, 15, 40),
+                          fillColor: DarkColors.blockColor,
+                          hintText: 'XDAG',
+                          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white54)),
+                          enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                          focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      Text(AppLocalizations.of(context).remark, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      const SizedBox(height: 15),
+                      AutoSizeTextField(
+                        controller: controller2,
+                        // onChanged: (value) {
+                        //   setState(() {
+                        //     remark = value;
+                        //   });
+                        // },
+                        minFontSize: 16,
+                        maxLines: 10,
+                        minLines: 1,
+                        maxLength: 32,
+                        autofocus: false,
+                        keyboardAppearance: Brightness.dark,
+                        contextMenuBuilder: (context, editableTextState) {
+                          final List<ContextMenuButtonItem> buttonItems = editableTextState.contextMenuButtonItems;
+                          return AdaptiveTextSelectionToolbar.buttonItems(
+                            anchors: editableTextState.contextMenuAnchors,
+                            buttonItems: buttonItems,
+                          );
+                        },
+                        textInputAction: TextInputAction.done,
+                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                        decoration: InputDecoration(
+                          filled: true,
+                          contentPadding: const EdgeInsets.all(15),
+                          fillColor: DarkColors.blockColor,
+                          counterStyle: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
+                          hintText: AppLocalizations.of(context).remark,
+                          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
+                          enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
+                          focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Button(
+                    text: AppLocalizations.of(context).continueText,
+                    width: ScreenHelper.screenWidth - 30,
+                    bgColor: DarkColors.mainColor,
+                    textColor: Colors.white,
+                    onPressed: () async {
+                      Map<String, dynamic> res = {
+                        'name': controller3.text,
+                        'amount': controller.text,
+                        'remark': controller2.text,
+                      };
+                      String jsonStr = jsonEncode(res);
+                      Navigator.of(context).pop(jsonStr);
                     },
                   ),
                 ],

@@ -86,6 +86,7 @@ class WalletModal extends ChangeNotifier {
 
   deleteWallet(Wallet wallet, int index) async {
     bool isDef = wallet.isDef;
+    await Global.prefs.remove('${wallet.address}_qr');
     await Global.deleteWallet(wallet.address);
     // await wallet.delete();
     await walletList.deleteAt(index);

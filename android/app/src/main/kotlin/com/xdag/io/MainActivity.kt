@@ -28,7 +28,6 @@ class MainActivity: FlutterFragmentActivity() {
             onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         }
     }
-
     override fun onDestroy() {
         super.onDestroy()
         if (Build.VERSION.SDK_INT >= 33) {

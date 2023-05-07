@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:flutter/material.dart';
@@ -82,13 +83,25 @@ class _AddContactsPage extends State<AddContactsPage> {
                                 errQrText: AppLocalizations.of(context).qr_not_found,
                               );
                               if (res != null) {
-                                bool flag = TransactionHelper.checkAddress(res);
+                                // 判断 res 是否是一个 json 字符串
+                                bool isJosn = TransactionHelper.isJson(res);
+                                Map<String, dynamic> json = {};
+                                String address = "";
+                                if (isJosn) {
+                                  json = const JsonDecoder().convert(res);
+                                  address = json["address"] ?? "";
+                                }
+                                bool flag = TransactionHelper.checkAddress(address);
                                 if (flag) {
                                   setState(() {
                                     error = "";
                                   });
-                                  controller.text = res;
-                                  controller.selection = TextSelection.fromPosition(TextPosition(offset: res.length));
+                                  controller.text = address;
+                                  controller.selection = TextSelection.fromPosition(TextPosition(offset: address.length));
+                                  if (json["name"] != null) {
+                                    controller2.text = json["name"];
+                                    controller2.selection = TextSelection.fromPosition(TextPosition(offset: json["name"].length));
+                                  }
                                 } else {
                                   controller.clear();
                                   controller.selection = TextSelection.fromPosition(const TextPosition(offset: 0));

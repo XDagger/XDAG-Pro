@@ -129,5 +129,9 @@
   "sent":"发送",
   "received":"接收",
   "qr_code":"二维码",
-  "save_to_album":"保存到相册"
+  "save_image":"保存图片",
+  "payment":"付款",
+  "contact":"联系人",
+  "customize_QR_code":"自定义二维码",
+  "name":"名称"
 }
