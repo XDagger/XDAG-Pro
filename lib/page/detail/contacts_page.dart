@@ -80,11 +80,14 @@ class ContactsStatePage extends State<ContactsPage> {
                               if (res != null) {
                                 // 判断 res 是否是一个 json 字符串
                                 bool isJosn = TransactionHelper.isJson(res);
+                                String address = res;
                                 Map<String, dynamic> json = {};
-                                String address = "";
-                                if (isJosn) {
-                                  json = const JsonDecoder().convert(res);
-                                  address = json["address"] ?? "";
+                                bool flag1 = TransactionHelper.checkAddress(address);
+                                if (!flag1) {
+                                  if (isJosn) {
+                                    json = const JsonDecoder().convert(res);
+                                    address = json["address"] ?? "";
+                                  }
                                 }
                                 bool flag = TransactionHelper.checkAddress(address);
                                 if (flag) {

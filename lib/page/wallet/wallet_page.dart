@@ -110,6 +110,7 @@ class WalletPageState extends State<WalletPage> {
         "id": 1
       });
       walletModal.setBlance(responseBalance.data['result']);
+      // print("$explorURL/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=100");
       Response response = await dio.get(
         "$explorURL/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=100",
         cancelToken: cancelToken,
@@ -146,13 +147,14 @@ class WalletPageState extends State<WalletPage> {
         List<Transaction> newList2 = [];
         newList2.addAll(allList);
         String lastTime = "";
-        for (var i = 0; i < allList.length - 1; i++) {
+        for (var i = 0; i < allList.length; i++) {
           var transaction = allList[i];
           if (lastTime == "" || lastTime.substring(0, 7) != transaction.time.substring(0, 7)) {
             lastTime = transaction.time;
             newList2.insert(i, Transaction(type: 2, time: transaction.time, amount: '', address: '', status: "", from: '', to: '', hash: '', blockAddress: '', fee: 0, remark: ""));
           }
         }
+        // print(newList2);
         if (mounted) {
           setState(() {
             list = newList2;

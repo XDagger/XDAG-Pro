@@ -34,6 +34,7 @@ class BackUpPage extends StatelessWidget {
       args = ModalRoute.of(context)!.settings.arguments as BackUpPageRouteParams;
     }
     if (args.type == 0) {
+      // print(args.data);
       var mnemonicList = args.data.trim().split(' ');
       mnemonicList.asMap().forEach((index, value) {
         mnemonicItemList.add(MnemonicItem(index + 1, value));
