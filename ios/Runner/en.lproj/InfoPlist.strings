@@ -7,3 +7,4 @@
 */
 NSCameraUsageDescription = "XDAG-Pro needs access to your camera to scan the QR code.";
 NSFaceIDUsageDescription = "Use faceID to protect your data.";
+NSPhotoLibraryAddUsageDescription="XDAG-Pro needs to save the QR code image to your photo album.";

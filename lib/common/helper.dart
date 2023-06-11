@@ -41,8 +41,8 @@ class Helper {
   }
 
   static String formatString(String content) {
-    if (content.length > 20) {
-      return "${content.substring(0, 10)}...${content.substring(content.length - 10)}";
+    if (content.length > 16) {
+      return "${content.substring(0, 8)}...${content.substring(content.length - 8)}";
     }
     return content;
   }

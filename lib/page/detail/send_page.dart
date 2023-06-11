@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:isolate';
 import 'package:auto_size_text_field/auto_size_text_field.dart';
 import 'package:dio/dio.dart';
-import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -233,18 +232,13 @@ class _SendPageState extends State<SendPage> {
                               Text(AppLocalizations.of(context).to, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white54, fontWeight: FontWeight.w500))),
                               const SizedBox(width: 15),
                               Expanded(
-                                child: ExtendedText(
-                                  args.name.isEmpty ? args.address : args.name,
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                  style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500)),
-                                  overflowWidget: TextOverflowWidget(
-                                    position: TextOverflowPosition.middle,
-                                    align: TextOverflowAlign.center,
-                                    child: Text('...', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500))),
-                                  ),
-                                ),
-                              ),
+                                  child: Text(
+                                args.name.isEmpty ? Helper.formatString(args.address) : args.name,
+                                textAlign: TextAlign.center,
+                                maxLines: 1,
+                                style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w500)),
+                                overflow: TextOverflow.ellipsis,
+                              )),
                               const SizedBox(width: 15),
                               const Icon(Icons.edit, color: Colors.white54, size: 16),
                               const SizedBox(width: 15),

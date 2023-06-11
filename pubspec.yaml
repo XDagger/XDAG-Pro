@@ -57,7 +57,6 @@ dependencies:
   secp256k1: ^0.3.0
   url_launcher: ^6.1.10
   hex: ^0.2.0
-  extended_text: ^10.0.1
   fixnum: ^1.1.0
   pointycastle: ^3.6.2
   hive_flutter: ^1.1.0
@@ -66,9 +65,9 @@ dependencies:
     sdk: flutter
   flutter:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.18.0
   permission_handler: ^10.2.0
-  image_gallery_saver_v3: ^1.0.0
+  image_gallery_saver: '^2.0.1'
   device_info_plus: ^8.2.2
 
 

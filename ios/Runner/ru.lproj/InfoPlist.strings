@@ -7,3 +7,4 @@
 */
 NSCameraUsageDescription = "XDAG-Pro требуется доступ к вашей камере для сканирования QR-кода.";
 NSFaceIDUsageDescription = "Используйте faceID для защиты ваших данных.";
+NSPhotoLibraryAddUsageDescription= "XDAG-Pro нужно сохранить изображение QR-кода в вашу фотогалерею";

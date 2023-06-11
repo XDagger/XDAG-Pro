@@ -1,0 +1,10 @@
+/* 
+  InfoPlist.strings
+  Runner
+
+  Created by Hans on 2023/3/12.
+  
+*/
+NSCameraUsageDescription = "XDAG-Pro necesita acceder a tu cámara para escanear códigos QR.";
+NSFaceIDUsageDescription = "Utiliza Face ID para proteger tus datos.";
+NSPhotoLibraryAddUsageDescription = "XDAG-Pro necesita guardar imágenes de códigos QR en tu álbum de fotos.";

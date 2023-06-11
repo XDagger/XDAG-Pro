@@ -6,7 +6,7 @@ import 'dart:ui' as ui;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:image_gallery_saver_v3/image_gallery_saver.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -15,11 +15,8 @@ import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/db_model.dart';
 import 'package:xdag/model/wallet_modal.dart';
-import 'package:xdag/page/common/create_wallet_page.dart';
 import 'package:xdag/page/detail/send_page.dart';
 import 'package:xdag/widget/button.dart';
-import 'package:xdag/widget/desktop.dart';
-import 'package:xdag/widget/modal_frame.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:xdag/widget/nav_header.dart';
 
@@ -84,7 +81,7 @@ class _ReceivePageState extends State<ReceivePage> {
         }
       }
     }
-    return false;
+    return true;
   }
 
   @override
