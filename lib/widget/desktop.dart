@@ -9,7 +9,8 @@ class MyCupertinoButton extends StatelessWidget {
   final Color disabledColor;
   final BorderRadius? borderRadius;
   final double pressedOpacity;
-  const MyCupertinoButton({super.key, this.padding, required this.child, this.onPressed, this.color, this.disabledColor = CupertinoColors.systemGrey3, this.borderRadius, this.pressedOpacity = 0.4});
+  final bool disabled;
+  const MyCupertinoButton({super.key, this.padding, required this.child, this.onPressed, this.color, this.disabledColor = CupertinoColors.systemGrey3, this.borderRadius, this.pressedOpacity = 0.4, this.disabled = false});
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +25,7 @@ class MyCupertinoButton extends StatelessWidget {
     );
     if (Helper.isDesktop) {
       btn = MouseRegion(
-        cursor: SystemMouseCursors.click,
+        cursor: disabled ? SystemMouseCursors.forbidden : SystemMouseCursors.click,
         child: btn,
       );
     }

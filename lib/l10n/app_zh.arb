@@ -133,5 +133,14 @@
   "payment":"付款",
   "contact":"联系人",
   "customize_QR_code":"自定义二维码",
-  "name":"名称"
+  "name":"名称",
+  "desktop_createWallet": "创建新钱包",
+  "desktop_importWallet": "我已有一个钱包",
+  "desktop_create_password": "创建密码",
+  "desktop_repeat_password": "重复密码",
+  "desktop_create_password_tips": "点击继续即表示您同意我们的 1 和 1 条款",
+  "back": "返回",
+  "desktop_repeat_password_error":"密码不匹配。请确保在两个字段中输入相同的密码。",
+  "success_create_password":"密码创建成功，您可以在创建钱包之前重置密码。",
+  "desktop_reset_password": "重置密码"
 }

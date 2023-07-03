@@ -133,5 +133,14 @@
   "payment":"Zahlung",
   "contact":"Kontakt",
   "customize_QR_code":"QR-code anpassen",
-  "name":"Name"
+  "name":"Name",
+  "desktop_createWallet": "Neues Wallet erstellen",
+  "desktop_importWallet": "Ich habe bereits ein Wallet",
+  "desktop_create_password": "Passwort erstellen",
+  "desktop_repeat_password": "Passwort wiederholen",
+  "desktop_create_password_tips": "Durch Klicken auf Fortfahren stimmen Sie unseren Bedingungen 1 und 1 zu",
+  "back": "Zurück",
+  "desktop_repeat_password_error":"Passwörter stimmen nicht überein. Bitte stellen Sie sicher, dass Sie das gleiche Passwort in beiden Feldern eingeben.",
+  "success_create_password":"Passwort erfolgreich erstellt. Sie können es zurücksetzen, bis Sie ein Wallet erstellen.",
+  "desktop_reset_password": "Passwort zurücksetzen"
 }

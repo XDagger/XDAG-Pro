@@ -249,18 +249,15 @@ class WalletPageState extends State<WalletPage> {
                       ]);
                     }
                     if (loading) {
-                      return Column(
-                        children: const [
+                      return const Column(
+                        children: [
                           SizedBox(height: 30),
                           Center(
-                            child: SizedBox(
-                              width: 30,
-                              height: 30,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(DarkColors.mainColor),
-                              ),
-                            ),
-                          )
+                              child: SizedBox(
+                            width: 30,
+                            height: 30,
+                            child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(DarkColors.mainColor)),
+                          ))
                         ],
                       );
                     }

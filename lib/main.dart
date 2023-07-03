@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
+import 'package:xdag/desktop/start_page.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/db_model.dart';
@@ -33,24 +34,6 @@ void main() async {
   if (Platform.isIOS) {
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
   }
-  if (Helper.isDesktop) {
-    windowManager.ensureInitialized();
-    WindowOptions windowOptions = const WindowOptions(
-      size: Size(375, 667),
-      minimumSize: Size(375, 667),
-      maximumSize: Size(706, 1200),
-      center: true,
-      backgroundColor: DarkColors.bgColor,
-      skipTaskbar: false,
-      titleBarStyle: TitleBarStyle.normal,
-    );
-    windowManager.waitUntilReadyToShow(windowOptions, () async {
-      windowManager.setAspectRatio(375 / 667);
-      await windowManager.setResizable(true);
-      await windowManager.show();
-      await windowManager.focus();
-    });
-  }
   appInit();
 }
 
@@ -58,7 +41,23 @@ appInit() async {
   await Hive.initFlutter();
   Hive.registerAdapter(WalletAdapter());
   await Global.init();
+  if (Helper.isDesktop) {
+    Size size = Global.walletListBox.isEmpty ? Global.windowMinSize : Global.windowMaxSize;
+    windowManager.ensureInitialized();
 
+    WindowOptions windowOptions = WindowOptions(
+      size: size,
+      center: true,
+      backgroundColor: DarkColors.bgColor,
+      skipTaskbar: false,
+      titleBarStyle: TitleBarStyle.hidden,
+    );
+    windowManager.waitUntilReadyToShow(windowOptions, () async {
+      // await windowManager.setResizable(false);
+      await windowManager.show();
+      await windowManager.focus();
+    });
+  }
   if (Platform.isAndroid) {
     await FlutterStatusbarcolor.setStatusBarColor(DarkColors.bgColor);
     FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
@@ -71,12 +70,14 @@ class MyWidget extends StatelessWidget {
   const MyWidget({super.key});
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_) => ConfigModal()),
-          ChangeNotifierProvider(create: (_) => WalletModal()),
-          ChangeNotifierProvider(create: (_) => ContactsModal()),
-        ],
+    var providers = [
+      ChangeNotifierProvider(create: (_) => ConfigModal()),
+      ChangeNotifierProvider(create: (_) => WalletModal()),
+      ChangeNotifierProvider(create: (_) => ContactsModal()),
+    ];
+    if (Helper.isDesktop) {
+      return MultiProvider(
+        providers: providers,
         child: Consumer<ConfigModal>(
           builder: (context, configModal, child) => MaterialApp(
             debugShowCheckedModeBanner: false,
@@ -104,25 +105,61 @@ class MyWidget extends StatelessWidget {
               ),
             ),
             routes: {
-              "/": (context) => const StartPage(),
-              "/create": (context) => const CreateWalletPage(),
-              "/faceid": (context) => const FaceIDPage(),
-              "/select": (context) => const WalletListPage(),
-              "/wallet": (context) => const WalletHomePage(),
-              "/security": (context) => const SecurityPage(),
-              "/legal": (context) => const LegalPage(),
-              "/about_us": (context) => const AboutUsPage(),
-              "/setting": (context) => const WalletSettingPage(),
-              "/back_up": (context) => const BackUpPage(),
-              "/change_name": (context) => const ChangeNamePage(),
-              "/change_password": (context) => const PasswordPage(),
-              "/send": (context) => const SendPage(),
-              "/webview": (context) => const WebViewPage(),
-              "/back_up_test_start": (context) => const BackUpStartPage(),
-              "/back_up_test": (context) => const BackUpTestPage(),
-              "/customize_qr": (context) => const CustomizeQrPage(),
+              "/": (context) => const DesktopStartPage(),
             },
           ),
-        ));
+        ),
+      );
+    }
+    return MultiProvider(
+      providers: providers,
+      child: Consumer<ConfigModal>(
+        builder: (context, configModal, child) => MaterialApp(
+          debugShowCheckedModeBanner: false,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          locale: configModal.local,
+          theme: ThemeData(
+            fontFamily: configModal.local.languageCode == const Locale("ja").languageCode || configModal.local.languageCode == const Locale("zh").languageCode ? "system-font" : "RobotoMono",
+            scrollbarTheme: !Helper.isDesktop
+                ? null
+                : ScrollbarThemeData(
+                    thumbVisibility: MaterialStateProperty.all(true),
+                    thickness: MaterialStateProperty.all(3),
+                    thumbColor: MaterialStateProperty.all(DarkColors.mainColor54),
+                    radius: const Radius.circular(5),
+                    minThumbLength: 20,
+                  ),
+            pageTransitionsTheme: const PageTransitionsTheme(
+              builders: {
+                TargetPlatform.macOS: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.windows: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.android: CupertinoPageTransitionsBuilder(),
+                TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+              },
+            ),
+          ),
+          routes: {
+            "/": (context) => const StartPage(),
+            "/create": (context) => const CreateWalletPage(),
+            "/faceid": (context) => const FaceIDPage(),
+            "/select": (context) => const WalletListPage(),
+            "/wallet": (context) => const WalletHomePage(),
+            "/security": (context) => const SecurityPage(),
+            "/legal": (context) => const LegalPage(),
+            "/about_us": (context) => const AboutUsPage(),
+            "/setting": (context) => const WalletSettingPage(),
+            "/back_up": (context) => const BackUpPage(),
+            "/change_name": (context) => const ChangeNamePage(),
+            "/change_password": (context) => const PasswordPage(),
+            "/send": (context) => const SendPage(),
+            "/webview": (context) => const WebViewPage(),
+            "/back_up_test_start": (context) => const BackUpStartPage(),
+            "/back_up_test": (context) => const BackUpTestPage(),
+            "/customize_qr": (context) => const CustomizeQrPage(),
+          },
+        ),
+      ),
+    );
   }
 }

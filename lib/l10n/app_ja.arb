@@ -133,5 +133,14 @@
   "payment":"支払い",
   "contact":"連絡先",
   "customize_QR_code":"カスタマイズQRコード",
-  "name":"名前"
+  "name":"名前",
+  "desktop_createWallet": "新しいウォレットを作成",
+  "desktop_importWallet": "既にウォレットを持っています",
+  "desktop_create_password": "パスワードを作成",
+  "desktop_repeat_password": "パスワードを再入力",
+  "desktop_create_password_tips": "続行をクリックすることで、 1 と 1 に同意したことになります",
+  "back": "戻る",
+  "desktop_repeat_password_error":"パスワードが一致しません。両フィールドに同じパスワードを入力してください。",
+   "success_create_password":"パスワードの作成に成功しました。ウォレットを作成するまでパスワードをリセットできます。",
+   "desktop_reset_password": "パスワードをリセット"
 }

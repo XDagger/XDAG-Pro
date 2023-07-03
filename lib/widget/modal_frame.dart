@@ -7,18 +7,24 @@ import 'package:xdag/widget/desktop.dart';
 class CircleButton extends StatelessWidget {
   final IconData icon;
   final VoidCallback? onPressed;
-  const CircleButton({super.key, required this.icon, this.onPressed});
+  final double size;
+  const CircleButton({super.key, required this.icon, this.onPressed, this.size = 40});
 
   @override
   Widget build(BuildContext context) {
-    return MyCupertinoButton(
-      padding: EdgeInsets.zero,
-      onPressed: onPressed,
-      child: Container(
-        width: 40,
-        height: 40,
-        decoration: BoxDecoration(color: DarkColors.blockColor, borderRadius: BorderRadius.circular(20)),
-        child: Icon(size: 20, icon, color: Colors.white),
+    return SizedBox(
+      width: size,
+      height: size,
+      child: MyCupertinoButton(
+        padding: EdgeInsets.zero,
+        onPressed: onPressed,
+        child: Container(
+          width: size,
+          height: size,
+          margin: EdgeInsets.zero,
+          decoration: BoxDecoration(color: DarkColors.blockColor, borderRadius: BorderRadius.circular(20)),
+          child: Icon(size: size * 0.5, icon, color: Colors.white),
+        ),
       ),
     );
   }

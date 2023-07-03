@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:xdag/common/global.dart';
 
@@ -26,7 +24,7 @@ class ConfigModal extends ChangeNotifier {
   ];
   static final List<String> netWorks = ["MainNet", "TestNet"];
 
-  get local => walletConfig.local == 0 ? window.locale : langs[walletConfig.local].locale!;
+  get local => walletConfig.local == 0 ? WidgetsBinding.instance.platformDispatcher.locale : langs[walletConfig.local].locale!;
 
   changeLocal(int pos) async {
     await Global.saveLocale(pos);

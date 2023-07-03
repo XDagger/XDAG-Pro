@@ -133,5 +133,14 @@
   "payment":"Payment",
   "contact":"Contact",
   "customize_QR_code":"Customize QR Code",
-  "name":"Name"
+  "name":"Name",
+  "desktop_createWallet": "Create a new Wallet",
+  "desktop_importWallet": "I already have a wallet",
+  "desktop_create_password":"Create Password",
+  "desktop_repeat_password":"Repeat Password",
+  "desktop_create_password_tips":"By clicking Continue, you agree to our 1 and 1",
+  "back": "Back",
+  "desktop_repeat_password_error":"Passwords do not match. Please make sure to enter the same password in both fields.",
+  "success_create_password":"Creating a password is successful and you can reset your password until you create a wallet.",
+  "desktop_reset_password":"Reset Password"
 }

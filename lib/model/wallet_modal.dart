@@ -38,6 +38,16 @@ class WalletModal extends ChangeNotifier {
     return defaultWallet ?? Wallet('', '', '', true, true, false);
   }
 
+  int getCurrentWalletIndex() {
+    for (var i = 0; i < walletList.length; i++) {
+      Wallet? wallet = walletList.getAt(i);
+      if (wallet != null && wallet.isDef) {
+        return i;
+      }
+    }
+    return 0;
+  }
+
   // 获取去除当前钱包的其他钱包
   List<Wallet> getOtherWallet() {
     List<Wallet> list = [];

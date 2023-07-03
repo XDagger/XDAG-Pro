@@ -131,9 +131,9 @@ class ContactsStatePage extends State<ContactsPage> {
                               // ignore: empty_catches
                             } catch (e) {}
                           },
-                          child: Row(
+                          child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(Icons.qr_code_scanner_outlined, color: Colors.white, size: 16),
                             ],
                           ),

@@ -37,6 +37,8 @@ class _InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
+    double fontSize = 16;
+    EdgeInsetsGeometry contentPadding = const EdgeInsets.fromLTRB(15, 15, 0, 15);
     return TextField(
       controller: _textController,
       focusNode: widget.focusNode,
@@ -46,13 +48,13 @@ class _InputState extends State<Input> {
       keyboardAppearance: Brightness.dark,
       autofocus: widget.isFocus,
       cursorColor: DarkColors.mainColor,
-      style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+      style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: fontSize, fontWeight: FontWeight.w500, color: Colors.white)),
       decoration: InputDecoration(
           hintText: widget.hintText,
           filled: true,
           fillColor: DarkColors.blockColor,
-          contentPadding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
-          hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
+          contentPadding: contentPadding,
+          hintStyle: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: fontSize, fontWeight: FontWeight.w500, color: Colors.white54)),
           focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: DarkColors.mainColor, width: 1),
             borderRadius: BorderRadius.all(Radius.circular(10)),

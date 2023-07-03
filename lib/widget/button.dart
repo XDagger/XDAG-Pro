@@ -12,6 +12,9 @@ class Button extends StatelessWidget {
   final bool disable;
   final VoidCallback? onPressed;
   final bool isLoad;
+  final EdgeInsetsGeometry? padding;
+  final double? fontSize;
+  final double? height;
   const Button({
     super.key,
     required this.text,
@@ -22,16 +25,20 @@ class Button extends StatelessWidget {
     this.disable = false,
     this.onPressed,
     this.isLoad = false,
+    this.padding = EdgeInsets.zero,
+    this.fontSize = 16,
+    this.height = 50,
   });
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
         // width: width,
-        height: 50.0,
+        height: height,
         child: MyCupertinoButton(
-          padding: EdgeInsets.zero,
+          padding: padding,
           color: bgColor,
+          disabled: disable,
           disabledColor: bgColor,
           borderRadius: BorderRadius.circular(borderRadius),
           onPressed: disable || isLoad ? null : onPressed,
@@ -44,7 +51,7 @@ class Button extends StatelessWidget {
               : Text(
                   text,
                   textAlign: TextAlign.center,
-                  style: Helper.fitChineseFont(context, TextStyle(color: textColor, fontSize: 16.0, fontWeight: FontWeight.w500)),
+                  style: Helper.fitChineseFont(context, TextStyle(color: textColor, fontSize: fontSize, fontWeight: FontWeight.w500)),
                 ),
         ));
   }

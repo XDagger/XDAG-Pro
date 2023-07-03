@@ -302,8 +302,8 @@ class Item extends StatelessWidget {
           key: Key(wallet!.address),
           background: Container(
             color: Colors.red,
-            child: Row(
-              children: const [
+            child: const Row(
+              children: [
                 Spacer(),
                 Padding(
                   padding: EdgeInsets.only(right: 20),

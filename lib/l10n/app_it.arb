@@ -133,5 +133,14 @@
   "payment":"Pagamento",
   "contact":"Contatto",
   "customize_QR_code":"Personalizza codice QR",
-  "name":"Nome"
+  "name":"Nome",
+  "desktop_createWallet": "Crea un nuovo portafoglio",
+  "desktop_importWallet": "Ho già un portafoglio",
+  "desktop_create_password": "Crea una password",
+  "desktop_repeat_password": "Ripeti la password",
+  "desktop_create_password_tips": "Cliccando su Continua, accetti le nostre condizioni 1 e 1",
+  "back": "Indietro",
+  "desktop_repeat_password_error":"Le password non corrispondono. Assicurati di inserire la stessa password in entrambi i campi.",
+   "success_create_password":"La creazione della password è avvenuta con successo e puoi resettare la tua password fino a quando non crei un portafoglio.",
+   "desktop_reset_password": "Resetta la password"
 }

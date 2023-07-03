@@ -228,6 +228,38 @@ flutter:
     - images/2.0x/qr.png
     - images/3.0x/qr.png
 
+    - images/logo.png
+    - images/2.0x/logo.png
+    - images/3.0x/logo.png
+
+    - images/set_white.png
+    - images/2.0x/set_white.png
+    - images/3.0x/set_white.png
+
+    - images/wallet_white.png
+    - images/2.0x/wallet_white.png
+    - images/3.0x/wallet_white.png
+
+    - images/desktop_lang.png
+    - images/2.0x/desktop_lang.png
+    - images/3.0x/desktop_lang.png
+
+    - images/desktop_network.png
+    - images/2.0x/desktop_network.png
+    - images/3.0x/desktop_network.png
+
+    - images/desktop_legal.png
+    - images/2.0x/desktop_legal.png
+    - images/3.0x/desktop_legal.png
+
+    - images/desktop_security.png
+    - images/2.0x/desktop_security.png
+    - images/3.0x/desktop_security.png
+
+    - images/home.png
+    - images/2.0x/home.png
+    - images/3.0x/home.png
+
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
