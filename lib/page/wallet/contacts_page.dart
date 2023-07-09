@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xdag/desktop/modal_frame.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/page/common/add_contacts_page.dart';
 import 'package:xdag/page/detail/send_page.dart';
@@ -28,12 +29,13 @@ class ContactsMainPage extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                    child: Text(
-                  AppLocalizations.of(context).contacts,
-                  style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white)),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                )),
+                  child: Text(
+                    AppLocalizations.of(context).contacts,
+                    style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white)),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
                 MyCupertinoButton(
                   padding: const EdgeInsets.all(0),
                   child: Container(
@@ -227,120 +229,147 @@ class ContactsDetail extends StatelessWidget {
       isShowRightCloseButton: true,
       child: Container(
         padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
-        child: Column(
-          children: [
-            Expanded(
-              child: Column(
-                children: [
-                  // Text(item.name, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w400))),
-                  // const SizedBox(height: 15),
-                  Container(
+        child: CommonContactDetail(item: item, canEdit: canEdit),
+      ),
+    );
+  }
+}
+
+class CommonContactDetail extends StatelessWidget {
+  final ContactsItem item;
+  final bool canEdit;
+  const CommonContactDetail({Key? key, required this.item, this.canEdit = false}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(15, 20, 15, 0),
+      child: Column(
+        children: [
+          Expanded(
+            child: Column(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: DarkColors.blockColor,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.all(15),
+                  child: Text(item.address, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700))),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 60,
+            margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
+            // color: Colors.green,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                if (canEdit)
+                  MyCupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: DarkColors.redColorMask2,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop("delete");
+                    },
+                  ),
+                if (canEdit)
+                  MyCupertinoButton(
+                    padding: EdgeInsets.zero,
+                    child: Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        color: DarkColors.blockColor,
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      child: const Center(
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop("edit");
+                    },
+                  ),
+                MyCupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: Container(
+                    width: 60,
+                    height: 60,
                     decoration: BoxDecoration(
                       color: DarkColors.blockColor,
-                      borderRadius: BorderRadius.circular(8),
+                      borderRadius: BorderRadius.circular(30),
                     ),
-                    padding: const EdgeInsets.all(15),
-                    child: Text(item.address, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white54, fontSize: 16, fontWeight: FontWeight.w700))),
+                    child: const Center(
+                      child: Icon(
+                        Icons.send,
+                        color: Colors.white,
+                      ),
+                    ),
                   ),
-                ],
-              ),
+                  onPressed: () {
+                    Navigator.of(context).pop("send");
+                  },
+                ),
+                MyCupertinoButton(
+                  padding: EdgeInsets.zero,
+                  child: Container(
+                    width: 60,
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: DarkColors.blockColor,
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    child: const Center(
+                      child: Icon(
+                        Icons.copy,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: item.address));
+                    Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                  },
+                ),
+              ],
             ),
-            Container(
-              height: 60,
-              margin: EdgeInsets.fromLTRB(15, 20, 15, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
-              // color: Colors.green,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  if (canEdit)
-                    MyCupertinoButton(
-                      padding: EdgeInsets.zero,
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: DarkColors.redColorMask2,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.delete,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop("delete");
-                      },
-                    ),
-                  if (canEdit)
-                    MyCupertinoButton(
-                      padding: EdgeInsets.zero,
-                      child: Container(
-                        width: 60,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: DarkColors.blockColor,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: const Center(
-                          child: Icon(
-                            Icons.edit,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop("edit");
-                      },
-                    ),
-                  MyCupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: DarkColors.blockColor,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.send,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.of(context).pop("send");
-                    },
-                  ),
-                  MyCupertinoButton(
-                    padding: EdgeInsets.zero,
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: DarkColors.blockColor,
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.copy,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    onPressed: () {
-                      Clipboard.setData(ClipboardData(text: item.address));
-                      Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
-                    },
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
+    );
+  }
+}
+
+class DesktopContactsDetail extends StatelessWidget {
+  final ContactsItem item;
+  final bool canEdit;
+  const DesktopContactsDetail({Key? key, required this.item, this.canEdit = false}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DesktopModalFrame(
+      boxSize: const Size(600, 400),
+      title: item.name,
+      child: Expanded(child: CommonContactDetail(item: item, canEdit: canEdit)),
     );
   }
 }

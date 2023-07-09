@@ -55,6 +55,7 @@ appInit() async {
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       // await windowManager.setResizable(false);
       await windowManager.show();
+      // windowManager.setAlwaysOnTop(true);
       await windowManager.focus();
     });
   }

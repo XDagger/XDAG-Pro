@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
-import 'package:xdag/common/global.dart';
+import 'package:xdag/common/config.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/desktop/lang_page.dart';
+import 'package:xdag/desktop/security_page.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/widget/desktop.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -36,10 +37,10 @@ class _SettingPageState extends State<SettingPage> {
     SettingItem(title: 'Legal', icon: 'images/desktop_legal.png'),
   ];
   List<AboutItem> aboutItems = const [
-    AboutItem(icon: 'images/telegram.png', url: 'https://www.telegram.me/dagger_cryptocurrency'),
-    AboutItem(icon: 'images/discord.png', url: 'https://discord.gg/Nf72gd9'),
-    AboutItem(icon: 'images/twitter.png', url: 'https://twitter.com/XDAG_Community'),
-    AboutItem(icon: 'images/home.png', url: "https://xdag.io/"),
+    AboutItem(icon: 'images/telegram.png', url: ConfigGlobal.telegram),
+    AboutItem(icon: 'images/discord.png', url: ConfigGlobal.discord),
+    AboutItem(icon: 'images/twitter.png', url: ConfigGlobal.twitter),
+    AboutItem(icon: 'images/home.png', url: ConfigGlobal.home),
   ];
   @override
   Widget build(BuildContext context) {
@@ -65,7 +66,7 @@ class _SettingPageState extends State<SettingPage> {
                     Item(
                       title: ConfigModal.netWorks[config.walletConfig.network],
                       item: items[1],
-                      onTap: () => showDialog(context: context, builder: (BuildContext context) => const DesktoLegalPage(boxSize: Size(400, 185))),
+                      onTap: () => showDialog(context: context, builder: (BuildContext context) => const DesktopNetPage(boxSize: Size(400, 185))),
                     ),
                   ],
                 ),
@@ -75,7 +76,25 @@ class _SettingPageState extends State<SettingPage> {
                   children: [
                     Item(
                       item: items[2],
-                      onTap: () => showDialog(context: context, builder: (BuildContext context) => const DesktoLegalPage(boxSize: Size(400, 185))),
+                      onTap: () {
+                        // 弹窗全屏
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) => DesktopLockPage(
+                            checkCallback: (p0) {
+                              if (p0) {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) => const DesktopSecurityPage(boxSize: Size(500, 400), type: 1),
+                                );
+                              }
+                            },
+                          ),
+                        );
+                        // 弹窗要求输入新密码
+                        // 弹窗要求再次输入新密码
+                        // 展示成果
+                      },
                     ),
                     const SizedBox(width: 20),
                     Item(
@@ -98,16 +117,16 @@ class _SettingPageState extends State<SettingPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AboutButton(item: aboutItems[0]),
-                const SizedBox(width: 5),
+                const SizedBox(width: 20),
                 AboutButton(item: aboutItems[1]),
-                const SizedBox(width: 5),
+                const SizedBox(width: 20),
                 AboutButton(item: aboutItems[2]),
-                const SizedBox(width: 5),
+                const SizedBox(width: 20),
                 AboutButton(item: aboutItems[3]),
               ],
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 20),
         ],
       ),
     );
@@ -116,7 +135,7 @@ class _SettingPageState extends State<SettingPage> {
 
 class Item extends StatelessWidget {
   final SettingItem item;
-  final String? title;
+  final String title;
   final VoidCallback onTap;
   const Item({super.key, required this.item, required this.onTap, this.title = ""});
 
@@ -138,7 +157,7 @@ class Item extends StatelessWidget {
           children: [
             Image.asset(item.icon, width: 80, height: 80),
             const SizedBox(height: 15),
-            Text(title == "" ? item.title : title!, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+            Text(title == "" ? item.title : title, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
           ],
         ),
       ),

@@ -23,10 +23,48 @@ class DesktopStartPage extends StatefulWidget {
 }
 
 class DesktopStartPageState extends State<DesktopStartPage> {
+  int needCheck = -1;
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
+      Wallet? wallet = walletModal.defaultWallet;
+      var flag = wallet == null;
+      setState(() {
+        needCheck = flag ? 0 : 1;
+      });
+      if (!flag) {
+        showModalBottomSheet(
+          backgroundColor: DarkColors.bgColor,
+          context: context,
+          isScrollControlled: true,
+          isDismissible: false,
+          enableDrag: false,
+          builder: (BuildContext buildContext) => DesktopLockPage(
+              showBack: false,
+              checkCallback: (bool isCheck) async {
+                if (isCheck) {
+                  setState(() {
+                    needCheck = 2;
+                  });
+                }
+              }),
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     WalletModal walletModal = Provider.of<WalletModal>(context);
     Wallet? wallet = walletModal.defaultWallet;
+    if (needCheck == -1 || needCheck == 1) {
+      return const Scaffold(
+        backgroundColor: DarkColors.bgColor,
+        body: null,
+      );
+    }
     return wallet == null ? const DesktopHomeScreen() : const DesktopWalletPage();
   }
 }
@@ -53,8 +91,8 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
   }
 
   void resetPassword(BuildContext context) async {
-    ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
-    await config.deletePassword();
+    // ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
+    // await config.deletePassword();
     if (context.mounted) {
       showDialog(
         context: context,
@@ -155,7 +193,7 @@ class StartButton extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return const DesktopCreateWalletPage(boxSize: Size(500, 400));
+        return DesktopCreateWalletPage(boxSize: const Size(500, 400), type: type);
       },
     );
   }

@@ -12,6 +12,7 @@ class NavHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var topPadding = Helper.isDesktop ? 10.0 : ScreenHelper.topPadding;
+    bool isColseIcon = this.isColseIcon || Helper.isDesktop;
     return Container(
       color: DarkColors.bgColor,
       // height: 50,

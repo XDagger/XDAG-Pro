@@ -142,5 +142,10 @@
   "back": "戻る",
   "desktop_repeat_password_error":"パスワードが一致しません。両フィールドに同じパスワードを入力してください。",
    "success_create_password":"パスワードの作成に成功しました。ウォレットを作成するまでパスワードをリセットできます。",
-   "desktop_reset_password": "パスワードをリセット"
+   "desktop_reset_password": "パスワードをリセット",
+   "desktop_password_error": "パスワードが正しくありません",
+   "desktop_change_password": "パスワードを変更",
+   "desktop_change_password_success": "パスワードの変更に成功しました",
+   "desktop_enter_password": "パスワードを入力してください",
+   "transactions": "取引"
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/config.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/desktop/modal_frame.dart';
 import 'package:xdag/model/config_modal.dart';
@@ -111,7 +112,7 @@ class DesktoLegalPage extends StatelessWidget {
             itemBuilder: (context, index) => ItemWithRightIcon(
               name: netWorks[index],
               onPressed: () {
-                launchUrlString(index == 0 ? "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/privacy_policy.html" : "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/terms_of_use.html", mode: LaunchMode.externalApplication);
+                launchUrlString(index == 0 ? ConfigGlobal.privacyPolicy : ConfigGlobal.termsOfUse, mode: LaunchMode.externalApplication);
               },
             ),
           ),

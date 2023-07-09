@@ -142,5 +142,10 @@
   "back": "Atrás",
   "desktop_repeat_password_error":"Las contraseñas no coinciden. Por favor, asegúrate de introducir la misma contraseña en ambos campos.",
   "success_create_password":"La creación de la contraseña se realizó con éxito y puedes restablecer tu contraseña hasta que crees una billetera.",
-  "desktop_reset_password": "Restablecer contraseña"
+  "desktop_reset_password": "Restablecer contraseña",
+  "desktop_password_error": "Contraseña incorrecta",
+  "desktop_change_password": "Cambiar contraseña",
+  "desktop_change_password_success": "Contraseña cambiada con éxito",
+  "desktop_enter_password": "Por favor, introduce tu contraseña",
+  "transactions": "Transacciones"
 }

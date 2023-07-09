@@ -99,7 +99,6 @@ class WalletPageState extends State<WalletPage> {
     // print("${config.walletConfig.network}) fetchPage");
     Wallet wallet = walletModal.getWallet();
     try {
-      // DateTime startTime = DateTime.now();
       String rpcURL = config.getCurrentRpc();
       String explorURL = config.getCurrentExplorer();
 
@@ -145,14 +144,16 @@ class WalletPageState extends State<WalletPage> {
         List<Transaction> allList = currentPage == 1 ? newList : list + newList;
         allList = allList.where((element) => element.type != 2).toList();
         List<Transaction> newList2 = [];
-        newList2.addAll(allList);
+        // newList2.addAll(allList);
         String lastTime = "";
         for (var i = 0; i < allList.length; i++) {
           var transaction = allList[i];
           if (lastTime == "" || lastTime.substring(0, 7) != transaction.time.substring(0, 7)) {
             lastTime = transaction.time;
-            newList2.insert(i, Transaction(type: 2, time: transaction.time, amount: '', address: '', status: "", from: '', to: '', hash: '', blockAddress: '', fee: 0, remark: ""));
+            //newList2.insert(i, Transaction(type: 2, time: transaction.time, amount: '', address: '', status: "", from: '', to: '', hash: '', blockAddress: '', fee: 0, remark: ""));
+            newList2.add(Transaction(type: 2, time: transaction.time, amount: '', address: '', status: "", from: '', to: '', hash: '', blockAddress: '', fee: 0, remark: ""));
           }
+          newList2.add(transaction);
         }
         // print(newList2);
         if (mounted) {

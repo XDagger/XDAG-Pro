@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/config.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/page/common/security_page.dart';
@@ -57,7 +58,7 @@ class LegalPage extends StatelessWidget {
                   LabelButton(
                     label: AppLocalizations.of(context).privacy_Policy,
                     onPressed: () {
-                      var url = "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/privacy_policy.html";
+                      var url = ConfigGlobal.privacyPolicy;
                       if (Platform.isAndroid || Platform.isIOS) {
                         Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
                       } else {
@@ -70,7 +71,7 @@ class LegalPage extends StatelessWidget {
                     type: 1,
                     label: AppLocalizations.of(context).terms_of_Use,
                     onPressed: () {
-                      var url = "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/terms_of_use.html";
+                      var url = ConfigGlobal.termsOfUse;
                       if (Platform.isAndroid || Platform.isIOS) {
                         Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
                       } else {

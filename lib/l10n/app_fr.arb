@@ -142,5 +142,10 @@
   "back": "Retour",
   "desktop_repeat_password_error":"Les mots de passe ne correspondent pas. Veuillez vous assurer de saisir le même mot de passe dans les deux champs.",
   "success_create_password":"Création du mot de passe réussie. Vous pouvez réinitialiser votre mot de passe jusqu'à la création d'un portefeuille.",
-  "desktop_reset_password": "Réinitialiser le mot de passe"
+  "desktop_reset_password": "Réinitialiser le mot de passe",
+  "desktop_password_error": "Mot de passe incorrect",
+  "desktop_change_password": "Changer le mot de passe",
+  "desktop_change_password_success": "Mot de passe changé avec succès",
+  "desktop_enter_password": "Veuillez saisir votre mot de passe",
+  "transactions": "Transactions"
 }

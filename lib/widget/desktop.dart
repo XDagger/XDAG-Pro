@@ -18,6 +18,7 @@ class MyCupertinoButton extends StatelessWidget {
       padding: padding,
       onPressed: onPressed,
       color: color,
+      minSize: 0,
       pressedOpacity: pressedOpacity,
       disabledColor: disabledColor,
       borderRadius: borderRadius,

@@ -142,5 +142,10 @@
   "back": "Indietro",
   "desktop_repeat_password_error":"Le password non corrispondono. Assicurati di inserire la stessa password in entrambi i campi.",
    "success_create_password":"La creazione della password è avvenuta con successo e puoi resettare la tua password fino a quando non crei un portafoglio.",
-   "desktop_reset_password": "Resetta la password"
+   "desktop_reset_password": "Resetta la password",
+   "desktop_password_error": "Password errata",
+   "desktop_change_password": "Cambia password",
+   "desktop_change_password_success": "Cambiamento della password effettuato con successo",
+   "desktop_enter_password": "Inserisci la password",
+   "transactions": "Transazioni"
 }

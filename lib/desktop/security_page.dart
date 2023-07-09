@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/config.dart';
+import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:xdag/desktop/modal_frame.dart';
@@ -13,7 +15,8 @@ import 'package:xdag/widget/modal_frame.dart';
 
 class DesktopSecurityPage extends StatefulWidget {
   final Size boxSize;
-  const DesktopSecurityPage({super.key, required this.boxSize});
+  final int type;
+  const DesktopSecurityPage({super.key, required this.boxSize, this.type = 0});
 
   @override
   State<DesktopSecurityPage> createState() => _DesktopSecurityPageState();
@@ -69,6 +72,7 @@ class _DesktopSecurityPageState extends State<DesktopSecurityPage> {
               return PageCreatePassword(
                 disable: !isButtonEnable,
                 obscureText: obscureText,
+                type: widget.type,
                 onChanged: (value) => setState(() => password = value),
                 enterCallback: () => nextNav(),
                 onPressed: () => nextNav(),
@@ -78,9 +82,13 @@ class _DesktopSecurityPageState extends State<DesktopSecurityPage> {
               return PageRepeatPassword(
                 obscureText: obscureText,
                 error: error,
-                onChanged: (value) {
+                type: widget.type,
+                onChanged: (value) async {
                   if (value.length == 6) {
                     if (value == password) {
+                      if (widget.type == 1) {
+                        await config.deletePassword();
+                      }
                       config.savePassword(value);
                       toSuccessNav();
                     } else {
@@ -105,7 +113,7 @@ class _DesktopSecurityPageState extends State<DesktopSecurityPage> {
                       color: DarkColors.bgColor,
                       child: Image.asset("images/p1.png"),
                     ),
-                    Text(AppLocalizations.of(context).success_create_password, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
+                    Text(widget.type == 0 ? AppLocalizations.of(context).success_create_password : AppLocalizations.of(context).desktop_change_password_success, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
                     const SizedBox(height: 20),
                   ],
                 )),
@@ -125,33 +133,117 @@ class _DesktopSecurityPageState extends State<DesktopSecurityPage> {
   }
 }
 
+class DesktopLockPage extends StatefulWidget {
+  final bool showBack;
+  final void Function(bool) checkCallback;
+  const DesktopLockPage({super.key, required this.checkCallback, this.showBack = true});
+
+  @override
+  State<DesktopLockPage> createState() => _DesktopLockPageState();
+}
+
+class _DesktopLockPageState extends State<DesktopLockPage> {
+  bool obscureText = true;
+  bool error = false;
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async {
+        return !widget.showBack;
+      },
+      child: Scaffold(
+        backgroundColor: DarkColors.bgColor,
+        body: Column(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(top: 20, right: 20),
+              child: Row(
+                children: [
+                  const Spacer(),
+                  CircleButton(icon: obscureText ? Icons.visibility : Icons.visibility_off, size: 30, onPressed: () => setState(() => obscureText = !obscureText)),
+                  widget.showBack ? const SizedBox(width: 15) : const SizedBox(),
+                  widget.showBack ? CircleButton(icon: Icons.close_rounded, size: 30, onPressed: () => Navigator.pop(context)) : const SizedBox(),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    AppLocalizations.of(context).desktop_enter_password,
+                    style: Helper.fitChineseFont(context, const TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white)),
+                  ),
+                  const SizedBox(height: 25),
+                  PasswordInput(
+                    obscureText: obscureText,
+                    length: 6,
+                    type: 1,
+                    enterCallback: () {},
+                    onChanged: (value) async {
+                      // 密码输入完成
+                      if (value.length == 6) {
+                        bool flag = await Global.checkPassword(value);
+                        if (flag) {
+                          if (mounted) {
+                            Navigator.of(context).pop();
+                            widget.checkCallback(true);
+                          }
+                        } else {
+                          setState(() => error = true);
+                        }
+                      } else {
+                        setState(() => error = false);
+                      }
+                    },
+                  ),
+                  error
+                      ? Container(
+                          width: 500,
+                          height: 50,
+                          margin: const EdgeInsets.only(bottom: 15, top: 15),
+                          child: Center(child: Text(AppLocalizations.of(context).desktop_password_error, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.red))))),
+                        )
+                      : const SizedBox(height: 80),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class PageCreatePassword extends StatelessWidget {
   final bool disable;
+  final int type;
   final ValueChanged<String> onChanged; // 输入变化回调
   final VoidCallback enterCallback; // 输入变化回调
   final bool obscureText;
   final VoidCallback? onPressed;
-  const PageCreatePassword({super.key, this.disable = false, required this.onChanged, required this.enterCallback, this.obscureText = true, this.onPressed});
+  const PageCreatePassword({super.key, this.type = 0, this.disable = false, required this.onChanged, required this.enterCallback, this.obscureText = true, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context).create_password_tips, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white)))),
+        type == 0 ? Text(AppLocalizations.of(context).create_password_tips, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white)))) : const SizedBox(),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(AppLocalizations.of(context).desktop_create_password, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)))),
+              Text(type == 0 ? AppLocalizations.of(context).desktop_create_password : AppLocalizations.of(context).desktop_change_password, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)))),
               const SizedBox(height: 10),
               PasswordInput(obscureText: obscureText, length: 6, enterCallback: enterCallback, onChanged: onChanged),
             ],
           ),
         ),
-        Linktext(text: AppLocalizations.of(context).desktop_create_password_tips),
-        const SizedBox(height: 10),
+        type == 0 ? Linktext(text: AppLocalizations.of(context).desktop_create_password_tips) : const SizedBox(),
+        SizedBox(height: type == 0 ? 10 : 0),
         Row(children: [const Spacer(), BottomBtn(bgColor: disable ? DarkColors.mainColor.withOpacity(0.5) : DarkColors.mainColor, disable: disable, text: AppLocalizations.of(context).continueText, onPressed: onPressed)])
       ],
     );
@@ -161,16 +253,17 @@ class PageCreatePassword extends StatelessWidget {
 class PageRepeatPassword extends StatelessWidget {
   final ValueChanged<String> onChanged; // 输入变化回调
   final bool obscureText;
+  final int type;
   final VoidCallback? onPressed;
   final bool error;
-  const PageRepeatPassword({super.key, required this.onChanged, this.obscureText = true, this.onPressed, this.error = false});
+  const PageRepeatPassword({super.key, this.type = 0, required this.onChanged, this.obscureText = true, this.onPressed, this.error = false});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(AppLocalizations.of(context).create_password_tips, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white)))),
+        type == 0 ? Text(AppLocalizations.of(context).create_password_tips, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white)))) : const SizedBox(),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -185,7 +278,7 @@ class PageRepeatPassword extends StatelessWidget {
         error
             ? Container(
                 width: 315,
-                height: 20,
+                // height: 50,
                 margin: const EdgeInsets.only(bottom: 15),
                 child: Text(AppLocalizations.of(context).desktop_repeat_password_error, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red)))),
               )
@@ -222,13 +315,14 @@ class BottomBtn extends StatelessWidget {
 }
 
 class PasswordInput extends StatefulWidget {
-  final int length; // 密码长度
-  final ValueChanged<String> onChanged; // 输入变化回调
-  final VoidCallback enterCallback; // 输入变化回调
+  final int length;
+  final ValueChanged<String> onChanged;
+  final VoidCallback enterCallback;
   final bool obscureText;
-  // 导出一个 controller 方便外部调用
+  final int type;
+  // TODO 导出一个 controller 方便外部调用
 
-  const PasswordInput({super.key, required this.length, required this.onChanged, required this.enterCallback, this.obscureText = false});
+  const PasswordInput({super.key, required this.length, required this.onChanged, required this.enterCallback, this.obscureText = false, this.type = 0});
 
   @override
   State<PasswordInput> createState() => _PasswordInputState();
@@ -284,6 +378,7 @@ class _PasswordInputState extends State<PasswordInput> {
 
   @override
   Widget build(BuildContext context) {
+    double size = widget.type == 0 ? 40 : 50;
     return RawKeyboardListener(
       focusNode: FocusNode(),
       onKey: (RawKeyEvent event) {
@@ -310,8 +405,9 @@ class _PasswordInputState extends State<PasswordInput> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: List.generate(widget.length, (index) {
           return Container(
-            width: 40,
-            height: 40,
+            width: size,
+            height: size,
+            // color: Colors.red,
             margin: EdgeInsets.fromLTRB(0, 0, index == widget.length - 1 ? 0 : 15, 0),
             child: Center(
               child: TextField(
@@ -398,7 +494,7 @@ class Linktext extends StatelessWidget {
                         style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: DarkColors.mainColor, height: 1.5)),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            launchUrlString(index == 0 ? "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/privacy_policy.html" : "https://htmlpreview.github.io/?https://github.com/XDagger/XDAG-Pro/blob/main/legals/terms_of_use.html", mode: LaunchMode.externalApplication);
+                            launchUrlString(index == 0 ? ConfigGlobal.privacyPolicy : ConfigGlobal.termsOfUse, mode: LaunchMode.externalApplication);
                           },
                       ),
                     ],

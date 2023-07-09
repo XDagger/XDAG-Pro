@@ -142,5 +142,10 @@
   "back": "Zurück",
   "desktop_repeat_password_error":"Passwörter stimmen nicht überein. Bitte stellen Sie sicher, dass Sie das gleiche Passwort in beiden Feldern eingeben.",
   "success_create_password":"Passwort erfolgreich erstellt. Sie können es zurücksetzen, bis Sie ein Wallet erstellen.",
-  "desktop_reset_password": "Passwort zurücksetzen"
+  "desktop_reset_password": "Passwort zurücksetzen",
+  "desktop_password_error": "Passwort ist falsch",
+  "desktop_change_password": "Passwort ändern",
+  "desktop_change_password_success": "Passwort erfolgreich geändert",
+  "desktop_enter_password": "Bitte geben Sie Ihr Passwort ein",
+  "transactions": "Transaktionen"
 }

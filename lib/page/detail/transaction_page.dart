@@ -31,8 +31,6 @@ class _TransactionPageState extends State<TransactionPage> {
   String fee = "";
   String hash = "";
   String transactionState = 'Pending';
-  // double height = 430;
-
   final dio = Dio();
   CancelToken cancelToken = CancelToken();
   @override
@@ -343,7 +341,7 @@ class TransactionButton extends StatelessWidget {
     TextStyle valueStyle = Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: readFont ? DarkColors.redColor : Colors.white));
     return Container(
       constraints: const BoxConstraints(minHeight: 50.0),
-      margin: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+      margin: Helper.isDesktop ? const EdgeInsets.all(0) : const EdgeInsets.fromLTRB(15, 0, 15, 0),
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: DarkColors.blockColor,

@@ -45,8 +45,9 @@ class ModalFrame extends StatelessWidget {
     // 获取设备高度
     double screenHeight = ScreenHelper.screenHeight;
     double topPadding = ScreenHelper.topPadding;
-    Widget leftButton = isHideLeftDownButton != null && isHideLeftDownButton == true ? const SizedBox(width: 40) : CircleButton(icon: Icons.expand_more, onPressed: () => Navigator.pop(context));
+    Widget leftButton = isHideLeftDownButton != null && isHideLeftDownButton == true ? const SizedBox(width: 40) : CircleButton(icon: Helper.isDesktop ? Icons.close : Icons.expand_more, onPressed: () => Navigator.pop(context));
     Widget rightButton = rightBtn ?? (isShowRightCloseButton != null && isShowRightCloseButton == true ? CircleButton(icon: Icons.close_rounded, onPressed: () => Navigator.pop(context)) : const SizedBox(width: 40));
+    Radius radius = Helper.isDesktop ? const Radius.circular(0) : const Radius.circular(20);
     return Container(
       decoration: const BoxDecoration(
         color: DarkColors.bgColor,
@@ -56,9 +57,9 @@ class ModalFrame extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             color: DarkColors.bgColor,
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20)),
+            borderRadius: BorderRadius.only(topLeft: radius, topRight: radius),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

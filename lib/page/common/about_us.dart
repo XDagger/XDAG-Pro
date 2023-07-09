@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/config.dart';
 import 'package:xdag/page/common/webview.dart';
 import 'package:xdag/widget/label_button.dart';
 import 'package:xdag/widget/nav_header.dart';
@@ -25,7 +26,7 @@ class AboutUsPage extends StatelessWidget {
                         LabelButton(
                           label: "Telegram",
                           onPressed: () async {
-                            launchUrlString('https://www.telegram.me/dagger_cryptocurrency', mode: LaunchMode.externalApplication);
+                            launchUrlString(ConfigGlobal.telegram, mode: LaunchMode.externalApplication);
                           },
                           child: Image.asset("images/telegram.png", width: 25, height: 25),
                         ),
@@ -34,7 +35,7 @@ class AboutUsPage extends StatelessWidget {
                           type: 2,
                           label: "Discord",
                           onPressed: () {
-                            launchUrlString('https://discord.gg/Nf72gd9', mode: LaunchMode.externalApplication);
+                            launchUrlString(ConfigGlobal.discord, mode: LaunchMode.externalApplication);
                           },
                           child: Image.asset("images/discord.png", width: 25, height: 25),
                         ),
@@ -43,7 +44,7 @@ class AboutUsPage extends StatelessWidget {
                           type: 2,
                           label: "Twitter",
                           onPressed: () {
-                            launchUrlString('https://twitter.com/XDAG_Community', mode: LaunchMode.externalApplication);
+                            launchUrlString(ConfigGlobal.twitter, mode: LaunchMode.externalApplication);
                           },
                           child: Image.asset("images/twitter.png", width: 25, height: 25),
                         ),
@@ -52,7 +53,7 @@ class AboutUsPage extends StatelessWidget {
                           type: 1,
                           label: "Website",
                           onPressed: () {
-                            Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: "https://xdag.io/", title: 'XDAG'));
+                            Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: ConfigGlobal.home, title: 'XDAG'));
                           },
                           child: Image.asset("images/website.png", width: 25, height: 25),
                         ),

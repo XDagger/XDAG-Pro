@@ -142,5 +142,10 @@
   "back": "Back",
   "desktop_repeat_password_error":"Passwords do not match. Please make sure to enter the same password in both fields.",
   "success_create_password":"Creating a password is successful and you can reset your password until you create a wallet.",
-  "desktop_reset_password":"Reset Password"
+  "desktop_reset_password":"Reset Password",
+  "desktop_password_error": "Password error",
+  "desktop_change_password": "Change Password",
+  "desktop_change_password_success": "Change password successfully",
+  "desktop_enter_password": "Enter Password",
+  "transactions": "Transactions"
 }

@@ -260,6 +260,18 @@ flutter:
     - images/2.0x/home.png
     - images/3.0x/home.png
 
+    - images/ref.png
+    - images/2.0x/ref.png
+    - images/3.0x/ref.png
+
+    - images/lock_icon.png
+    - images/2.0x/lock_icon.png
+    - images/3.0x/lock_icon.png
+
+    - images/contacts_white.png
+    - images/2.0x/contacts_white.png
+    - images/3.0x/contacts_white.png
+
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

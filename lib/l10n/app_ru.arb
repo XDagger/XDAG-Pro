@@ -142,5 +142,10 @@
   "back": "Назад",
   "desktop_repeat_password_error":"Пароли не совпадают. Пожалуйста, убедитесь, что вы вводите одинаковый пароль в обоих полях.",
   "success_create_password":"Пароль успешно создан, вы можете сбросить его до создания кошелька.",
-  "desktop_reset_password": "Сбросить пароль"
+  "desktop_reset_password": "Сбросить пароль",
+  "desktop_password_error": "Неверный пароль",
+  "desktop_change_password": "Изменить пароль",
+  "desktop_change_password_success": "Пароль успешно изменен",
+  "desktop_enter_password": "Пожалуйста, введите пароль",
+  "transactions": "Транзакции"
 }

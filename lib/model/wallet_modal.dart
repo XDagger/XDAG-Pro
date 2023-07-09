@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:xdag/common/global.dart';
 import 'package:xdag/model/db_model.dart';
-import 'package:dio/dio.dart';
 
 class Transaction {
   final String time;
@@ -21,7 +20,6 @@ class Transaction {
 
 class WalletModal extends ChangeNotifier {
   Box<Wallet> get walletList => Global.walletListBox;
-  final dio = Dio();
   Wallet? get defaultWallet {
     // 从_wallets列表中查找第一个isDef属性为true的Wallet对象
     for (var i = 0; i < walletList.length; i++) {
@@ -60,6 +58,11 @@ class WalletModal extends ChangeNotifier {
     return list;
   }
 
+  // get wallet by index
+  Wallet getWalletByIndex(int index) {
+    return walletList.getAt(index) ?? Wallet('', '', '', true, true, false);
+  }
+
   createWallet({required String name, required String address, required String data, bool needBackUp = false}) async {
     try {
       Wallet newWallet = await Global.createWallet(
@@ -87,6 +90,15 @@ class WalletModal extends ChangeNotifier {
 
   changeName(String name) async {
     Wallet? wallet = defaultWallet;
+    if (wallet != null) {
+      wallet.name = name;
+      await wallet.save();
+      notifyListeners();
+    }
+  }
+
+  changeNameByIndex(String name, int index) async {
+    Wallet? wallet = walletList.getAt(index);
     if (wallet != null) {
       wallet.name = name;
       await wallet.save();

@@ -60,6 +60,7 @@ class Helper {
   }
 
   static String formatDouble(String num) {
+    if (num.isEmpty) return "0.00";
     String result;
     double number = double.parse(num);
     if (number == number.toInt()) {
