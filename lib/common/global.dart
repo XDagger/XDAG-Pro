@@ -38,7 +38,7 @@ class Global {
   static const String _hasRunBeforeKey = 'hasRunBeforeKey';
   static const String walletListKey = 'walletListKey';
   static const String contactsListKey = 'contactsListKey';
-  static const Size windowMinSize = Size(675, 450);
+  static const Size windowMinSize = Size(675, 480);
   static const Size windowMaxSize = Size(1024, 768);
   // static const Size windowSize = Size(675, 450);
 

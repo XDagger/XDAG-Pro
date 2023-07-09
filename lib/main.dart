@@ -50,7 +50,7 @@ appInit() async {
       center: true,
       backgroundColor: DarkColors.bgColor,
       skipTaskbar: false,
-      titleBarStyle: TitleBarStyle.hidden,
+      titleBarStyle: Platform.isWindows ? TitleBarStyle.normal : TitleBarStyle.hidden,
     );
     windowManager.waitUntilReadyToShow(windowOptions, () async {
       // await windowManager.setResizable(false);
