@@ -115,7 +115,7 @@ class DesktopAlertModal extends StatelessWidget {
                         BottomBtn(
                           bgColor: DarkColors.blockColor,
                           disable: false,
-                          text: AppLocalizations.of(context).cancel,
+                          text: AppLocalizations.of(context)!.cancel,
                           onPressed: () {
                             Navigator.pop(context, false);
                           },
@@ -124,7 +124,7 @@ class DesktopAlertModal extends StatelessWidget {
                         BottomBtn(
                           bgColor: DarkColors.redColor,
                           disable: false,
-                          text: AppLocalizations.of(context).continueText,
+                          text: AppLocalizations.of(context)!.continueText,
                           onPressed: () {
                             Navigator.pop(context, true);
                           },

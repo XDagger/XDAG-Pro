@@ -20,7 +20,7 @@ class WalletDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ModalFrame(
-      title: AppLocalizations.of(context).wallet_details,
+      title: AppLocalizations.of(context)!.wallet_details,
       child: const CommonWalletDetailPage(),
     );
   }
@@ -56,7 +56,7 @@ class CommonWalletDetailPage extends StatelessWidget {
                   ),
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: wallet.address));
-                    Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                    Helper.showToast(context, AppLocalizations.of(context)!.copied_to_clipboard);
                   },
                 ),
                 const Spacer(),
@@ -66,7 +66,7 @@ class CommonWalletDetailPage extends StatelessWidget {
           const SizedBox(height: 20),
           LabelButton(
             type: 0,
-            label: AppLocalizations.of(context).walletName,
+            label: AppLocalizations.of(context)!.walletName,
             onPressed: () async {
               Helper.changeAndroidStatusBar(false);
               await Navigator.pushNamed(context, "/change_name");
@@ -85,7 +85,7 @@ class CommonWalletDetailPage extends StatelessWidget {
             type: 2,
             padding: const EdgeInsets.fromLTRB(15, 10, 10, 10),
             onPressed: () async {},
-            label: AppLocalizations.of(context).hide_balance,
+            label: AppLocalizations.of(context)!.hide_balance,
             child: CupertinoSwitch(
               activeColor: DarkColors.mainColor54,
               trackColor: DarkColors.transactionColor,
@@ -125,7 +125,7 @@ class CommonWalletDetailPage extends StatelessWidget {
               );
               Helper.changeAndroidStatusBar(true);
             },
-            label: AppLocalizations.of(context).backup,
+            label: AppLocalizations.of(context)!.backup,
           ),
         ],
       ),

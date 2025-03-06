@@ -49,7 +49,7 @@ class _SettingPageState extends State<SettingPage> {
       margin: const EdgeInsets.only(left: 30, right: 30, top: 30, bottom: 0),
       child: Column(
         children: [
-          Row(children: [Text(AppLocalizations.of(context).setting, style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white)))]),
+          Row(children: [Text(AppLocalizations.of(context)!.setting, style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white)))]),
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -58,7 +58,7 @@ class _SettingPageState extends State<SettingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Item(
-                      title: config.walletConfig.local == 0 ? AppLocalizations.of(context).auto : ConfigModal.langs[config.walletConfig.local].name,
+                      title: config.walletConfig.local == 0 ? AppLocalizations.of(context)!.auto : ConfigModal.langs[config.walletConfig.local].name,
                       item: items[0],
                       onTap: () => showDialog(context: context, builder: (BuildContext context) => const DesktopLangPage(boxSize: Size(500, 400))),
                     ),
@@ -108,7 +108,7 @@ class _SettingPageState extends State<SettingPage> {
           ),
           Center(
               child: Text(
-            AppLocalizations.of(context).about_us,
+            AppLocalizations.of(context)!.about_us,
             style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white)),
           )),
           const SizedBox(height: 10),

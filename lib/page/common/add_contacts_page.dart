@@ -70,7 +70,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
     bool flag2 = Helper.checkName(controller2.text);
     if (!flag2) {
       setState(() {
-        error = AppLocalizations.of(context).contact_name_error;
+        error = AppLocalizations.of(context)!.contact_name_error;
       });
       return;
     }
@@ -89,7 +89,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
         }
         if (hasRepeat) {
           setState(() {
-            error = AppLocalizations.of(context).contact_address_repeat;
+            error = AppLocalizations.of(context)!.contact_address_repeat;
           });
           return;
         }
@@ -98,7 +98,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
       if (mounted) Navigator.pop(context);
     } else {
       setState(() {
-        error = AppLocalizations.of(context).walletAddressError;
+        error = AppLocalizations.of(context)!.walletAddressError;
       });
     }
   }
@@ -119,7 +119,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
               children: [
                 const Spacer(),
                 BottomBtn(
-                  text: AppLocalizations.of(context).continueText,
+                  text: AppLocalizations.of(context)!.continueText,
                   bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                   disable: !isButtonEnable,
                   onPressed: () => addContacts(),
@@ -133,7 +133,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Button(
-                  text: AppLocalizations.of(context).continueText,
+                  text: AppLocalizations.of(context)!.continueText,
                   width: ScreenHelper.screenWidth - 30,
                   bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                   textColor: Colors.white,
@@ -148,7 +148,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
         Helper.isDesktop
             ? const SizedBox()
             : NavHeader(
-                title: widget.isEdit ? AppLocalizations.of(context).edit_contact : AppLocalizations.of(context).add_contact,
+                title: widget.isEdit ? AppLocalizations.of(context)!.edit_contact : AppLocalizations.of(context)!.add_contact,
                 isColseIcon: true,
                 rightWidget: Platform.isIOS || Platform.isAndroid
                     ? Row(children: [
@@ -166,11 +166,11 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
                               try {
                                 var res = await ScanQr.openScanQr(
                                   color: "#15A9EC",
-                                  title: AppLocalizations.of(context).error,
-                                  content: AppLocalizations.of(context).camera_permissions,
-                                  confirmText: AppLocalizations.of(context).setting,
-                                  cancelText: AppLocalizations.of(context).cancel,
-                                  errQrText: AppLocalizations.of(context).qr_not_found,
+                                  title: AppLocalizations.of(context)!.error,
+                                  content: AppLocalizations.of(context)!.camera_permissions,
+                                  confirmText: AppLocalizations.of(context)!.setting,
+                                  cancelText: AppLocalizations.of(context)!.cancel,
+                                  errQrText: AppLocalizations.of(context)!.qr_not_found,
                                 );
                                 if (res != null) {
                                   // 判断 res 是否是一个 json 字符串
@@ -199,14 +199,14 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
                                     controller.clear();
                                     controller.selection = TextSelection.fromPosition(const TextPosition(offset: 0));
                                     setState(() {
-                                      error = AppLocalizations.of(context).walletAddressError;
+                                      error = AppLocalizations.of(context)!.walletAddressError;
                                     });
                                   }
                                 } else {
                                   controller.clear();
                                   controller.selection = TextSelection.fromPosition(const TextPosition(offset: 0));
                                   setState(() {
-                                    error = AppLocalizations.of(context).walletAddressError;
+                                    error = AppLocalizations.of(context)!.walletAddressError;
                                   });
                                 }
                                 // ignore: empty_catches
@@ -231,7 +231,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(AppLocalizations.of(context).contact_name, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+                  Text(AppLocalizations.of(context)!.contact_name, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                   const SizedBox(height: 13),
                   AutoSizeTextField(
                     controller: controller2,
@@ -258,7 +258,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
                       filled: true,
                       contentPadding: const EdgeInsets.all(15),
                       fillColor: DarkColors.blockColor,
-                      hintText: AppLocalizations.of(context).contact_name,
+                      hintText: AppLocalizations.of(context)!.contact_name,
                       hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide.none,
@@ -271,7 +271,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
                     ),
                   ),
                   const SizedBox(height: 25),
-                  Text(AppLocalizations.of(context).walletAddress, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+                  Text(AppLocalizations.of(context)!.walletAddress, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                   const SizedBox(height: 13),
                   AutoSizeTextField(
                     controller: controller,
@@ -298,7 +298,7 @@ class _CommonAddContactsPage extends State<CommonAddContactsPage> {
                       filled: true,
                       contentPadding: const EdgeInsets.all(15),
                       fillColor: DarkColors.blockColor,
-                      hintText: AppLocalizations.of(context).walletAddress,
+                      hintText: AppLocalizations.of(context)!.walletAddress,
                       hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide.none,
@@ -344,7 +344,7 @@ class DesktopContactsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return DesktopModalFrame(
         boxSize: const Size(600, 400),
-        title: isEdit ? AppLocalizations.of(context).edit_contact : AppLocalizations.of(context).add_contact,
+        title: isEdit ? AppLocalizations.of(context)!.edit_contact : AppLocalizations.of(context)!.add_contact,
         child: Expanded(
           child: CommonAddContactsPage(item: item, isEdit: isEdit, index: index),
         ));

@@ -18,15 +18,15 @@ class BottomNavButton extends StatelessWidget {
     switch (type) {
       case 1:
         image = index == 1 ? Image.asset('images/contacts.png', width: 25, height: 25) : Image.asset('images/contacts1.png', width: 25, height: 25);
-        text = AppLocalizations.of(context).contacts;
+        text = AppLocalizations.of(context)!.contacts;
         break;
       case 2:
         image = index == 2 ? Image.asset('images/set.png', width: 25, height: 25) : Image.asset('images/set1.png', width: 25, height: 25);
-        text = AppLocalizations.of(context).setting;
+        text = AppLocalizations.of(context)!.setting;
         break;
       default:
         image = index == 0 ? Image.asset('images/wallet.png', width: 25, height: 25) : Image.asset('images/wallet1.png', width: 25, height: 25);
-        text = AppLocalizations.of(context).wallet;
+        text = AppLocalizations.of(context)!.wallet;
         break;
     }
     return MyCupertinoButton(

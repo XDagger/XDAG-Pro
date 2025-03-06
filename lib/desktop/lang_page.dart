@@ -21,7 +21,7 @@ class DesktopLangPage extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: DesktopModalFrame(
         boxSize: boxSize,
-        title: AppLocalizations.of(context).language,
+        title: AppLocalizations.of(context)!.language,
         child: Expanded(
           child: GridView.builder(
             itemCount: ConfigModal.langs.length,
@@ -34,7 +34,7 @@ class DesktopLangPage extends StatelessWidget {
             itemBuilder: (context, index) => Item(
               index: index,
               isSelect: config.walletConfig.local == index,
-              name: index == 0 ? AppLocalizations.of(context).auto : ConfigModal.langs[index].name,
+              name: index == 0 ? AppLocalizations.of(context)!.auto : ConfigModal.langs[index].name,
               onPressed: () {
                 config.changeLocal(index);
                 Navigator.of(context).pop();
@@ -59,7 +59,7 @@ class DesktopNetPage extends StatelessWidget {
       backgroundColor: Colors.transparent,
       body: DesktopModalFrame(
         boxSize: boxSize,
-        title: AppLocalizations.of(context).select_network,
+        title: AppLocalizations.of(context)!.select_network,
         child: Expanded(
           child: GridView.builder(
             itemCount: netWorks.length,
@@ -92,14 +92,14 @@ class DesktoLegalPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> netWorks = [
-      AppLocalizations.of(context).privacy_Policy,
-      AppLocalizations.of(context).terms_of_Use,
+      AppLocalizations.of(context)!.privacy_Policy,
+      AppLocalizations.of(context)!.terms_of_Use,
     ];
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: DesktopModalFrame(
         boxSize: boxSize,
-        title: AppLocalizations.of(context).legal_documents,
+        title: AppLocalizations.of(context)!.legal_documents,
         child: Expanded(
           child: GridView.builder(
             itemCount: netWorks.length,
@@ -132,7 +132,7 @@ class Item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ConfigModal config = Provider.of<ConfigModal>(context);
-    // String title = index == 0 ? AppLocalizations.of(context).auto : name;
+    // String title = index == 0 ? AppLocalizations.of(context)!.auto : name;
 
     // config.walletConfig.local == index
     return MyCupertinoButton(

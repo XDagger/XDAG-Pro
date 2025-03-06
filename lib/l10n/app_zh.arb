@@ -147,5 +147,6 @@
   "desktop_change_password": "更改密码",
   "desktop_change_password_success": "密码更改成功",
   "desktop_enter_password": "输入密码",
-  "transactions": "交易"
+  "transactions": "交易",
+  "forget_the_password": "忘记密码"
 }

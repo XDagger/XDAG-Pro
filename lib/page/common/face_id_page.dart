@@ -21,7 +21,7 @@ class FaceIDPageRouteParams {
 class FaceIDPage extends StatelessWidget {
   const FaceIDPage({super.key});
   Future<bool> _authenticate(ConfigModal configModal, BuildContext context, FaceIDPageRouteParams args) async {
-    bool flag = await Global.authenticate(AppLocalizations.of(context).verify_protect_wallet, AppLocalizations.of(context).cancel);
+    bool flag = await Global.authenticate(AppLocalizations.of(context)!.verify_protect_wallet, AppLocalizations.of(context)!.cancel);
     // save
     await configModal.saveBiometrics(flag);
     if (context.mounted && flag) {
@@ -48,16 +48,16 @@ class FaceIDPage extends StatelessWidget {
       args = ModalRoute.of(context)!.settings.arguments as FaceIDPageRouteParams;
     }
     ScreenHelper.initScreen(context);
-    // String tipsText = AppLocalizations.of(context).create_biometrics_tips_3;
-    String tipsText = args.type == 0 ? AppLocalizations.of(context).create_biometrics_tips_1 : AppLocalizations.of(context).create_biometrics_tips_2;
-    if (args.type > 0 && Platform.isAndroid) tipsText = AppLocalizations.of(context).create_biometrics_tips_3;
+    // String tipsText = AppLocalizations.of(context)!.create_biometrics_tips_3;
+    String tipsText = args.type == 0 ? AppLocalizations.of(context)!.create_biometrics_tips_1 : AppLocalizations.of(context)!.create_biometrics_tips_2;
+    if (args.type > 0 && Platform.isAndroid) tipsText = AppLocalizations.of(context)!.create_biometrics_tips_3;
     ConfigModal config = Provider.of<ConfigModal>(context);
     return Scaffold(
         backgroundColor: DarkColors.bgColor,
         appBar: null,
         body: Column(
           children: [
-            NavHeader(title: AppLocalizations.of(context).security),
+            NavHeader(title: AppLocalizations.of(context)!.security),
             Expanded(
               child: Container(
                 color: DarkColors.bgColor,
@@ -67,7 +67,7 @@ class FaceIDPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const SizedBox(height: 20),
-                    Text(AppLocalizations.of(context).create_faceid_tips, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+                    Text(AppLocalizations.of(context)!.create_faceid_tips, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                     Expanded(
                       child: MyCupertinoButton(
                           child: Column(
@@ -83,7 +83,7 @@ class FaceIDPage extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.fromLTRB(0, 25, 0, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
                       child: Button(
-                        text: AppLocalizations.of(context).skip_for_now,
+                        text: AppLocalizations.of(context)!.skip_for_now,
                         bgColor: DarkColors.lineColor,
                         textColor: Colors.white,
                         onPressed: () => toCreatePage(context, args),

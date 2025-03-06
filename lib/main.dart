@@ -16,6 +16,7 @@ import 'package:xdag/page/common/back_up_test_page.dart';
 import 'package:xdag/page/common/change_name_page.dart';
 import 'package:xdag/page/common/face_id_page.dart';
 import 'package:xdag/page/common/legal_page.dart';
+import 'package:xdag/page/common/log.dart';
 import 'package:xdag/page/common/password_page.dart';
 import 'package:xdag/page/common/security_page.dart';
 import 'package:xdag/page/common/create_wallet_page.dart';
@@ -158,6 +159,7 @@ class MyWidget extends StatelessWidget {
             "/back_up_test_start": (context) => const BackUpStartPage(),
             "/back_up_test": (context) => const BackUpTestPage(),
             "/customize_qr": (context) => const CustomizeQrPage(),
+            "/log": (context) => const LogPage(),
           },
         ),
       ),

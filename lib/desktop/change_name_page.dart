@@ -35,19 +35,19 @@ class _ChangeNameState extends State<ChangeNamePage> {
     bool isButtonEnable = walletName.isNotEmpty && walletName != wallet.name;
     return DesktopModalFrame(
         boxSize: const Size(500, 250),
-        title: AppLocalizations.of(context).change_wallet_name,
+        title: AppLocalizations.of(context)!.change_wallet_name,
         child: Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 5),
-              Text(AppLocalizations.of(context).walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+              Text(AppLocalizations.of(context)!.walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
               const SizedBox(height: 15),
               Input(
                 defaultValue: wallet.name,
                 isFocus: true,
                 focusNode: _focusNode,
-                hintText: AppLocalizations.of(context).walletName,
+                hintText: AppLocalizations.of(context)!.walletName,
                 onChanged: (p0) {
                   setState(() {
                     walletName = p0;
@@ -61,7 +61,7 @@ class _ChangeNameState extends State<ChangeNamePage> {
                   BottomBtn(
                     bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withOpacity(0.5),
                     disable: !isButtonEnable,
-                    text: AppLocalizations.of(context).continueText,
+                    text: AppLocalizations.of(context)!.continueText,
                     onPressed: () {
                       walletModal.changeNameByIndex(walletName, widget.index);
                       Navigator.pop(context);

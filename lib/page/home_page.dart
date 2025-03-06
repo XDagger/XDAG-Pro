@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
                   flex: 1,
                   child: Center(
                     child: Text(
-                      AppLocalizations.of(context).attention,
+                      AppLocalizations.of(context)!.attention,
                       style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700)),
                     ),
                   )),
@@ -57,7 +57,7 @@ class HomePage extends StatelessWidget {
             ],
           ),
           content: Text(
-            AppLocalizations.of(context).reset_password_tips,
+            AppLocalizations.of(context)!.reset_password_tips,
             style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500)),
           ),
           actions: <Widget>[
@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Button(
-                  text: AppLocalizations.of(context).continueText,
+                  text: AppLocalizations.of(context)!.continueText,
                   bgColor: DarkColors.mainColor,
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -75,7 +75,7 @@ class HomePage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Button(
-                  text: AppLocalizations.of(context).reset_password,
+                  text: AppLocalizations.of(context)!.reset_password,
                   bgColor: DarkColors.lineColor,
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -185,9 +185,9 @@ class HomePage extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Button(text: AppLocalizations.of(context).createWallet, bgColor: DarkColors.mainColor, onPressed: () => checkPassword(0)),
+                    Button(text: AppLocalizations.of(context)!.createWallet, bgColor: DarkColors.mainColor, onPressed: () => checkPassword(0)),
                     const SizedBox(height: 20),
-                    Button(text: AppLocalizations.of(context).importWallet, bgColor: DarkColors.lineColor, onPressed: () => checkPassword(1)),
+                    Button(text: AppLocalizations.of(context)!.importWallet, bgColor: DarkColors.lineColor, onPressed: () => checkPassword(1)),
                   ],
                 ),
               )

@@ -147,5 +147,6 @@
    "desktop_change_password": "パスワードを変更",
    "desktop_change_password_success": "パスワードの変更に成功しました",
    "desktop_enter_password": "パスワードを入力してください",
-   "transactions": "取引"
+   "transactions": "取引",
+   "forget_the_password": "パスワードを忘れた"
 }

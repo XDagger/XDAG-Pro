@@ -19,7 +19,7 @@ class LangsSelectPage extends StatelessWidget {
     // double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * ConfigModal.langs.length + 10;
     return ModalFrame(
       height: screenHeight * 0.8,
-      title: AppLocalizations.of(context).select_language,
+      title: AppLocalizations.of(context)!.select_language,
       child: Column(
         children: [
           const SizedBox(height: 20),
@@ -41,7 +41,7 @@ class LangsSelectPage extends StatelessWidget {
                       children: [
                         const SizedBox(width: 15),
                         Text(
-                          index == 0 ? AppLocalizations.of(context).auto : item.name,
+                          index == 0 ? AppLocalizations.of(context)!.auto : item.name,
                           style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w700)),
                         ),
                         const Spacer(),
@@ -76,7 +76,7 @@ class NetWorkSelectPage extends StatelessWidget {
     double height = 60 + (bottomPadding > 0 ? bottomPadding : 20) + 70 * netWorks.length + 10 + 30;
     return ModalFrame(
       height: height,
-      title: AppLocalizations.of(context).select_network,
+      title: AppLocalizations.of(context)!.select_network,
       child: Column(
         children: [
           const SizedBox(height: 20),

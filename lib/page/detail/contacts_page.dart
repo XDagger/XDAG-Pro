@@ -53,7 +53,7 @@ class ContactsStatePage extends State<ContactsPage> {
         child: Column(
           children: [
             NavHeader(
-              title: "${AppLocalizations.of(context).send} XDAG",
+              title: "${AppLocalizations.of(context)!.send} XDAG",
               isColseIcon: true,
               rightWidget: Platform.isIOS || Platform.isAndroid
                   ? Row(children: [
@@ -71,11 +71,11 @@ class ContactsStatePage extends State<ContactsPage> {
                             try {
                               var res = await ScanQr.openScanQr(
                                 color: "#15A9EC",
-                                title: AppLocalizations.of(context).error,
-                                content: AppLocalizations.of(context).camera_permissions,
-                                confirmText: AppLocalizations.of(context).setting,
-                                cancelText: AppLocalizations.of(context).cancel,
-                                errQrText: AppLocalizations.of(context).qr_not_found,
+                                title: AppLocalizations.of(context)!.error,
+                                content: AppLocalizations.of(context)!.camera_permissions,
+                                confirmText: AppLocalizations.of(context)!.setting,
+                                cancelText: AppLocalizations.of(context)!.cancel,
+                                errQrText: AppLocalizations.of(context)!.qr_not_found,
                               );
                               if (res != null) {
                                 // 判断 res 是否是一个 json 字符串
@@ -116,7 +116,7 @@ class ContactsStatePage extends State<ContactsPage> {
                                   setState(() {
                                     // walletAddress = "";
                                     isButtonEnable = false;
-                                    error = AppLocalizations.of(context).walletAddressError;
+                                    error = AppLocalizations.of(context)!.walletAddressError;
                                   });
                                 }
                               } else {
@@ -125,7 +125,7 @@ class ContactsStatePage extends State<ContactsPage> {
                                 setState(() {
                                   // walletAddress = "";
                                   isButtonEnable = false;
-                                  error = AppLocalizations.of(context).walletAddressError;
+                                  error = AppLocalizations.of(context)!.walletAddressError;
                                 });
                               }
                               // ignore: empty_catches
@@ -173,7 +173,7 @@ class ContactsStatePage extends State<ContactsPage> {
                       filled: true,
                       contentPadding: const EdgeInsets.all(15),
                       fillColor: DarkColors.blockColor,
-                      hintText: AppLocalizations.of(context).walletAddress,
+                      hintText: AppLocalizations.of(context)!.walletAddress,
                       hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: BorderSide.none,
@@ -220,7 +220,7 @@ class ContactsStatePage extends State<ContactsPage> {
                       pageController.animateToPage(0, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                     },
                     child: Text(
-                      AppLocalizations.of(context).contacts,
+                      AppLocalizations.of(context)!.contacts,
                       style: Helper.fitChineseFont(context, TextStyle(color: nav == 0 ? DarkColors.mainColor : Colors.white54, fontSize: 22.0, fontWeight: FontWeight.w700)),
                     ),
                   ),
@@ -235,7 +235,7 @@ class ContactsStatePage extends State<ContactsPage> {
                       pageController.animateToPage(1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
                     },
                     child: Text(
-                      AppLocalizations.of(context).wallet,
+                      AppLocalizations.of(context)!.wallet,
                       style: Helper.fitChineseFont(context, TextStyle(color: nav == 1 ? DarkColors.mainColor : Colors.white54, fontSize: 22.0, fontWeight: FontWeight.w700)),
                     ),
                   ),
@@ -257,7 +257,7 @@ class ContactsStatePage extends State<ContactsPage> {
                         return Column(children: [
                           const SizedBox(height: 20),
                           const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                          Text(pos == 0 ? AppLocalizations.of(context).no_contacts : AppLocalizations.of(context).no_wallets, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14))),
+                          Text(pos == 0 ? AppLocalizations.of(context)!.no_contacts : AppLocalizations.of(context)!.no_wallets, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14))),
                         ]);
                       }
                       ContactsItem item = isContact ? contacts.contactsList[index] : ContactsItem(walletList[index].name, walletList[index].address);
@@ -319,7 +319,7 @@ class ContactsStatePage extends State<ContactsPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Button(
-                    text: AppLocalizations.of(context).continueText,
+                    text: AppLocalizations.of(context)!.continueText,
                     width: ScreenHelper.screenWidth - 30,
                     bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                     textColor: Colors.white,
@@ -335,7 +335,7 @@ class ContactsStatePage extends State<ContactsPage> {
                         );
                       } else {
                         setState(() {
-                          error = AppLocalizations.of(context).walletAddressError;
+                          error = AppLocalizations.of(context)!.walletAddressError;
                         });
                       }
                     },

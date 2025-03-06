@@ -315,7 +315,7 @@ class TransactionCard extends StatelessWidget {
             child: Row(
               children: [
                 Text(
-                  AppLocalizations.of(context).transactions,
+                  AppLocalizations.of(context)!.transactions,
                   style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700)),
                 ),
                 // const Spacer(),
@@ -362,7 +362,7 @@ class TransactionCard extends StatelessWidget {
                   return Column(children: [
                     const SizedBox(height: 50),
                     const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                    Text(AppLocalizations.of(context).no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
+                    Text(AppLocalizations.of(context)!.no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
                     const SizedBox(height: 50),
                   ]);
                 }
@@ -595,7 +595,7 @@ class _SendCardState extends State<SendCard> {
             //   return;
             // }
           } else {
-            showDialog(context: context, builder: (context) => DesktopAlertModal(title: AppLocalizations.of(context).error, content: res));
+            showDialog(context: context, builder: (context) => DesktopAlertModal(title: AppLocalizations.of(context)!.error, content: res));
             controller0.clear();
             controller1.clear();
             controller2.clear();
@@ -626,7 +626,7 @@ class _SendCardState extends State<SendCard> {
               child: Row(
                 children: [
                   Text(
-                    AppLocalizations.of(context).send,
+                    AppLocalizations.of(context)!.send,
                     style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.w700)),
                   ),
                 ],
@@ -640,7 +640,7 @@ class _SendCardState extends State<SendCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 10),
-                    Text(AppLocalizations.of(context).to, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                    Text(AppLocalizations.of(context)!.to, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                     const SizedBox(height: 10),
                     AutoSizeTextField(
                       controller: controller0,
@@ -664,7 +664,7 @@ class _SendCardState extends State<SendCard> {
                         filled: true,
                         contentPadding: const EdgeInsets.all(15),
                         fillColor: DarkColors.bgColor,
-                        hintText: AppLocalizations.of(context).walletAddress,
+                        hintText: AppLocalizations.of(context)!.walletAddress,
                         hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                         enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -677,7 +677,7 @@ class _SendCardState extends State<SendCard> {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    Text(AppLocalizations.of(context).amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                    Text(AppLocalizations.of(context)!.amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                     const SizedBox(height: 10),
                     AutoSizeTextField(
                       controller: controller1,
@@ -710,7 +710,7 @@ class _SendCardState extends State<SendCard> {
                       ),
                     ),
                     const SizedBox(height: 15),
-                    Text(AppLocalizations.of(context).remark, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                    Text(AppLocalizations.of(context)!.remark, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                     const SizedBox(height: 10),
                     AutoSizeTextField(
                       controller: controller2,
@@ -739,7 +739,7 @@ class _SendCardState extends State<SendCard> {
                         contentPadding: const EdgeInsets.all(15),
                         fillColor: DarkColors.bgColor,
                         counterStyle: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
-                        hintText: AppLocalizations.of(context).remark,
+                        hintText: AppLocalizations.of(context)!.remark,
                         hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                         enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
                         focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -758,7 +758,7 @@ class _SendCardState extends State<SendCard> {
                             // 检查 address
                             bool flag = TransactionHelper.checkAddress(address);
                             if (!flag) {
-                              showDialog(context: context, builder: (context) => DesktopAlertModal(title: AppLocalizations.of(context).error, content: AppLocalizations.of(context).walletAddressError));
+                              showDialog(context: context, builder: (context) => DesktopAlertModal(title: AppLocalizations.of(context)!.error, content: AppLocalizations.of(context)!.walletAddressError));
                               return;
                             }
                             WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
@@ -795,7 +795,7 @@ class _SendCardState extends State<SendCard> {
                           },
                           bgColor: DarkColors.mainColor,
                           disable: false,
-                          text: AppLocalizations.of(context).continueText,
+                          text: AppLocalizations.of(context)!.continueText,
                         ),
                       ],
                     ),

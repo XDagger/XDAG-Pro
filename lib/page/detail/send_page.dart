@@ -208,7 +208,7 @@ class _SendPageState extends State<SendPage> {
         },
         child: Column(
           children: [
-            NavHeader(title: "${AppLocalizations.of(context).send} XDAG"),
+            NavHeader(title: "${AppLocalizations.of(context)!.send} XDAG"),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -229,7 +229,7 @@ class _SendPageState extends State<SendPage> {
                           child: Row(
                             children: [
                               const SizedBox(width: 15),
-                              Text(AppLocalizations.of(context).to, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white54, fontWeight: FontWeight.w500))),
+                              Text(AppLocalizations.of(context)!.to, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white54, fontWeight: FontWeight.w500))),
                               const SizedBox(width: 15),
                               Expanded(
                                   child: Text(
@@ -247,7 +247,7 @@ class _SendPageState extends State<SendPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Text(AppLocalizations.of(context).amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      Text(AppLocalizations.of(context)!.amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller,
@@ -308,7 +308,7 @@ class _SendPageState extends State<SendPage> {
                                       borderRadius: BorderRadius.circular(5),
                                     ),
                                     child: Center(
-                                      child: Text(AppLocalizations.of(context).all, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500))),
+                                      child: Text(AppLocalizations.of(context)!.all, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500))),
                                     ),
                                   )
                                 ],
@@ -317,7 +317,7 @@ class _SendPageState extends State<SendPage> {
                           ],
                         ),
                       ),
-                      Text(AppLocalizations.of(context).remark, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      Text(AppLocalizations.of(context)!.remark, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller2,
@@ -346,7 +346,7 @@ class _SendPageState extends State<SendPage> {
                           contentPadding: const EdgeInsets.all(15),
                           fillColor: DarkColors.blockColor,
                           counterStyle: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
-                          hintText: AppLocalizations.of(context).remark,
+                          hintText: AppLocalizations.of(context)!.remark,
                           hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                           enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
                           focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -376,7 +376,7 @@ class _SendPageState extends State<SendPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Button(
-                    text: AppLocalizations.of(context).continueText,
+                    text: AppLocalizations.of(context)!.continueText,
                     width: ScreenHelper.screenWidth - 30,
                     bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                     textColor: Colors.white,
@@ -487,7 +487,7 @@ class _CustomizeQrPageState extends State<CustomizeQrPage> {
         },
         child: Column(
           children: [
-            NavHeader(title: AppLocalizations.of(context).customize_QR_code),
+            NavHeader(title: AppLocalizations.of(context)!.customize_QR_code),
             Expanded(
               child: SingleChildScrollView(
                 child: Padding(
@@ -496,7 +496,7 @@ class _CustomizeQrPageState extends State<CustomizeQrPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AppLocalizations.of(context).name, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      Text(AppLocalizations.of(context)!.name, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller3,
@@ -524,14 +524,14 @@ class _CustomizeQrPageState extends State<CustomizeQrPage> {
                           contentPadding: const EdgeInsets.all(15),
                           fillColor: DarkColors.blockColor,
                           counterStyle: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
-                          hintText: AppLocalizations.of(context).name,
+                          hintText: AppLocalizations.of(context)!.name,
                           hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                           enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
                           focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Text(AppLocalizations.of(context).amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      Text(AppLocalizations.of(context)!.amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller,
@@ -564,7 +564,7 @@ class _CustomizeQrPageState extends State<CustomizeQrPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Text(AppLocalizations.of(context).remark, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      Text(AppLocalizations.of(context)!.remark, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller2,
@@ -593,7 +593,7 @@ class _CustomizeQrPageState extends State<CustomizeQrPage> {
                           contentPadding: const EdgeInsets.all(15),
                           fillColor: DarkColors.blockColor,
                           counterStyle: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
-                          hintText: AppLocalizations.of(context).remark,
+                          hintText: AppLocalizations.of(context)!.remark,
                           hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                           enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
                           focusedBorder: const OutlineInputBorder(borderSide: BorderSide(color: DarkColors.mainColor, width: 1), borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -610,7 +610,7 @@ class _CustomizeQrPageState extends State<CustomizeQrPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Button(
-                    text: AppLocalizations.of(context).continueText,
+                    text: AppLocalizations.of(context)!.continueText,
                     width: ScreenHelper.screenWidth - 30,
                     bgColor: DarkColors.mainColor,
                     textColor: Colors.white,

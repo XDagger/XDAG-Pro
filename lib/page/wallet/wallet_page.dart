@@ -245,7 +245,7 @@ class WalletPageState extends State<WalletPage> {
                       return Column(children: [
                         const SizedBox(height: 50),
                         const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                        Text(AppLocalizations.of(context).no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
+                        Text(AppLocalizations.of(context)!.no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
                         const SizedBox(height: 50),
                       ]);
                     }

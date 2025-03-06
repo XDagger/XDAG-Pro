@@ -34,14 +34,14 @@ class _PasswordPageState extends State<PasswordPage> {
     ConfigModal config = Provider.of<ConfigModal>(context);
     String title = "";
     if (config.walletConfig.hasSetBiometrics) {
-      title = type == 0 ? AppLocalizations.of(context).enable_biometrics_1 : AppLocalizations.of(context).enable_biometrics_2;
+      title = type == 0 ? AppLocalizations.of(context)!.enable_biometrics_1 : AppLocalizations.of(context)!.enable_biometrics_2;
       if (type > 0 && Platform.isAndroid) {
-        title = AppLocalizations.of(context).enable_biometrics_3;
+        title = AppLocalizations.of(context)!.enable_biometrics_3;
       }
     } else {
-      title = type == 0 ? AppLocalizations.of(context).disenable_biometrics_1 : AppLocalizations.of(context).disenable_biometrics_2;
+      title = type == 0 ? AppLocalizations.of(context)!.disenable_biometrics_1 : AppLocalizations.of(context)!.disenable_biometrics_2;
       if (type > 0 && Platform.isAndroid) {
-        title = AppLocalizations.of(context).disenable_biometrics_3;
+        title = AppLocalizations.of(context)!.disenable_biometrics_3;
       }
     }
 
@@ -49,7 +49,7 @@ class _PasswordPageState extends State<PasswordPage> {
       backgroundColor: DarkColors.bgColor,
       body: Column(
         children: [
-          NavHeader(title: AppLocalizations.of(context).security),
+          NavHeader(title: AppLocalizations.of(context)!.security),
           const SizedBox(height: 30),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -57,7 +57,7 @@ class _PasswordPageState extends State<PasswordPage> {
               children: [
                 LabelButton(
                   type: Global.devBiometricsType == -1 ? 3 : 0,
-                  label: AppLocalizations.of(context).change_password,
+                  label: AppLocalizations.of(context)!.change_password,
                   child: const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 16),
                   onPressed: () {
                     showModalBottomSheet(
@@ -79,7 +79,7 @@ class _PasswordPageState extends State<PasswordPage> {
                                       backgroundColor: DarkColors.greenColor,
                                       behavior: SnackBarBehavior.fixed,
                                       content: Text(
-                                        AppLocalizations.of(context).change_password_success,
+                                        AppLocalizations.of(context)!.change_password_success,
                                         style: Helper.fitChineseFont(
                                           context,
                                           const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white),

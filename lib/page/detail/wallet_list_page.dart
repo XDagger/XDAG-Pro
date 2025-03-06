@@ -117,7 +117,7 @@ class _WalletListPageState extends State<WalletListPage> {
       body: Column(
         children: [
           NavHeader(
-            title: AppLocalizations.of(context).select_Wallet,
+            title: AppLocalizations.of(context)!.select_Wallet,
             rightWidget: Helper.isDesktop
                 ? const SizedBox(width: 40)
                 : Row(
@@ -158,7 +158,7 @@ class _WalletListPageState extends State<WalletListPage> {
                                           flex: 1,
                                           child: Center(
                                             child: Text(
-                                              AppLocalizations.of(context).tips,
+                                              AppLocalizations.of(context)!.tips,
                                               style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700)),
                                             ),
                                           )),
@@ -166,7 +166,7 @@ class _WalletListPageState extends State<WalletListPage> {
                                     ],
                                   ),
                                   content: Text(
-                                    AppLocalizations.of(context).wallet_tips,
+                                    AppLocalizations.of(context)!.wallet_tips,
                                     style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500)),
                                   ),
                                   actions: <Widget>[
@@ -175,7 +175,7 @@ class _WalletListPageState extends State<WalletListPage> {
                                       crossAxisAlignment: CrossAxisAlignment.stretch,
                                       children: [
                                         Button(
-                                          text: AppLocalizations.of(context).continueText,
+                                          text: AppLocalizations.of(context)!.continueText,
                                           bgColor: DarkColors.mainColor,
                                           onPressed: () {
                                             Navigator.of(context).pop();
@@ -219,7 +219,7 @@ class _WalletListPageState extends State<WalletListPage> {
               children: [
                 Button(
                   height: Helper.isDesktop ? 45 : 50,
-                  text: AppLocalizations.of(context).createWallet,
+                  text: AppLocalizations.of(context)!.createWallet,
                   width: ScreenHelper.screenWidth - 30,
                   bgColor: DarkColors.mainColor,
                   onPressed: () => toCreatePage(context, 0),
@@ -227,7 +227,7 @@ class _WalletListPageState extends State<WalletListPage> {
                 const SizedBox(height: 20),
                 Button(
                   height: Helper.isDesktop ? 45 : 50,
-                  text: AppLocalizations.of(context).importWallet,
+                  text: AppLocalizations.of(context)!.importWallet,
                   width: ScreenHelper.screenWidth - 30,
                   bgColor: DarkColors.lineColor,
                   onPressed: () => toCreatePage(context, 1),
@@ -253,8 +253,8 @@ class Item extends StatelessWidget {
       final shouldDelete = await showDialog(
         context: context,
         builder: (BuildContext context) => DesktopAlertModal(
-          title: AppLocalizations.of(context).attention,
-          content: AppLocalizations.of(context).delete_tip,
+          title: AppLocalizations.of(context)!.attention,
+          content: AppLocalizations.of(context)!.delete_tip,
         ),
       );
       if (shouldDelete == true) {
@@ -273,14 +273,14 @@ class Item extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Button(
-              text: AppLocalizations.of(context).continueText,
+              text: AppLocalizations.of(context)!.continueText,
               width: ScreenHelper.screenWidth - 60,
               bgColor: DarkColors.redColor,
               onPressed: () => Navigator.pop(context, true),
             ),
             const SizedBox(height: 20),
             Button(
-              text: AppLocalizations.of(context).cancel,
+              text: AppLocalizations.of(context)!.cancel,
               width: ScreenHelper.screenWidth - 60,
               bgColor: DarkColors.lineColor,
               onPressed: () => Navigator.pop(context, false),
@@ -313,7 +313,7 @@ class Item extends StatelessWidget {
                   flex: 1,
                   child: Center(
                     child: Text(
-                      AppLocalizations.of(context).attention,
+                      AppLocalizations.of(context)!.attention,
                       style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700)),
                     ),
                   )),
@@ -321,7 +321,7 @@ class Item extends StatelessWidget {
             ],
           ),
           content: Text(
-            AppLocalizations.of(context).delete_tip,
+            AppLocalizations.of(context)!.delete_tip,
             style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500)),
           ),
           actions: <Widget>[bottom],

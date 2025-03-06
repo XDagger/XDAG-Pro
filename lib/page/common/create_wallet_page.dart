@@ -149,7 +149,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
         },
         child: Column(
           children: [
-            NavHeader(title: args.isImport ? AppLocalizations.of(context).importWallet : AppLocalizations.of(context).createWallet),
+            NavHeader(title: args.isImport ? AppLocalizations.of(context)!.importWallet : AppLocalizations.of(context)!.createWallet),
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
@@ -167,7 +167,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                               children: [
                                 Expanded(
                                   child: HeaderItem(
-                                    title: AppLocalizations.of(context).mnemonic,
+                                    title: AppLocalizations.of(context)!.mnemonic,
                                     index: 0,
                                     selectIndex: selectIndex,
                                     onPressed: () {
@@ -183,7 +183,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                 ),
                                 Expanded(
                                   child: HeaderItem(
-                                    title: AppLocalizations.of(context).privateKey,
+                                    title: AppLocalizations.of(context)!.privateKey,
                                     index: 1,
                                     selectIndex: selectIndex,
                                     onPressed: () {
@@ -200,7 +200,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                             ),
                           ),
                           const SizedBox(height: 25),
-                          Text(isPrivateKey ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+                          Text(isPrivateKey ? AppLocalizations.of(context)!.privateKey : AppLocalizations.of(context)!.mnemonic, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                           const SizedBox(height: 10),
                           AutoSizeTextField(
                             controller: controller,
@@ -231,7 +231,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                               filled: true,
                               contentPadding: const EdgeInsets.all(15),
                               fillColor: DarkColors.blockColor,
-                              hintText: isPrivateKey ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic_hint_1,
+                              hintText: isPrivateKey ? AppLocalizations.of(context)!.privateKey : AppLocalizations.of(context)!.mnemonic_hint_1,
                               hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                               enabledBorder: const OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -247,7 +247,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                           Row(
                             children: [
                               const Spacer(),
-                              Text('$mnemonicNumber ${mnemonicNumber > 1 ? AppLocalizations.of(context).words : AppLocalizations.of(context).word}', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white54))),
+                              Text('$mnemonicNumber ${mnemonicNumber > 1 ? AppLocalizations.of(context)!.words : AppLocalizations.of(context)!.word}', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white54))),
                             ],
                           ),
                           if (errorText.isNotEmpty)
@@ -268,12 +268,12 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                       )
                     else
                       Container(),
-                    Text(AppLocalizations.of(context).walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+                    Text(AppLocalizations.of(context)!.walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                     const SizedBox(height: 10),
                     Input(
                       isFocus: !args.isImport,
                       focusNode: _focusNode2,
-                      hintText: AppLocalizations.of(context).walletName,
+                      hintText: AppLocalizations.of(context)!.walletName,
                       onChanged: (p0) {
                         setState(() {
                           walletName = p0;
@@ -282,7 +282,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                     ),
                     const SizedBox(height: 25),
                     MyRadioButton(
-                      title: AppLocalizations.of(context).createWalletTips,
+                      title: AppLocalizations.of(context)!.createWalletTips,
                       isCheck: isAgree,
                       onTap: () {
                         setState(() {
@@ -337,7 +337,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Button(
-                          text: AppLocalizations.of(context).continueText,
+                          text: AppLocalizations.of(context)!.continueText,
                           bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                           textColor: Colors.white,
                           disable: !isButtonEnable,
@@ -348,7 +348,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                               for (String word in list) {
                                 if (!wordList.contains(word)) {
                                   setState(() {
-                                    errorText = AppLocalizations.of(context).mnemonic_error;
+                                    errorText = AppLocalizations.of(context)!.mnemonic_error;
                                   });
                                   return;
                                 }

@@ -206,12 +206,12 @@ class _InputPassCodeState extends State<InputPassCode> {
 
   @override
   Widget build(BuildContext context) {
-    String title = widget.nextPage == 2 ? AppLocalizations.of(context).change_password : AppLocalizations.of(context).create_password;
+    String title = widget.nextPage == 2 ? AppLocalizations.of(context)!.change_password : AppLocalizations.of(context)!.create_password;
     if (widget.code.isNotEmpty) {
-      title = AppLocalizations.of(context).repeat_password;
+      title = AppLocalizations.of(context)!.repeat_password;
     }
     if (widget.checkCallback != null && widget.nextPage != 2) {
-      title = AppLocalizations.of(context).enter_password;
+      title = AppLocalizations.of(context)!.enter_password;
     }
     return Column(
       children: [

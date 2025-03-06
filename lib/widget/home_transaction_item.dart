@@ -70,7 +70,7 @@ class WalletTransactionItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(isSnapshot ? AppLocalizations.of(context).snapshot : (isSend ? AppLocalizations.of(context).sent : AppLocalizations.of(context).received), style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
+                          Text(isSnapshot ? AppLocalizations.of(context)!.snapshot : (isSend ? AppLocalizations.of(context)!.sent : AppLocalizations.of(context)!.received), style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
                           const SizedBox(height: 5),
                           Text('${Helper.formatTime(transaction.time)}  UTC', style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54))),
                         ],

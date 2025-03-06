@@ -123,7 +123,7 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
                             children: [
                               const Icon(Icons.refresh_rounded, color: Colors.white, size: 16),
                               const SizedBox(width: 5),
-                              Text(AppLocalizations.of(context).desktop_reset_password, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white))),
+                              Text(AppLocalizations.of(context)!.desktop_reset_password, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w500, color: Colors.white))),
                             ],
                           ),
                         ),
@@ -158,9 +158,9 @@ class _DesktopHomeScreenState extends State<DesktopHomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                StartButton(text: AppLocalizations.of(context).desktop_createWallet),
+                StartButton(text: AppLocalizations.of(context)!.desktop_createWallet),
                 const SizedBox(height: 15),
-                StartButton(text: AppLocalizations.of(context).desktop_importWallet, type: 1),
+                StartButton(text: AppLocalizations.of(context)!.desktop_importWallet, type: 1),
               ],
             ),
           ),

@@ -17,7 +17,7 @@ class QrPage extends StatelessWidget {
     Wallet wallet = walletModal.getWallet();
     return DesktopModalFrame(
         boxSize: const Size(400, 420),
-        title: AppLocalizations.of(context).qr_code,
+        title: AppLocalizations.of(context)!.qr_code,
         child: Expanded(
           child: Center(
             child: Container(
@@ -53,7 +53,7 @@ class BackupPage extends StatelessWidget {
 
     return DesktopModalFrame(
         boxSize: const Size(700, 400),
-        title: AppLocalizations.of(context).backup,
+        title: AppLocalizations.of(context)!.backup,
         child: Expanded(
           child: Center(
               child: mnemonicItemList.isEmpty

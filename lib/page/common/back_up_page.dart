@@ -45,7 +45,7 @@ class BackUpPage extends StatelessWidget {
       body: Column(
         children: [
           if (!args.isBackup)
-            NavHeader(title: AppLocalizations.of(context).backup)
+            NavHeader(title: AppLocalizations.of(context)!.backup)
           else
             CreateWalletStep(
               step: 2,
@@ -57,10 +57,10 @@ class BackUpPage extends StatelessWidget {
                     padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
                     child: Column(
                       children: [
-                        Text(args.type == 0 ? AppLocalizations.of(context).write_Down_Mnemonics : AppLocalizations.of(context).write_Down_PrivateKey, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor))),
+                        Text(args.type == 0 ? AppLocalizations.of(context)!.write_Down_Mnemonics : AppLocalizations.of(context)!.write_Down_PrivateKey, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor))),
                         const SizedBox(height: 15),
                         Text(
-                          args.isBackup ? AppLocalizations.of(context).backup_test_tips_3 : (args.type == 0 ? AppLocalizations.of(context).write_Down_Mnemonics_tips : AppLocalizations.of(context).write_Down_PrivateKey_tips),
+                          args.isBackup ? AppLocalizations.of(context)!.backup_test_tips_3 : (args.type == 0 ? AppLocalizations.of(context)!.write_Down_Mnemonics_tips : AppLocalizations.of(context)!.write_Down_PrivateKey_tips),
                           style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white)),
                         ),
                         const SizedBox(height: 20),
@@ -108,7 +108,7 @@ class BackUpPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Button(
-                      text: AppLocalizations.of(context).next,
+                      text: AppLocalizations.of(context)!.next,
                       bgColor: DarkColors.mainColor,
                       onPressed: () => Navigator.pushNamed(context, '/back_up_test', arguments: BackUpTestPageRouteParams(args.data)),
                     ),

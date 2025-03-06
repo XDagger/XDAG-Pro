@@ -30,7 +30,7 @@ class ContactsMainPage extends StatelessWidget {
               children: [
                 Expanded(
                   child: Text(
-                    AppLocalizations.of(context).contacts,
+                    AppLocalizations.of(context)!.contacts,
                     style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white)),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -71,7 +71,7 @@ class ContactsMainPage extends StatelessWidget {
                   return Column(children: [
                     const SizedBox(height: 50),
                     const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                    Text(AppLocalizations.of(context).no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
+                    Text(AppLocalizations.of(context)!.no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
                     const SizedBox(height: 50),
                   ]);
                 }
@@ -122,7 +122,7 @@ class ContactsMainPage extends StatelessWidget {
                                       flex: 1,
                                       child: Center(
                                         child: Text(
-                                          AppLocalizations.of(context).attention,
+                                          AppLocalizations.of(context)!.attention,
                                           style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.w700)),
                                         ),
                                       )),
@@ -130,7 +130,7 @@ class ContactsMainPage extends StatelessWidget {
                                 ],
                               ),
                               content: Text(
-                                AppLocalizations.of(context).delete_contact,
+                                AppLocalizations.of(context)!.delete_contact,
                                 style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16.0, fontWeight: FontWeight.w500)),
                               ),
                               actions: <Widget>[
@@ -138,14 +138,14 @@ class ContactsMainPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.stretch,
                                   children: [
                                     Button(
-                                      text: AppLocalizations.of(context).continueText,
+                                      text: AppLocalizations.of(context)!.continueText,
                                       width: ScreenHelper.screenWidth - 60,
                                       bgColor: DarkColors.redColor,
                                       onPressed: () => Navigator.pop(context, true),
                                     ),
                                     const SizedBox(height: 20),
                                     Button(
-                                      text: AppLocalizations.of(context).cancel,
+                                      text: AppLocalizations.of(context)!.cancel,
                                       width: ScreenHelper.screenWidth - 60,
                                       bgColor: DarkColors.lineColor,
                                       onPressed: () => Navigator.pop(context, false),
@@ -347,7 +347,7 @@ class CommonContactDetail extends StatelessWidget {
                   ),
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: item.address));
-                    Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                    Helper.showToast(context, AppLocalizations.of(context)!.copied_to_clipboard);
                   },
                 ),
               ],

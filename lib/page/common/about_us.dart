@@ -16,7 +16,7 @@ class AboutUsPage extends StatelessWidget {
       color: DarkColors.bgColor,
       child: Column(
         children: [
-          NavHeader(title: AppLocalizations.of(context).about_us),
+          NavHeader(title: AppLocalizations.of(context)!.about_us),
           Expanded(
             child: SingleChildScrollView(
                 child: Padding(

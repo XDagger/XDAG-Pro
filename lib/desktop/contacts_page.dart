@@ -20,7 +20,7 @@ class ContactsPage extends StatelessWidget {
           Row(
             children: [
               Text(
-                AppLocalizations.of(context).contacts,
+                AppLocalizations.of(context)!.contacts,
                 style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white)),
               ),
               const Spacer(),
@@ -50,7 +50,7 @@ class ContactsPage extends StatelessWidget {
                   return Column(children: [
                     const SizedBox(height: 50),
                     const Icon(Icons.crop_landscape, size: 100, color: Colors.white),
-                    Text(AppLocalizations.of(context).no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
+                    Text(AppLocalizations.of(context)!.no_transactions, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 16))),
                     const SizedBox(height: 50),
                   ]);
                 }
@@ -89,8 +89,8 @@ class ContactsPage extends StatelessWidget {
                                     final shouldDelete = await await showDialog(
                                       context: context,
                                       builder: (BuildContext context) => DesktopAlertModal(
-                                        title: AppLocalizations.of(context).attention,
-                                        content: AppLocalizations.of(context).delete_contact,
+                                        title: AppLocalizations.of(context)!.attention,
+                                        content: AppLocalizations.of(context)!.delete_contact,
                                       ),
                                     );
                                     if (shouldDelete) {

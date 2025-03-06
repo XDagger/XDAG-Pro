@@ -36,13 +36,13 @@ class BackUpStartPage extends StatelessWidget {
               padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
               child: Column(
                 children: [
-                  Text(AppLocalizations.of(context).secure_wallet, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor))),
+                  Text(AppLocalizations.of(context)!.secure_wallet, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor))),
                   const SizedBox(height: 50),
                   Expanded(child: Image.asset('images/lock.png', fit: BoxFit.contain)),
                   const SizedBox(height: 50),
-                  Text(AppLocalizations.of(context).write_Down_Mnemonics_tips, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
+                  Text(AppLocalizations.of(context)!.write_Down_Mnemonics_tips, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
                   const SizedBox(height: 12),
-                  Text(AppLocalizations.of(context).backup_test_tips_2, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
+                  Text(AppLocalizations.of(context)!.backup_test_tips_2, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
                 ],
               ),
             ),
@@ -61,7 +61,7 @@ class BackUpStartPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Button(
-                      text: AppLocalizations.of(context).start,
+                      text: AppLocalizations.of(context)!.start,
                       bgColor: DarkColors.mainColor,
                       onPressed: () async {
                         await showModalBottomSheet(
@@ -191,10 +191,10 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                 padding: const EdgeInsets.fromLTRB(15, 30, 15, 0),
                 child: Column(
                   children: [
-                    Text(AppLocalizations.of(context).confirm_Mnemonic, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor))),
+                    Text(AppLocalizations.of(context)!.confirm_Mnemonic, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: DarkColors.mainColor))),
                     const SizedBox(height: 15),
                     Text(
-                      AppLocalizations.of(context).mnemonic_hint_2,
+                      AppLocalizations.of(context)!.mnemonic_hint_2,
                       style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white)),
                     ),
                     const SizedBox(height: 20),
@@ -225,7 +225,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                         filled: true,
                         contentPadding: const EdgeInsets.all(15),
                         fillColor: DarkColors.blockColor,
-                        hintText: AppLocalizations.of(context).mnemonic,
+                        hintText: AppLocalizations.of(context)!.mnemonic,
                         hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
                         enabledBorder: const OutlineInputBorder(
                           borderSide: BorderSide.none,
@@ -241,7 +241,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                     Row(
                       children: [
                         const Spacer(),
-                        Text('$mnemonicNumber ${mnemonicNumber > 1 ? AppLocalizations.of(context).words : AppLocalizations.of(context).word}', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white54))),
+                        Text('$mnemonicNumber ${mnemonicNumber > 1 ? AppLocalizations.of(context)!.words : AppLocalizations.of(context)!.word}', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white54))),
                       ],
                     ),
                     if (errorText.isNotEmpty)
@@ -303,7 +303,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Button(
-                          text: AppLocalizations.of(context).continueText,
+                          text: AppLocalizations.of(context)!.continueText,
                           bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                           textColor: Colors.white,
                           disable: !isButtonEnable,
@@ -331,17 +331,17 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                                           Image.asset('images/like.png', width: 100, height: 100),
                                           const SizedBox(height: 20),
                                           Text(
-                                            AppLocalizations.of(context).successful,
+                                            AppLocalizations.of(context)!.successful,
                                             style: Helper.fitChineseFont(context, const TextStyle(color: DarkColors.mainColor, fontSize: 24.0, fontWeight: FontWeight.w700)),
                                           ),
                                           const SizedBox(height: 20),
                                           Text(
-                                            AppLocalizations.of(context).backup_test_tips_4,
+                                            AppLocalizations.of(context)!.backup_test_tips_4,
                                             style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500)),
                                           ),
                                           const SizedBox(height: 10),
                                           Text(
-                                            AppLocalizations.of(context).backup_test_tips_5,
+                                            AppLocalizations.of(context)!.backup_test_tips_5,
                                             style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500)),
                                           )
                                         ],
@@ -351,7 +351,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                                           crossAxisAlignment: CrossAxisAlignment.stretch,
                                           children: [
                                             Button(
-                                              text: AppLocalizations.of(context).continueText,
+                                              text: AppLocalizations.of(context)!.continueText,
                                               width: ScreenHelper.screenWidth - 60,
                                               bgColor: DarkColors.mainColor,
                                               onPressed: () => Navigator.pop(context, true),
@@ -369,7 +369,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                             } else {
                               setState(() {
                                 mnemonicList = [];
-                                errorText = AppLocalizations.of(context).mnemonic_error_1;
+                                errorText = AppLocalizations.of(context)!.mnemonic_error_1;
                               });
                             }
                           },

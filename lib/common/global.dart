@@ -54,13 +54,21 @@ class Global {
   static const bool isTest = false;
 
   static SharedPreferences get prefs => _prefs;
+  // log string[]
+  static List<String> logList = [];
   static Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
     _storage = Platform.isAndroid ? const FlutterSecureStorage(aOptions: AndroidOptions(encryptedSharedPreferences: true)) : const FlutterSecureStorage();
+    // 检查是否有密码
+    logList.add("init - 0");
     if (_prefs.getBool(_hasRunBeforeKey) != true) {
+      logList.add("init - 1");
       await _storage.deleteAll();
       _prefs.setBool(_hasRunBeforeKey, true);
     }
+    logList.add(
+      "init - 1",
+    );
     //_prefs.clear();
     //await _storage.deleteAll();
     walletConfig = WalletConfig(local: 0, hasSetPassword: false, hasSetBiometrics: false);
@@ -81,6 +89,17 @@ class Global {
     version = packageInfo.version;
     buildNumber = packageInfo.buildNumber;
     await checkBiometricType();
+    await updateConfig();
+  }
+
+  static Future<void> fixData() async {
+    await _storage.deleteAll();
+    await _prefs.clear();
+    walletConfig = WalletConfig(local: 0, hasSetPassword: false, hasSetBiometrics: false);
+    walletListBox = await Hive.openBox<Wallet>(walletListKey);
+    contactsListBox = [
+      ContactsItem("Community Fund", '4duPWMbYUgAifVYkKDCWxLvRRkSByf5gb'),
+    ];
     await updateConfig();
   }
 
@@ -123,7 +142,8 @@ class Global {
 
   static checkPassword(String password) async {
     String? savedPassword = await _storage.read(key: _passwordKey);
-    //print("savedPassword: $savedPassword and password: $password");
+    logList.add("savedPassword: $savedPassword and input password: $password");
+    // print("savedPassword: $savedPassword and password: $password");
     return savedPassword == password;
   }
 

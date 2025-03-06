@@ -42,7 +42,7 @@ class WalletHeader extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          AppLocalizations.of(context).backup_your_wallet,
+                          AppLocalizations.of(context)!.backup_your_wallet,
                           style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
                         ),
                       ),
@@ -101,7 +101,7 @@ class WalletHeader extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: wallet.address));
-                    Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                    Helper.showToast(context, AppLocalizations.of(context)!.copied_to_clipboard);
                   },
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
@@ -129,7 +129,7 @@ class WalletHeader extends StatelessWidget {
             children: [
               Expanded(
                   child: HomeHeaderButton(
-                title: AppLocalizations.of(context).security,
+                title: AppLocalizations.of(context)!.security,
                 icon: wallet.isBackup ? 'images/security_1.png' : 'images/security.png',
                 onPressed: () async {
                   Helper.changeAndroidStatusBar(true);
@@ -140,7 +140,7 @@ class WalletHeader extends StatelessWidget {
               const SizedBox(width: 15),
               Expanded(
                   child: HomeHeaderButton(
-                title: AppLocalizations.of(context).send,
+                title: AppLocalizations.of(context)!.send,
                 icon: 'images/send.png',
                 onPressed: () {
                   showModalBottomSheet(
@@ -154,7 +154,7 @@ class WalletHeader extends StatelessWidget {
               const SizedBox(width: 15),
               Expanded(
                   child: HomeHeaderButton(
-                title: AppLocalizations.of(context).qr_code,
+                title: AppLocalizations.of(context)!.qr_code,
                 icon: 'images/qr.png',
                 onPressed: () async {
                   // Helper.changeAndroidStatusBar(true);

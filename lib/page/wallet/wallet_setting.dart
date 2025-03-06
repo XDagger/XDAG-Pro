@@ -26,7 +26,7 @@ class WalletSettingPage extends StatelessWidget {
               children: [
                 Expanded(
                     child: Text(
-                  AppLocalizations.of(context).setting,
+                  AppLocalizations.of(context)!.setting,
                   style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w700, color: Colors.white)),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -41,7 +41,7 @@ class WalletSettingPage extends StatelessWidget {
                     child: Column(
                       children: [
                         LabelButton(
-                          label: AppLocalizations.of(context).language,
+                          label: AppLocalizations.of(context)!.language,
                           onPressed: () async {
                             Helper.changeAndroidStatusBar(true);
                             await Helper.showBottomSheet(context, const LangsSelectPage());
@@ -49,7 +49,7 @@ class WalletSettingPage extends StatelessWidget {
                           },
                           child: Row(
                             children: [
-                              Text(config.walletConfig.local == 0 ? AppLocalizations.of(context).auto : ConfigModal.langs[config.walletConfig.local].name, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w400))),
+                              Text(config.walletConfig.local == 0 ? AppLocalizations.of(context)!.auto : ConfigModal.langs[config.walletConfig.local].name, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w400))),
                               const SizedBox(width: 5),
                               const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 12),
                             ],
@@ -58,7 +58,7 @@ class WalletSettingPage extends StatelessWidget {
                         const SizedBox(height: 1),
                         LabelButton(
                           type: 2,
-                          label: AppLocalizations.of(context).network,
+                          label: AppLocalizations.of(context)!.network,
                           onPressed: () async {
                             Helper.changeAndroidStatusBar(true);
                             await Helper.showBottomSheet(context, const NetWorkSelectPage());
@@ -75,7 +75,7 @@ class WalletSettingPage extends StatelessWidget {
                         const SizedBox(height: 1),
                         LabelButton(
                           type: 1,
-                          label: AppLocalizations.of(context).security,
+                          label: AppLocalizations.of(context)!.security,
                           onPressed: () {
                             Navigator.pushNamed(context, '/change_password');
                           },
@@ -87,14 +87,21 @@ class WalletSettingPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 26),
                         LabelButton(
-                          label: AppLocalizations.of(context).legal_documents,
+                          label: AppLocalizations.of(context)!.legal_documents,
                           onPressed: () => Navigator.pushNamed(context, "/legal", arguments: LegalPageRouteParams(isFromSetting: true)),
                           child: Image.asset("images/document.png", width: 25, height: 25),
                         ),
                         const SizedBox(height: 1),
                         LabelButton(
+                          type: 2,
+                          label: "log",
+                          onPressed: () => Navigator.pushNamed(context, "/log"),
+                          child: Image.asset("images/aboutus.png", width: 25, height: 25),
+                        ),
+                        const SizedBox(height: 1),
+                        LabelButton(
                           type: 1,
-                          label: AppLocalizations.of(context).about_us,
+                          label: AppLocalizations.of(context)!.about_us,
                           onPressed: () => Navigator.pushNamed(context, "/about_us"),
                           child: Image.asset("images/aboutus.png", width: 25, height: 25),
                         ),

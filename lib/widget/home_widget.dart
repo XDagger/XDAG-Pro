@@ -67,18 +67,18 @@ class _HomeMainState extends State<HomeMain> {
     var config = [
       {
         "image": 'images/p1.png',
-        "title": AppLocalizations.of(context).welcomeTitle_1,
-        "subTitle": AppLocalizations.of(context).welcomeDesc_1,
+        "title": AppLocalizations.of(context)!.welcomeTitle_1,
+        "subTitle": AppLocalizations.of(context)!.welcomeDesc_1,
       },
       {
         "image": 'images/p2.png',
-        "title": AppLocalizations.of(context).welcomeTitle_2,
-        "subTitle": AppLocalizations.of(context).welcomeDesc_2,
+        "title": AppLocalizations.of(context)!.welcomeTitle_2,
+        "subTitle": AppLocalizations.of(context)!.welcomeDesc_2,
       },
       {
         "image": 'images/p3.png',
-        "title": AppLocalizations.of(context).welcomeTitle_3,
-        "subTitle": AppLocalizations.of(context).welcomeDesc_3,
+        "title": AppLocalizations.of(context)!.welcomeTitle_3,
+        "subTitle": AppLocalizations.of(context)!.welcomeDesc_3,
       }
     ];
     return LayoutBuilder(

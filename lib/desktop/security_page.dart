@@ -61,7 +61,7 @@ class _DesktopSecurityPageState extends State<DesktopSecurityPage> {
           SizedBox(width: nav == 2 ? 0 : 15),
         ],
       ),
-      title: AppLocalizations.of(context).security,
+      title: AppLocalizations.of(context)!.security,
       child: Expanded(
         child: PageView.builder(
           itemCount: 3,
@@ -113,7 +113,7 @@ class _DesktopSecurityPageState extends State<DesktopSecurityPage> {
                       color: DarkColors.bgColor,
                       child: Image.asset("images/p1.png"),
                     ),
-                    Text(widget.type == 0 ? AppLocalizations.of(context).success_create_password : AppLocalizations.of(context).desktop_change_password_success, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
+                    Text(widget.type == 0 ? AppLocalizations.of(context)!.success_create_password : AppLocalizations.of(context)!.desktop_change_password_success, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
                     const SizedBox(height: 20),
                   ],
                 )),
@@ -123,7 +123,7 @@ class _DesktopSecurityPageState extends State<DesktopSecurityPage> {
                     },
                     bgColor: DarkColors.mainColor,
                     disable: false,
-                    text: AppLocalizations.of(context).continueText)
+                    text: AppLocalizations.of(context)!.continueText)
               ],
             );
           },
@@ -172,7 +172,7 @@ class _DesktopLockPageState extends State<DesktopLockPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    AppLocalizations.of(context).desktop_enter_password,
+                    AppLocalizations.of(context)!.desktop_enter_password,
                     style: Helper.fitChineseFont(context, const TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: Colors.white)),
                   ),
                   const SizedBox(height: 25),
@@ -203,7 +203,7 @@ class _DesktopLockPageState extends State<DesktopLockPage> {
                           width: 500,
                           height: 50,
                           margin: const EdgeInsets.only(bottom: 15, top: 15),
-                          child: Center(child: Text(AppLocalizations.of(context).desktop_password_error, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.red))))),
+                          child: Center(child: Text(AppLocalizations.of(context)!.desktop_password_error, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.red))))),
                         )
                       : const SizedBox(height: 80),
                 ],
@@ -230,21 +230,21 @@ class PageCreatePassword extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        type == 0 ? Text(AppLocalizations.of(context).create_password_tips, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white)))) : const SizedBox(),
+        type == 0 ? Text(AppLocalizations.of(context)!.create_password_tips, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white)))) : const SizedBox(),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(type == 0 ? AppLocalizations.of(context).desktop_create_password : AppLocalizations.of(context).desktop_change_password, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)))),
+              Text(type == 0 ? AppLocalizations.of(context)!.desktop_create_password : AppLocalizations.of(context)!.desktop_change_password, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)))),
               const SizedBox(height: 10),
               PasswordInput(obscureText: obscureText, length: 6, enterCallback: enterCallback, onChanged: onChanged),
             ],
           ),
         ),
-        type == 0 ? Linktext(text: AppLocalizations.of(context).desktop_create_password_tips) : const SizedBox(),
+        type == 0 ? Linktext(text: AppLocalizations.of(context)!.desktop_create_password_tips) : const SizedBox(),
         SizedBox(height: type == 0 ? 10 : 0),
-        Row(children: [const Spacer(), BottomBtn(bgColor: disable ? DarkColors.mainColor.withOpacity(0.5) : DarkColors.mainColor, disable: disable, text: AppLocalizations.of(context).continueText, onPressed: onPressed)])
+        Row(children: [const Spacer(), BottomBtn(bgColor: disable ? DarkColors.mainColor.withOpacity(0.5) : DarkColors.mainColor, disable: disable, text: AppLocalizations.of(context)!.continueText, onPressed: onPressed)])
       ],
     );
   }
@@ -263,13 +263,13 @@ class PageRepeatPassword extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        type == 0 ? Text(AppLocalizations.of(context).create_password_tips, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white)))) : const SizedBox(),
+        type == 0 ? Text(AppLocalizations.of(context)!.create_password_tips, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white)))) : const SizedBox(),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(AppLocalizations.of(context).desktop_repeat_password, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)))),
+              Text(AppLocalizations.of(context)!.desktop_repeat_password, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)))),
               const SizedBox(height: 10),
               PasswordInput(obscureText: obscureText, length: 6, enterCallback: () {}, onChanged: onChanged),
             ],
@@ -280,10 +280,10 @@ class PageRepeatPassword extends StatelessWidget {
                 width: 315,
                 // height: 50,
                 margin: const EdgeInsets.only(bottom: 15),
-                child: Text(AppLocalizations.of(context).desktop_repeat_password_error, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red)))),
+                child: Text(AppLocalizations.of(context)!.desktop_repeat_password_error, style: Helper.fitChineseFont(context, Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.red)))),
               )
             : const SizedBox(height: 35),
-        Row(children: [BottomBtn(bgColor: DarkColors.blockColor, disable: false, text: AppLocalizations.of(context).back, onPressed: onPressed)])
+        Row(children: [BottomBtn(bgColor: DarkColors.blockColor, disable: false, text: AppLocalizations.of(context)!.back, onPressed: onPressed)])
       ],
     );
   }
@@ -490,7 +490,7 @@ class Linktext extends StatelessWidget {
                   ? []
                   : [
                       TextSpan(
-                        text: index == 0 ? AppLocalizations.of(context).privacy_Policy : AppLocalizations.of(context).terms_of_Use,
+                        text: index == 0 ? AppLocalizations.of(context)!.privacy_Policy : AppLocalizations.of(context)!.terms_of_Use,
                         style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: DarkColors.mainColor, height: 1.5)),
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {

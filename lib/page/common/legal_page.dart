@@ -37,7 +37,7 @@ class LegalPage extends StatelessWidget {
         : Column(
             children: [
               const SizedBox(height: 40),
-              Text(AppLocalizations.of(context).review_Privacy_Policy, style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
+              Text(AppLocalizations.of(context)!.review_Privacy_Policy, style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
               const SizedBox(height: 28),
             ],
           );
@@ -46,7 +46,7 @@ class LegalPage extends StatelessWidget {
       backgroundColor: DarkColors.bgColor,
       body: Column(
         children: [
-          NavHeader(title: AppLocalizations.of(context).legal_documents),
+          NavHeader(title: AppLocalizations.of(context)!.legal_documents),
           Expanded(
             child: Container(
               color: DarkColors.bgColor,
@@ -56,11 +56,11 @@ class LegalPage extends StatelessWidget {
                 children: [
                   header,
                   LabelButton(
-                    label: AppLocalizations.of(context).privacy_Policy,
+                    label: AppLocalizations.of(context)!.privacy_Policy,
                     onPressed: () {
                       var url = ConfigGlobal.privacyPolicy;
                       if (Platform.isAndroid || Platform.isIOS) {
-                        Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
+                        Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context)!.privacy_Policy));
                       } else {
                         launchUrlString(url, mode: LaunchMode.externalApplication);
                       }
@@ -69,11 +69,11 @@ class LegalPage extends StatelessWidget {
                   const SizedBox(height: 1),
                   LabelButton(
                     type: 1,
-                    label: AppLocalizations.of(context).terms_of_Use,
+                    label: AppLocalizations.of(context)!.terms_of_Use,
                     onPressed: () {
                       var url = ConfigGlobal.termsOfUse;
                       if (Platform.isAndroid || Platform.isIOS) {
-                        Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context).privacy_Policy));
+                        Navigator.pushNamed(context, '/webview', arguments: WebViewPageRouteParams(url: url, title: AppLocalizations.of(context)!.privacy_Policy));
                       } else {
                         launchUrlString(url, mode: LaunchMode.externalApplication);
                       }
@@ -108,7 +108,7 @@ class _LegalBottomState extends State<LegalBottom> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         MyRadioButton(
-          title: AppLocalizations.of(context).accepted_Privacy_Policy,
+          title: AppLocalizations.of(context)!.accepted_Privacy_Policy,
           textColor: DarkColors.mainColor,
           isCheck: _isAgree,
           onTap: () {
@@ -120,7 +120,7 @@ class _LegalBottomState extends State<LegalBottom> {
         Container(
           margin: EdgeInsets.fromLTRB(0, 25, 0, ScreenHelper.bottomPadding > 0 ? ScreenHelper.bottomPadding : 20),
           child: Button(
-            text: AppLocalizations.of(context).continueText,
+            text: AppLocalizations.of(context)!.continueText,
             width: widget.width - 30,
             bgColor: _isAgree ? DarkColors.mainColor : DarkColors.lineColor54,
             textColor: _isAgree ? Colors.white : Colors.white54,

@@ -24,7 +24,7 @@ class SecurityPage extends StatelessWidget {
     return Scaffold(
       body: Column(
         children: [
-          NavHeader(title: AppLocalizations.of(context).security),
+          NavHeader(title: AppLocalizations.of(context)!.security),
           Expanded(
             child: Container(
               color: DarkColors.bgColor,
@@ -32,7 +32,7 @@ class SecurityPage extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  if (args.code.isNotEmpty || args.nextPage == 2) const SizedBox() else Text(AppLocalizations.of(context).create_password_tips, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+                  if (args.code.isNotEmpty || args.nextPage == 2) const SizedBox() else Text(AppLocalizations.of(context)!.create_password_tips, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                   Expanded(child: InputPassCode(code: args.code, nextPage: args.nextPage, checkCallback: args.checkCallback)),
                 ],
               ),

@@ -47,20 +47,20 @@ class _CommoneChangeNameState extends State<CommoneChangeName> {
     return GestureDetector(
         child: Column(
       children: [
-        NavHeader(title: AppLocalizations.of(context).change_wallet_name),
+        NavHeader(title: AppLocalizations.of(context)!.change_wallet_name),
         Expanded(
           child: SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(AppLocalizations.of(context).walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+                Text(AppLocalizations.of(context)!.walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
                 const SizedBox(height: 10),
                 Input(
                   defaultValue: wallet.name,
                   isFocus: true,
                   focusNode: _focusNode,
-                  hintText: AppLocalizations.of(context).walletName,
+                  hintText: AppLocalizations.of(context)!.walletName,
                   onChanged: (p0) {
                     setState(() {
                       walletName = p0;
@@ -78,7 +78,7 @@ class _CommoneChangeNameState extends State<CommoneChangeName> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Button(
-                text: AppLocalizations.of(context).continueText,
+                text: AppLocalizations.of(context)!.continueText,
                 width: ScreenHelper.screenWidth - 30,
                 bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
                 textColor: Colors.white,

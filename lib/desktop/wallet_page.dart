@@ -112,7 +112,7 @@ class _DesktopWalletPageState extends State<DesktopWalletPage> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       NavButton(
-                          title: AppLocalizations.of(context).wallet,
+                          title: AppLocalizations.of(context)!.wallet,
                           icon: 'images/wallet1.png',
                           onTap: () {
                             setState(() => index = 0);
@@ -122,7 +122,7 @@ class _DesktopWalletPageState extends State<DesktopWalletPage> {
                           selectIcon: 'images/wallet_white.png'),
                       const SizedBox(height: 10),
                       NavButton(
-                          title: AppLocalizations.of(context).contacts,
+                          title: AppLocalizations.of(context)!.contacts,
                           icon: 'images/contacts1.png',
                           onTap: () {
                             setState(() => index = 1);
@@ -132,7 +132,7 @@ class _DesktopWalletPageState extends State<DesktopWalletPage> {
                           selectIcon: 'images/contacts_white.png'),
                       const SizedBox(height: 10),
                       NavButton(
-                          title: AppLocalizations.of(context).setting,
+                          title: AppLocalizations.of(context)!.setting,
                           icon: 'images/set1.png',
                           onTap: () {
                             setState(() => index = 2);

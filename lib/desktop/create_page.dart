@@ -28,7 +28,7 @@ class _DesktopCreateWalletPageState extends State<DesktopCreateWalletPage> {
   Widget build(BuildContext context) {
     return DesktopModalFrame(
       boxSize: widget.boxSize,
-      title: widget.type == 0 ? AppLocalizations.of(context).createWallet : AppLocalizations.of(context).importWallet,
+      title: widget.type == 0 ? AppLocalizations.of(context)!.createWallet : AppLocalizations.of(context)!.importWallet,
       child: Expanded(
         child: widget.type == 0 ? const WalletNamePage() : const ImportWalletPage(),
       ),
@@ -80,17 +80,17 @@ class _WalletNamePageState extends State<WalletNamePage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(AppLocalizations.of(context).walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+        Text(AppLocalizations.of(context)!.walletName, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
         const SizedBox(height: 15),
         Input(
           focusNode: _focusNode2,
           isFocus: true,
-          hintText: AppLocalizations.of(context).walletName,
+          hintText: AppLocalizations.of(context)!.walletName,
           onChanged: (p0) => setState(() => walletName = p0),
         ),
         const Spacer(),
         MyRadioButton(
-          title: AppLocalizations.of(context).createWalletTips,
+          title: AppLocalizations.of(context)!.createWalletTips,
           isCheck: isAgree,
           onTap: () {
             setState(() {
@@ -101,13 +101,13 @@ class _WalletNamePageState extends State<WalletNamePage> {
         const SizedBox(height: 25),
         Row(
           children: [
-            widget.showBack != null ? BottomBtn(bgColor: DarkColors.blockColor, disable: false, text: AppLocalizations.of(context).back, onPressed: widget.showBack) : const SizedBox(),
+            widget.showBack != null ? BottomBtn(bgColor: DarkColors.blockColor, disable: false, text: AppLocalizations.of(context)!.back, onPressed: widget.showBack) : const SizedBox(),
             const Spacer(),
             BottomBtn(
               bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withOpacity(0.5),
               disable: !isButtonEnable,
               isLoad: isLoad,
-              text: AppLocalizations.of(context).continueText,
+              text: AppLocalizations.of(context)!.continueText,
               onPressed: () async {
                 if (isLoad) return;
                 setState(() {
@@ -193,7 +193,7 @@ class _ImportStylePageState extends State<ImportStylePage> {
           children: [
             Expanded(
               child: HeaderItem(
-                title: AppLocalizations.of(context).mnemonic,
+                title: AppLocalizations.of(context)!.mnemonic,
                 index: 0,
                 selectIndex: selectIndex,
                 onPressed: () {
@@ -207,7 +207,7 @@ class _ImportStylePageState extends State<ImportStylePage> {
             ),
             Expanded(
               child: HeaderItem(
-                title: AppLocalizations.of(context).privateKey,
+                title: AppLocalizations.of(context)!.privateKey,
                 index: 1,
                 selectIndex: selectIndex,
                 onPressed: () {
@@ -223,7 +223,7 @@ class _ImportStylePageState extends State<ImportStylePage> {
         ),
       ),
       const SizedBox(height: 25),
-      Text(selectIndex == 1 ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
+      Text(selectIndex == 1 ? AppLocalizations.of(context)!.privateKey : AppLocalizations.of(context)!.mnemonic, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white))),
       const SizedBox(height: 10),
       AutoSizeTextField(
         controller: controller,
@@ -251,7 +251,7 @@ class _ImportStylePageState extends State<ImportStylePage> {
           filled: true,
           contentPadding: const EdgeInsets.all(15),
           fillColor: DarkColors.blockColor,
-          hintText: selectIndex == 1 ? AppLocalizations.of(context).privateKey : AppLocalizations.of(context).mnemonic_hint_1,
+          hintText: selectIndex == 1 ? AppLocalizations.of(context)!.privateKey : AppLocalizations.of(context)!.mnemonic_hint_1,
           hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide.none,
@@ -270,7 +270,7 @@ class _ImportStylePageState extends State<ImportStylePage> {
           BottomBtn(
             bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withOpacity(0.5),
             disable: !isButtonEnable,
-            text: AppLocalizations.of(context).continueText,
+            text: AppLocalizations.of(context)!.continueText,
             onPressed: () {
               if (widget.onPressed != null) {
                 widget.onPressed!(importContent, selectIndex == 1);

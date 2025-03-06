@@ -96,7 +96,7 @@ class _ReceivePageState extends State<ReceivePage> {
       body: Column(
         children: [
           NavHeader(
-            title: AppLocalizations.of(context).qr_code,
+            title: AppLocalizations.of(context)!.qr_code,
             isColseIcon: true,
           ),
           Expanded(
@@ -177,7 +177,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
                         Button(
-                          text: AppLocalizations.of(context).customize_QR_code,
+                          text: AppLocalizations.of(context)!.customize_QR_code,
                           // bgColor: DarkColors.mainColor,
                           bgColor: DarkColors.lineColor,
                           textColor: Colors.white,
@@ -197,7 +197,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         ),
                         const SizedBox(height: 20),
                         Button(
-                          text: AppLocalizations.of(context).save_image,
+                          text: AppLocalizations.of(context)!.save_image,
                           bgColor: DarkColors.lineColor,
                           textColor: Colors.white,
                           onPressed: () async {
@@ -210,7 +210,7 @@ class _ReceivePageState extends State<ReceivePage> {
                               final result = await ImageGallerySaver.saveImage(pngBytes);
                               if (!mounted) return;
                               if (result["isSuccess"]) {
-                                Helper.showToast(context, AppLocalizations.of(context).successful);
+                                Helper.showToast(context, AppLocalizations.of(context)!.successful);
                               } else {}
                             } else {}
                           },

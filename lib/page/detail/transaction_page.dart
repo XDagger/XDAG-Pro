@@ -137,7 +137,7 @@ class _TransactionPageState extends State<TransactionPage> {
                 const SizedBox(height: 5),
                 if (transaction.status == 'pending')
                   Text(
-                    "${AppLocalizations.of(context).state}: $transactionState",
+                    "${AppLocalizations.of(context)!.state}: $transactionState",
                     style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: transactionState == 'Accepted' ? DarkColors.greenColor : DarkColors.redColor)),
                   )
                 else
@@ -146,7 +146,7 @@ class _TransactionPageState extends State<TransactionPage> {
                   const SizedBox()
                 else
                   Text(
-                    "${isSend ? AppLocalizations.of(context).send_on : AppLocalizations.of(context).receive_on} ${Helper.formatFullTime(transaction.time)} UTC",
+                    "${isSend ? AppLocalizations.of(context)!.send_on : AppLocalizations.of(context)!.receive_on} ${Helper.formatFullTime(transaction.time)} UTC",
                     style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54)),
                   ),
                 const SizedBox(height: 25),
@@ -171,7 +171,7 @@ class _TransactionPageState extends State<TransactionPage> {
                           child: TransactionButton(
                             showCopy: true,
                             borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                            title: isSend ? AppLocalizations.of(context).receiver : AppLocalizations.of(context).sender,
+                            title: isSend ? AppLocalizations.of(context)!.receiver : AppLocalizations.of(context)!.sender,
                             value: otherContact.name.isEmpty ? otherContact.address : otherContact.name,
                             leftIcon: otherContact.name.isEmpty ? const Icon(Icons.person_add, color: Colors.white, size: 10) : const Icon(Icons.person, color: Colors.white, size: 10),
                           ),
@@ -184,23 +184,23 @@ class _TransactionPageState extends State<TransactionPage> {
                           child: TransactionButton(showCopy: true, title: "Hash", value: hash),
                           onPressed: () {
                             Clipboard.setData(ClipboardData(text: hash));
-                            Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                            Helper.showToast(context, AppLocalizations.of(context)!.copied_to_clipboard);
                           }),
                       const SizedBox(height: 1),
                       MyCupertinoButton(
                           padding: EdgeInsets.zero,
-                          child: TransactionButton(showCopy: true, title: AppLocalizations.of(context).block_address, value: transaction.blockAddress),
+                          child: TransactionButton(showCopy: true, title: AppLocalizations.of(context)!.block_address, value: transaction.blockAddress),
                           onPressed: () {
                             Clipboard.setData(ClipboardData(text: transaction.blockAddress));
-                            Helper.showToast(context, AppLocalizations.of(context).copied_to_clipboard);
+                            Helper.showToast(context, AppLocalizations.of(context)!.copied_to_clipboard);
                           }),
                       const SizedBox(height: 1),
-                      TransactionButton(showCopy: false, title: AppLocalizations.of(context).fee, value: '$fee XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+                      TransactionButton(showCopy: false, title: AppLocalizations.of(context)!.fee, value: '$fee XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
                       const SizedBox(height: 1),
                       if (transaction.remark.isNotEmpty)
                         TransactionButton(
                           showCopy: false,
-                          title: AppLocalizations.of(context).remark,
+                          title: AppLocalizations.of(context)!.remark,
                           value: transaction.remark,
                           borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                         ),
@@ -215,7 +215,7 @@ class _TransactionPageState extends State<TransactionPage> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Button(
-                  text: AppLocalizations.of(context).view_in_explorer,
+                  text: AppLocalizations.of(context)!.view_in_explorer,
                   width: ScreenHelper.screenWidth - 30,
                   bgColor: DarkColors.blockColor,
                   textColor: Colors.white,
@@ -279,7 +279,7 @@ class TransactionShowDetail extends StatelessWidget {
                   showCopy: false,
                   readFont: isSameAddress,
                   borderRadius: const BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8)),
-                  title: AppLocalizations.of(context).receiver,
+                  title: AppLocalizations.of(context)!.receiver,
                   value: transaction.to,
                 ),
                 const SizedBox(height: 1),
@@ -287,16 +287,16 @@ class TransactionShowDetail extends StatelessWidget {
                   showCopy: false,
                   readFont: isSameAddress,
                   borderRadius: BorderRadius.zero,
-                  title: AppLocalizations.of(context).sender,
+                  title: AppLocalizations.of(context)!.sender,
                   value: transaction.from,
                 ),
                 const SizedBox(height: 1),
-                TransactionButton(showCopy: false, title: AppLocalizations.of(context).fee, value: '0.00 XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+                TransactionButton(showCopy: false, title: AppLocalizations.of(context)!.fee, value: '0.00 XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
                 const SizedBox(height: 1),
                 if (transaction.remark.isNotEmpty)
                   TransactionButton(
                     showCopy: false,
-                    title: AppLocalizations.of(context).remark,
+                    title: AppLocalizations.of(context)!.remark,
                     value: transaction.remark,
                     borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8)),
                   ),
@@ -309,7 +309,7 @@ class TransactionShowDetail extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Button(
-                  text: AppLocalizations.of(context).send,
+                  text: AppLocalizations.of(context)!.send,
                   width: ScreenHelper.screenWidth - 30,
                   bgColor: DarkColors.mainColor,
                   textColor: Colors.white,

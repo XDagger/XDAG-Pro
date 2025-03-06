@@ -147,5 +147,6 @@
    "desktop_change_password": "Cambia password",
    "desktop_change_password_success": "Cambiamento della password effettuato con successo",
    "desktop_enter_password": "Inserisci la password",
-   "transactions": "Transazioni"
+   "transactions": "Transazioni",
+   "forget_the_password": "Dimentica la password"
 }
