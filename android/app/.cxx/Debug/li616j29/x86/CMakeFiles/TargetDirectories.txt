@@ -1,0 +1,2 @@
+/Users/songhang/flutter/project/xdag/android/app/.cxx/Debug/li616j29/x86/CMakeFiles/edit_cache.dir
+/Users/songhang/flutter/project/xdag/android/app/.cxx/Debug/li616j29/x86/CMakeFiles/rebuild_cache.dir

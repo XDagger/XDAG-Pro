@@ -6,10 +6,12 @@ import 'dart:ui' as ui;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
+// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:vision_gallery_saver/vision_gallery_saver.dart';
+import 'package:vision_gallery_saver/vision_gallery_saver_platform_interface.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
@@ -207,7 +209,9 @@ class _ReceivePageState extends State<ReceivePage> {
                               ui.Image image = await boundary.toImage(pixelRatio: 2);
                               ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
                               Uint8List pngBytes = byteData!.buffer.asUint8List();
-                              final result = await ImageGallerySaver.saveImage(pngBytes);
+                              final result = await VisionGallerySaver.saveImage(
+                                pngBytes,
+                              );
                               if (!mounted) return;
                               if (result["isSuccess"]) {
                                 Helper.showToast(context, AppLocalizations.of(context)!.successful);
