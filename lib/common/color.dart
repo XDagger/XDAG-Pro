@@ -22,4 +22,7 @@ class DarkColors {
   static const redColorMask = Color(0x33DD4556);
   // 40% opacity
   static const redColorMask2 = Color(0x66DD4556);
+
+  // warning,比较深的黄色
+  static const warningColor = Color.fromARGB(255, 150, 117, 56);
 }

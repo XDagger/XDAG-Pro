@@ -277,7 +277,7 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                         String word = mnemonicList[index];
                         return TextButton(
                           style: ButtonStyle(
-                            padding: MaterialStateProperty.all(const EdgeInsets.fromLTRB(20, 0, 20, 0)),
+                            padding: WidgetStateProperty.all(const EdgeInsets.fromLTRB(20, 0, 20, 0)),
                           ),
                           onPressed: () {
                             String text = controller.text;
@@ -313,58 +313,60 @@ class _BackUpTestPageState extends State<BackUpTestPage> {
                               await walletModal.setBackUp();
                               if (mounted) {
                                 Helper.changeAndroidStatusBarAndNavBar(true);
-                                await showCupertinoModalPopup(
-                                  context: context,
-                                  barrierColor: Colors.black.withOpacity(0.6),
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      backgroundColor: DarkColors.bgColor,
-                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-                                      titlePadding: const EdgeInsets.fromLTRB(12.0, 15.0, 12, 0),
-                                      insetPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 0.0),
-                                      contentPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 0.0),
-                                      actionsPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 20.0),
-                                      title: null,
-                                      content: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          Image.asset('images/like.png', width: 100, height: 100),
-                                          const SizedBox(height: 20),
-                                          Text(
-                                            AppLocalizations.of(context)!.successful,
-                                            style: Helper.fitChineseFont(context, const TextStyle(color: DarkColors.mainColor, fontSize: 24.0, fontWeight: FontWeight.w700)),
-                                          ),
-                                          const SizedBox(height: 20),
-                                          Text(
-                                            AppLocalizations.of(context)!.backup_test_tips_4,
-                                            style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500)),
-                                          ),
-                                          const SizedBox(height: 10),
-                                          Text(
-                                            AppLocalizations.of(context)!.backup_test_tips_5,
-                                            style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500)),
-                                          )
-                                        ],
-                                      ),
-                                      actions: <Widget>[
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                                if (context.mounted) {
+                                  await showCupertinoModalPopup(
+                                    context: context,
+                                    barrierColor: Colors.black.withAlpha(153),
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        backgroundColor: DarkColors.bgColor,
+                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+                                        titlePadding: const EdgeInsets.fromLTRB(12.0, 15.0, 12, 0),
+                                        insetPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 0.0),
+                                        contentPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 0.0),
+                                        actionsPadding: const EdgeInsets.fromLTRB(15.0, 25.0, 15.0, 20.0),
+                                        title: null,
+                                        content: Column(
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Button(
-                                              text: AppLocalizations.of(context)!.continueText,
-                                              width: ScreenHelper.screenWidth - 60,
-                                              bgColor: DarkColors.mainColor,
-                                              onPressed: () => Navigator.pop(context, true),
+                                            Image.asset('images/like.png', width: 100, height: 100),
+                                            const SizedBox(height: 20),
+                                            Text(
+                                              AppLocalizations.of(context)!.successful,
+                                              style: Helper.fitChineseFont(context, const TextStyle(color: DarkColors.mainColor, fontSize: 24.0, fontWeight: FontWeight.w700)),
+                                            ),
+                                            const SizedBox(height: 20),
+                                            Text(
+                                              AppLocalizations.of(context)!.backup_test_tips_4,
+                                              style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500)),
+                                            ),
+                                            const SizedBox(height: 10),
+                                            Text(
+                                              AppLocalizations.of(context)!.backup_test_tips_5,
+                                              style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w500)),
                                             )
                                           ],
-                                        )
-                                      ],
-                                    );
-                                  },
-                                );
+                                        ),
+                                        actions: <Widget>[
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                                            children: [
+                                              Button(
+                                                text: AppLocalizations.of(context)!.continueText,
+                                                width: ScreenHelper.screenWidth - 60,
+                                                bgColor: DarkColors.mainColor,
+                                                onPressed: () => Navigator.pop(context, true),
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                                 Helper.changeAndroidStatusBarAndNavBar(false);
                                 // 返回首页
-                                if (mounted) Navigator.of(context).popUntil((route) => route.isFirst);
+                                if (context.mounted) Navigator.of(context).popUntil((route) => route.isFirst);
                               }
                             } else {
                               setState(() {

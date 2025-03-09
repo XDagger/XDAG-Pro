@@ -148,5 +148,7 @@
   "desktop_change_password_success": "Mot de passe changé avec succès",
   "desktop_enter_password": "Veuillez saisir votre mot de passe",
   "transactions": "Transactions",
-  "forget_the_password": "Mot de passe oublié"
+  "forget_the_password": "Mot de passe oublié",
+  "time_zone": "Fuseau horaire",
+  "transactions_in_progress": "Transactions en cours"
 }

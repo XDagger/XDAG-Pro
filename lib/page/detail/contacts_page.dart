@@ -98,7 +98,7 @@ class ContactsStatePage extends State<ContactsPage> {
                                   });
                                   controller.text = address;
                                   controller.selection = TextSelection.fromPosition(TextPosition(offset: address.length));
-                                  if (mounted) {
+                                  if (context.mounted) {
                                     Navigator.pushNamed(
                                       context,
                                       '/send',

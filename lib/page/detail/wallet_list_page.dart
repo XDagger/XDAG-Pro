@@ -133,7 +133,7 @@ class _WalletListPageState extends State<WalletListPage> {
                             Helper.changeAndroidStatusBarAndNavBar(true);
                             await showCupertinoModalPopup(
                               context: context,
-                              barrierColor: Colors.black.withOpacity(0.6),
+                              barrierColor: Colors.black.withAlpha(153),
                               builder: (BuildContext context) {
                                 return AlertDialog(
                                   backgroundColor: DarkColors.bgColor,
@@ -267,7 +267,7 @@ class Item extends StatelessWidget {
 
     final shouldDelete = await showCupertinoModalPopup(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withAlpha(153),
       builder: (BuildContext context) {
         Widget bottom = Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

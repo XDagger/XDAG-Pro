@@ -89,7 +89,7 @@ class WalletHeader extends StatelessWidget {
                             ],
                           ),
                           Text(
-                            wallet.hideBalance == true ? "****" : "${wallet.amount} XDAG",
+                            wallet.hideBalance == true ? "****" : "${Helper.formatNumberWithCommas(wallet.amount)} XDAG",
                             style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
                           ),
                         ],

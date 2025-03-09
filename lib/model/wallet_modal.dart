@@ -16,6 +16,28 @@ class Transaction {
   final String blockAddress;
   final String remark;
   Transaction({required this.time, required this.amount, required this.address, required this.status, required this.from, required this.to, required this.type, required this.hash, required this.fee, required this.blockAddress, required this.remark});
+
+  // from json
+  static fromJson(String e) {
+    List<String> list = e.split(",");
+    return Transaction(
+      time: list[0],
+      amount: list[1],
+      address: list[2],
+      status: list[3],
+      from: list[4],
+      to: list[5],
+      type: int.parse(list[6]),
+      hash: list[7],
+      fee: double.parse(list[8]),
+      blockAddress: list[9],
+      remark: list[10],
+    );
+  }
+
+  String toJsonString() {
+    return "$time,$amount,$address,$status,$from,$to,$type,$hash,$fee,$blockAddress,$remark";
+  }
 }
 
 class WalletModal extends ChangeNotifier {

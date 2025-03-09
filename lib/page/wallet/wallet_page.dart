@@ -2,9 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/db_model.dart';
+import 'package:xdag/model/transction_modal.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/widget/desktop.dart';
 import 'package:xdag/widget/home_transaction_item.dart';
@@ -41,6 +43,10 @@ class WalletPageState extends State<WalletPage> {
     });
     _scrollController.addListener(_scrollListener);
     configModal?.addListener(_onConfigModalChange);
+    Global.eventBus.on<TransactionChangedEvent>().listen((event) {
+      // print("TransactionChangedEvent");
+      fetchFristPage();
+    });
   }
 
   @override
@@ -96,7 +102,8 @@ class WalletPageState extends State<WalletPage> {
     });
     WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
     ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
-    // print("${config.walletConfig.network}) fetchPage");
+    int timeZone = Helper.getTimezone();
+    // print("${config.walletConfig.network}) fetchPage",);
     Wallet wallet = walletModal.getWallet();
     try {
       String rpcURL = config.getCurrentRpc();
@@ -108,6 +115,8 @@ class WalletPageState extends State<WalletPage> {
         "params": [wallet.address],
         "id": 1
       });
+      // int timeZone = Helper.getTimezone();
+      // print("timeZone: $timeZone");
       walletModal.setBlance(responseBalance.data['result']);
       // print("$explorURL/block/${wallet.address}?addresses_page=$currentPage&addresses_per_page=100");
       Response response = await dio.get(
@@ -126,7 +135,7 @@ class WalletPageState extends State<WalletPage> {
           String amountString = Helper.removeTrailingZeros(item["amount"].toString());
           try {
             newList.add(Transaction(
-              time: item["time"],
+              time: timeZone > 0 ? Helper.formatFullTimeWithTimeZone(item["time"], timeZone) : item["time"],
               amount: amountString,
               address: item["address"],
               status: "",
@@ -142,6 +151,15 @@ class WalletPageState extends State<WalletPage> {
           } catch (e) {}
         }
         List<Transaction> allList = currentPage == 1 ? newList : list + newList;
+        TransactionModal transactionModal = Provider.of<TransactionModal>(context, listen: false);
+        List<Transaction> transactions = transactionModal.getTransactionsList(wallet.address);
+        for (var i = 0; i < transactions.length; i++) {
+          // 先关闭了，方便测试
+          if (allList.any((element) => element.blockAddress == transactions[i].blockAddress)) {
+            // print("删除：" + transactions[i].toJsonString());
+            transactionModal.removeTransaction(i, wallet.address);
+          }
+        }
         allList = allList.where((element) => element.type != 2).toList();
         List<Transaction> newList2 = [];
         // newList2.addAll(allList);
@@ -178,7 +196,9 @@ class WalletPageState extends State<WalletPage> {
   @override
   Widget build(BuildContext context) {
     WalletModal walletModal = Provider.of<WalletModal>(context);
+    TransactionModal transactionModal = Provider.of<TransactionModal>(context);
     Wallet wallet = walletModal.getWallet();
+    List<Transaction> transactions = transactionModal.getTransactionsList(wallet.address);
     return Container(
       color: DarkColors.bgColor,
       child: Column(
@@ -208,7 +228,7 @@ class WalletPageState extends State<WalletPage> {
                     child: Image.asset("images/switch.png", width: 25, height: 25),
                     onPressed: () async {
                       await Navigator.pushNamed(context, "/select");
-                      if (mounted) {
+                      if (context.mounted) {
                         WalletModal newWalletModal = Provider.of<WalletModal>(context, listen: false);
                         if (newWalletModal.getWallet().address != _crurrentAddress) {
                           _crurrentAddress = newWalletModal.getWallet().address;
@@ -274,6 +294,41 @@ class WalletPageState extends State<WalletPage> {
               ),
             ),
           ),
+          if (transactions.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(15, 0, 15, 10),
+              child: MyCupertinoButton(
+                padding: EdgeInsets.zero,
+                onPressed: () => {
+                  Navigator.pushNamed(context, "/transactions_progress")
+                  // for (var i = 0; i < transactions.length; i++)
+                  //   {
+                  //     if (transactions[i].status == 'pending') {print(transactions[i].toJsonString())}
+                  //   }
+                },
+                child: Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                  decoration: BoxDecoration(
+                    color: DarkColors.warningColor,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          AppLocalizations.of(context)!.transactions_in_progress,
+                          style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
+                        ),
+                      ),
+                      const SizedBox(width: 5),
+                      const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: Colors.white),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          else
+            const SizedBox(),
         ],
       ),
     );

@@ -310,7 +310,7 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                         String word = mnemonicList[index];
                         return TextButton(
                           style: ButtonStyle(
-                            padding: MaterialStateProperty.all(const EdgeInsets.fromLTRB(20, 0, 20, 0)),
+                            padding: WidgetStateProperty.all(const EdgeInsets.fromLTRB(20, 0, 20, 0)),
                           ),
                           onPressed: () {
                             String text = controller.text;
@@ -370,21 +370,23 @@ class _CreateWalletPageState extends State<CreateWalletPage> {
                                   setState(() {
                                     isLoad = false;
                                   });
-                                  if (mounted) {
+                                  if (context.mounted) {
                                     Navigator.pop(context);
                                   }
                                 } catch (e) {
                                   setState(() {
                                     isLoad = false;
                                   });
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                    backgroundColor: DarkColors.redColor,
-                                    behavior: SnackBarBehavior.fixed,
-                                    content: Text(
-                                      e.toString(),
-                                      style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white), listen: false),
-                                    ),
-                                  ));
+                                  if (context.mounted) {
+                                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                      backgroundColor: DarkColors.redColor,
+                                      behavior: SnackBarBehavior.fixed,
+                                      content: Text(
+                                        e.toString(),
+                                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white), listen: false),
+                                      ),
+                                    ));
+                                  }
                                 }
                                 isolate?.kill(priority: Isolate.immediate);
                               }

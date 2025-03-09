@@ -148,5 +148,7 @@
   "desktop_change_password_success": "密码更改成功",
   "desktop_enter_password": "输入密码",
   "transactions": "交易",
-  "forget_the_password": "忘记密码"
+  "forget_the_password": "忘记密码",
+  "time_zone": "时区",
+  "transactions_in_progress": "交易进行中"
 }

@@ -587,7 +587,6 @@ class _SendCardState extends State<SendCard> {
             });
 
             showDialog(context: context, builder: (BuildContext context) => DesktopTransactionDetailPageWidget(transaction: transactionItem, address: fromAddress));
-
             // Helper.changeAndroidStatusBar(true);
             // ContactsItem? item = await Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
             // if (item == null) {
@@ -768,7 +767,7 @@ class _SendCardState extends State<SendCard> {
                               context: context,
                               builder: (context) => DesktopTransactionDetail(transaction: transactionItem),
                             );
-                            if (f == true && mounted) {
+                            if (f == true && context.mounted) {
                               showDialog(
                                 context: context,
                                 builder: (context) => DesktopLockPage(

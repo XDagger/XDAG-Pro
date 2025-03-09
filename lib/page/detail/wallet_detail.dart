@@ -87,8 +87,8 @@ class CommonWalletDetailPage extends StatelessWidget {
             onPressed: () async {},
             label: AppLocalizations.of(context)!.hide_balance,
             child: CupertinoSwitch(
-              activeColor: DarkColors.mainColor54,
-              trackColor: DarkColors.transactionColor,
+              activeTrackColor: DarkColors.mainColor54,
+              inactiveTrackColor: DarkColors.transactionColor,
               thumbColor: wallet.hideBalance == true ? DarkColors.mainColor : Colors.white,
               value: wallet.hideBalance == true,
               onChanged: (bool? value) {

@@ -148,5 +148,7 @@
   "desktop_change_password_success": "Пароль успешно изменен",
   "desktop_enter_password": "Пожалуйста, введите пароль",
   "transactions": "Транзакции",
-  "forget_the_password": "Забыли пароль"
+  "forget_the_password": "Забыли пароль",
+  "time_zone": "Часовой пояс",
+  "transactions_in_progress": "Транзакции в процессе"
 }

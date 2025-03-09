@@ -57,10 +57,8 @@ class _CheckPageState extends State<CheckPage> {
     var padding = Helper.isDesktop ? 10.0 : ScreenHelper.topPadding;
     return Scaffold(
       backgroundColor: DarkColors.bgColor,
-      body: WillPopScope(
-        onWillPop: () async {
-          return widget.canClose;
-        },
+      body: PopScope(
+        canPop: widget.canClose,
         child: Column(
           children: [
             Container(

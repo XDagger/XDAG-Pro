@@ -104,7 +104,7 @@ class _WalletNamePageState extends State<WalletNamePage> {
             widget.showBack != null ? BottomBtn(bgColor: DarkColors.blockColor, disable: false, text: AppLocalizations.of(context)!.back, onPressed: widget.showBack) : const SizedBox(),
             const Spacer(),
             BottomBtn(
-              bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withOpacity(0.5),
+              bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withAlpha(128),
               disable: !isButtonEnable,
               isLoad: isLoad,
               text: AppLocalizations.of(context)!.continueText,
@@ -113,38 +113,42 @@ class _WalletNamePageState extends State<WalletNamePage> {
                 setState(() {
                   isLoad = true;
                 });
-                // print("walletName: $walletName importContent: ${widget.importContent}");
-                // return;
+
                 final receivePort = ReceivePort();
                 isolate = await Isolate.spawn(isolateFunction, receivePort.sendPort);
+
                 receivePort.listen((data) async {
                   if (data is SendPort) {
                     var subSendPort = data;
                     subSendPort.send([widget.isPrivateKey, widget.importContent]);
                   } else if (data is List<String>) {
-                    // print("data: $data");
                     try {
                       await walletModal.createWallet(name: walletName, address: data[1], data: data[2], needBackUp: true);
+
                       setState(() {
                         isLoad = false;
                       });
-                      if (mounted) {
+
+                      if (context.mounted) {
                         Navigator.pop(context);
                       }
                     } catch (e) {
                       setState(() {
                         isLoad = false;
                       });
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        backgroundColor: DarkColors.redColor,
-                        behavior: SnackBarBehavior.fixed,
-                        content: Text(
-                          e.toString(),
-                          style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white), listen: false),
-                        ),
-                      ));
+
+                      if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: DarkColors.redColor,
+                          behavior: SnackBarBehavior.fixed,
+                          content: Text(
+                            e.toString(),
+                            style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white), listen: false),
+                          ),
+                        ));
+                      }
+                      isolate?.kill(priority: Isolate.immediate);
                     }
-                    isolate?.kill(priority: Isolate.immediate);
                   }
                 });
               },
@@ -268,7 +272,7 @@ class _ImportStylePageState extends State<ImportStylePage> {
         children: [
           const Spacer(),
           BottomBtn(
-            bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withOpacity(0.5),
+            bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withAlpha(128),
             disable: !isButtonEnable,
             text: AppLocalizations.of(context)!.continueText,
             onPressed: () {

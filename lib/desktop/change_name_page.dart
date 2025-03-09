@@ -59,7 +59,7 @@ class _ChangeNameState extends State<ChangeNamePage> {
                 children: [
                   const Spacer(),
                   BottomBtn(
-                    bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withOpacity(0.5),
+                    bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.mainColor.withAlpha(128),
                     disable: !isButtonEnable,
                     text: AppLocalizations.of(context)!.continueText,
                     onPressed: () {

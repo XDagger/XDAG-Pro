@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
     Helper.changeAndroidStatusBarAndNavBar(true);
     await showCupertinoModalPopup(
       context: context,
-      barrierColor: Colors.black.withOpacity(0.6),
+      barrierColor: Colors.black.withAlpha(153),
       builder: (BuildContext context) {
         return AlertDialog(
           backgroundColor: DarkColors.bgColor,

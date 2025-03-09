@@ -9,6 +9,7 @@ import 'package:xdag/desktop/start_page.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/db_model.dart';
+import 'package:xdag/model/transction_modal.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/about_us.dart';
 import 'package:xdag/page/common/back_up_page.dart';
@@ -22,6 +23,7 @@ import 'package:xdag/page/common/security_page.dart';
 import 'package:xdag/page/common/create_wallet_page.dart';
 import 'package:xdag/page/common/webview.dart';
 import 'package:xdag/page/detail/send_page.dart';
+import 'package:xdag/page/detail/transaction_page.dart';
 import 'package:xdag/page/detail/wallet_list_page.dart';
 import 'package:xdag/page/start_page.dart';
 import 'package:xdag/page/wallet/main_page.dart';
@@ -76,6 +78,7 @@ class MyWidget extends StatelessWidget {
       ChangeNotifierProvider(create: (_) => ConfigModal()),
       ChangeNotifierProvider(create: (_) => WalletModal()),
       ChangeNotifierProvider(create: (_) => ContactsModal()),
+      ChangeNotifierProvider(create: (_) => TransactionModal()),
     ];
     if (Helper.isDesktop) {
       return MultiProvider(
@@ -91,9 +94,9 @@ class MyWidget extends StatelessWidget {
               scrollbarTheme: !Helper.isDesktop
                   ? null
                   : ScrollbarThemeData(
-                      thumbVisibility: MaterialStateProperty.all(true),
-                      thickness: MaterialStateProperty.all(3),
-                      thumbColor: MaterialStateProperty.all(DarkColors.mainColor54),
+                      thumbVisibility: WidgetStateProperty.all(true),
+                      thickness: WidgetStateProperty.all(3),
+                      thumbColor: WidgetStateProperty.all(DarkColors.mainColor54),
                       radius: const Radius.circular(5),
                       minThumbLength: 20,
                     ),
@@ -126,9 +129,9 @@ class MyWidget extends StatelessWidget {
             scrollbarTheme: !Helper.isDesktop
                 ? null
                 : ScrollbarThemeData(
-                    thumbVisibility: MaterialStateProperty.all(true),
-                    thickness: MaterialStateProperty.all(3),
-                    thumbColor: MaterialStateProperty.all(DarkColors.mainColor54),
+                    thumbVisibility: WidgetStateProperty.all(true),
+                    thickness: WidgetStateProperty.all(3),
+                    thumbColor: WidgetStateProperty.all(DarkColors.mainColor54),
                     radius: const Radius.circular(5),
                     minThumbLength: 20,
                   ),
@@ -160,6 +163,7 @@ class MyWidget extends StatelessWidget {
             "/back_up_test": (context) => const BackUpTestPage(),
             "/customize_qr": (context) => const CustomizeQrPage(),
             "/log": (context) => const LogPage(),
+            "/transactions_progress": (context) => const TransactionsProgressPage(),
           },
         ),
       ),

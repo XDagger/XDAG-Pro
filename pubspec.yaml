@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.22+23
+version: 1.1.0+24
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -32,10 +32,10 @@ dependencies:
   qr_flutter: ^4.0.0
   shared_preferences: ^2.0.18
   flutter_secure_storage: ^8.0.0
-  local_auth: ^2.1.6
+  local_auth: ^2.3.0
   chinese_font_library: ^1.0.1
-  local_auth_android: ^1.0.21
-  local_auth_ios: ^1.1.1
+  local_auth_android: ^1.0.47
+  local_auth_darwin: ^1.4.3
   provider: ^6.0.5
   auto_size_text_field: ^2.2.1
   flutter_keyboard_visibility: ^5.4.0
@@ -61,15 +61,18 @@ dependencies:
   pointycastle: ^3.6.2
   hive_flutter: ^1.1.0
   hive: ^2.2.3
+  event_bus: ^2.0.1
   flutter_localizations:
     sdk: flutter
   flutter:
     sdk: flutter
-  intl: ^0.18.0
-  permission_handler: ^10.2.0
-  image_gallery_saver: '^2.0.1'
+  intl: ^0.19.0
+  flutter_timezone: ^4.1.0  
+  permission_handler: ^11.4.0
+  image_gallery_saver: ^2.0.1
   device_info_plus: ^8.2.2
-
+dependency_overrides:
+   win32: ^5.5.1
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"

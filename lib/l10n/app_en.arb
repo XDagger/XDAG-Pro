@@ -148,5 +148,7 @@
   "desktop_change_password_success": "Change password successfully",
   "desktop_enter_password": "Enter Password",
   "transactions": "Transactions",
-  "forget_the_password": "forget_the_password"
+  "forget_the_password": "forget_the_password",
+  "time_zone": "Time Zone",
+  "transactions_in_progress": "Transactions in progress"
 }

@@ -89,7 +89,7 @@ class _CommoneChangeNameState extends State<CommoneChangeName> {
                     isLoad = true;
                   });
                   await walletModal.changeName(walletName);
-                  if (mounted) {
+                  if (context.mounted) {
                     Navigator.pop(context);
                   }
                 },

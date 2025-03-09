@@ -47,15 +47,24 @@ class Helper {
     return content;
   }
 
-  static String formatTime(String time) {
+  static String formatTime(String time, int timeZone) {
+    // 将时间转换为UTC时间
     DateTime date = DateTime.parse(time);
-    // MM-dd HH:mm
+    // 加上时区
+    date = date.add(Duration(hours: timeZone));
     return "${date.month < 10 ? "0${date.month}" : date.month}-${date.day < 10 ? "0${date.day}" : date.day} ${date.hour < 10 ? "0${date.hour}" : date.hour}:${date.minute < 10 ? "0${date.minute}" : date.minute}";
   }
 
   static String formatFullTime(String time) {
     DateTime date = DateTime.parse(time);
     // YYYY-MM-dd HH:mm
+    return "${date.year}-${date.month < 10 ? "0${date.month}" : date.month}-${date.day < 10 ? "0${date.day}" : date.day} ${date.hour < 10 ? "0${date.hour}" : date.hour}:${date.minute < 10 ? "0${date.minute}" : date.minute}";
+  }
+
+  static String formatFullTimeWithTimeZone(String time, int timeZone) {
+    DateTime date = DateTime.parse(time);
+    // YYYY-MM-dd HH:mm
+    date = date.add(Duration(hours: timeZone));
     return "${date.year}-${date.month < 10 ? "0${date.month}" : date.month}-${date.day < 10 ? "0${date.day}" : date.day} ${date.hour < 10 ? "0${date.hour}" : date.hour}:${date.minute < 10 ? "0${date.minute}" : date.minute}";
   }
 
@@ -227,6 +236,48 @@ class Helper {
     bip32.BIP32 hdWallet = bip32.BIP32.fromSeed(HEX.decode(seed) as Uint8List);
     bip32.BIP32 child = hdWallet.derivePath("m/44'/586'/0'/0/0");
     return child;
+  }
+
+  /// Formats a number with commas as thousands separators
+  /// Example: 1234567 becomes "1,234,567"
+  static String formatNumberWithCommas(dynamic input) {
+    String numStr;
+
+    // Handle input type (number or string)
+    if (input is num) {
+      numStr = input.toString();
+    } else if (input is String) {
+      // Validate string is a valid number
+      if (input.isEmpty) {
+        return '0';
+      }
+      try {
+        // Check if string is a valid number
+        num.parse(input);
+        numStr = input;
+      } catch (e) {
+        return input; // Return original string if not a valid number
+      }
+    } else {
+      return input.toString(); // For other types, convert to string
+    }
+
+    // Handle decimal part if present
+    List<String> parts = numStr.split('.');
+    String integerPart = parts[0];
+    String decimalPart = parts.length > 1 ? '.${parts[1]}' : '';
+
+    // Add commas to the integer part
+    final RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
+    String result = integerPart.replaceAllMapped(reg, (Match match) => '${match[1]},');
+
+    return result + decimalPart;
+  }
+
+  static int getTimezone() {
+    DateTime now = DateTime.now();
+    Duration offset = now.timeZoneOffset;
+    return offset.inHours;
   }
 }
 

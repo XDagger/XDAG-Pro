@@ -54,5 +54,13 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSCameraUsageDescription</key>
+    <string>XDAG-Pro needs access to your camera to scan the QR code.</string>
+
+    <key>NSFaceIDUsageDescription</key>
+    <string>Use Face ID to protect your data.</string>
+
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>XDAG-Pro needs to save the QR code image to your photo album.</string>
 </dict>
 </plist>

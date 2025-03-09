@@ -6,15 +6,20 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import 'package:xdag/common/color.dart';
+import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/contacts_modal.dart';
+import 'package:xdag/model/db_model.dart';
+import 'package:xdag/model/transction_modal.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/webview.dart';
 import 'package:xdag/widget/button.dart';
 import 'package:xdag/widget/desktop.dart';
+import 'package:xdag/widget/home_transaction_item.dart';
 import 'package:xdag/widget/modal_frame.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:xdag/widget/nav_header.dart';
 
 class TransactionPage extends StatefulWidget {
   final Transaction transaction;
@@ -54,6 +59,8 @@ class _TransactionPageState extends State<TransactionPage> {
       ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
       String explorURL = config.getCurrentExplorer();
       Response response = await dio.get("$explorURL/block/${widget.transaction.blockAddress}", cancelToken: cancelToken);
+      // print("$explorURL/block/${widget.transaction.blockAddress}");
+      // print(response.data);
       String newFee = "";
       String newTransactionState = "Pending";
       String newOtherAddress = "";
@@ -64,7 +71,8 @@ class _TransactionPageState extends State<TransactionPage> {
         for (var i = 0; i < response.data["block_as_transaction"].length; i++) {
           var item = response.data["block_as_transaction"][i];
           if (item['direction'] == "fee") {
-            newFee = item['amount'];
+            //newFee = item['amount'];
+            newFee = '0.1';
           } else {
             if (isSend) {
               if (item['direction'] == "output") {
@@ -76,6 +84,20 @@ class _TransactionPageState extends State<TransactionPage> {
               }
             }
           }
+        }
+      }
+      // 获取
+      WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
+      Wallet wallet = walletModal.getWallet();
+      TransactionModal transactionModal = Provider.of<TransactionModal>(context, listen: false);
+      List<Transaction> transactions = transactionModal.getTransactionsList(wallet.address);
+      // 通知首页更新
+      for (var i = 0; i < transactions.length; i++) {
+        if (transactions[i].blockAddress == transaction.blockAddress && newTransactionState == "Accepted") {
+          // print("删除：" + newTransactionState);
+
+          transactionModal.removeTransaction(i, wallet.address);
+          Global.eventBus.fire(TransactionChangedEvent());
         }
       }
       setState(() {
@@ -98,6 +120,7 @@ class _TransactionPageState extends State<TransactionPage> {
     ContactsModal contacts = Provider.of<ContactsModal>(context);
     // 查询 otherAddress 是否在 contacts.contactsList 中
     ContactsItem otherContact = contacts.contactsList.firstWhere((element) => element.address == otherAddress, orElse: () => ContactsItem("", otherAddress));
+    int timeZone = Helper.getTimezone();
 
     ConfigModal config = Provider.of<ConfigModal>(context);
     return ModalFrame(
@@ -146,7 +169,7 @@ class _TransactionPageState extends State<TransactionPage> {
                   const SizedBox()
                 else
                   Text(
-                    "${isSend ? AppLocalizations.of(context)!.send_on : AppLocalizations.of(context)!.receive_on} ${Helper.formatFullTime(transaction.time)} UTC",
+                    "${isSend ? AppLocalizations.of(context)!.send_on : AppLocalizations.of(context)!.receive_on} ${Helper.formatFullTime(transaction.time)} UTC${timeZone > 0 ? '+${timeZone.toString()}' : timeZone.toString()}",
                     style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w400, color: Colors.white54)),
                   ),
                 const SizedBox(height: 25),
@@ -291,7 +314,7 @@ class TransactionShowDetail extends StatelessWidget {
                   value: transaction.from,
                 ),
                 const SizedBox(height: 1),
-                TransactionButton(showCopy: false, title: AppLocalizations.of(context)!.fee, value: '0.00 XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+                TransactionButton(showCopy: false, title: AppLocalizations.of(context)!.fee, value: '${transaction.fee} XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
                 const SizedBox(height: 1),
                 if (transaction.remark.isNotEmpty)
                   TransactionButton(
@@ -367,6 +390,94 @@ class TransactionButton extends StatelessWidget {
                 ),
                 child: leftIcon ?? const Icon(Icons.copy_rounded, size: 12, color: Colors.white))
         ],
+      ),
+    );
+  }
+}
+
+class TransactionsProgressPage extends StatefulWidget {
+  const TransactionsProgressPage({super.key});
+
+  @override
+  State<TransactionsProgressPage> createState() => _TransactionsProgressPageState();
+}
+
+class _TransactionsProgressPageState extends State<TransactionsProgressPage> {
+  final dio = Dio();
+  CancelToken cancelToken = CancelToken();
+  @override
+  void initState() {
+    super.initState();
+    fetchData();
+  }
+
+  @override
+  void dispose() {
+    cancelToken.cancel();
+    dio.close();
+    super.dispose();
+  }
+
+  fetchData() async {
+    WalletModal walletModal = Provider.of<WalletModal>(context, listen: false);
+    Wallet wallet = walletModal.getWallet();
+    TransactionModal transactionModal = Provider.of<TransactionModal>(context, listen: false);
+    List<Transaction> transactions = transactionModal.getTransactionsList(wallet.address);
+    try {
+      bool needSendEvent = false;
+      for (var i = 0; i < transactions.length; i++) {
+        var transaction = transactions[i];
+        ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
+        String explorURL = config.getCurrentExplorer();
+        Response response = await dio.get("$explorURL/block/${transaction.blockAddress}", cancelToken: cancelToken);
+        String newTransactionState = response.data['state'];
+        if (newTransactionState == "Accepted") {
+          // print("删除：" + transaction.toJsonString());
+          transactionModal.removeTransaction(i, wallet.address);
+          needSendEvent = true;
+        }
+      }
+      if (needSendEvent) {
+        Global.eventBus.fire(TransactionChangedEvent());
+      }
+    }
+    // ignore: empty_catches
+    catch (e) {
+      // print(e);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    WalletModal walletModal = Provider.of<WalletModal>(context);
+    Wallet wallet = walletModal.getWallet();
+    TransactionModal transactionModal = Provider.of<TransactionModal>(context);
+    List<Transaction> transactions = transactionModal.getTransactionsList(wallet.address);
+    return Scaffold(
+      backgroundColor: DarkColors.bgColor,
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          if (FocusScope.of(context).hasFocus) {
+            FocusScope.of(context).unfocus();
+          }
+        },
+        child: Column(
+          children: [
+            NavHeader(title: AppLocalizations.of(context)!.transactions),
+            const SizedBox(height: 10),
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemCount: transactions.length,
+                itemBuilder: (context, index) {
+                  return WalletTransactionItem(transaction: transactions[index], address: wallet.address, isProgress: true);
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

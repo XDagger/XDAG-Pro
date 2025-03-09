@@ -30,14 +30,16 @@ class WalletTransactionDateHeader extends StatelessWidget {
 class WalletTransactionItem extends StatelessWidget {
   final Transaction transaction;
   final String address;
+  final bool isProgress;
   final bool isLast;
-  const WalletTransactionItem({super.key, required this.transaction, required this.address, this.isLast = false});
+  const WalletTransactionItem({super.key, required this.transaction, required this.address, this.isProgress = false, this.isLast = false});
 
   @override
   Widget build(BuildContext context) {
     bool isSend = transaction.from == address;
     bool isSnapshot = transaction.type == 1;
-    var amount = Helper.formatDouble(transaction.amount);
+    int timeZone = Helper.getTimezone();
+    var amount = Helper.formatNumberWithCommas(Helper.formatDouble(transaction.amount));
     return MyCupertinoButton(
         padding: EdgeInsets.zero,
         child: Column(
@@ -70,9 +72,9 @@ class WalletTransactionItem extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(isSnapshot ? AppLocalizations.of(context)!.snapshot : (isSend ? AppLocalizations.of(context)!.sent : AppLocalizations.of(context)!.received), style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: Colors.white))),
+                          Text(isProgress ? AppLocalizations.of(context)!.pending : (isSnapshot ? AppLocalizations.of(context)!.snapshot : (isSend ? AppLocalizations.of(context)!.sent : AppLocalizations.of(context)!.received)), style: Helper.fitChineseFont(context, TextStyle(decoration: TextDecoration.none, fontSize: 14, fontWeight: FontWeight.w500, color: isProgress ? DarkColors.warningColor : Colors.white))),
                           const SizedBox(height: 5),
-                          Text('${Helper.formatTime(transaction.time)}  UTC', style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54))),
+                          Text('${Helper.formatTime(transaction.time, 0)}  UTC${timeZone > 0 ? '+${timeZone.toString()}' : timeZone.toString()}', style: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white54))),
                         ],
                       ),
                     ),

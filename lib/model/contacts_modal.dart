@@ -22,7 +22,7 @@ class ContactsModal extends ChangeNotifier {
   updateList() async {
     List<String> list = [];
     for (var i in Global.contactsListBox) {
-      if (i.address != '4duPWMbYUgAifVYkKDCWxLvRRkSByf5gb') {
+      if (i.address != 'PKcBtHWDSnAWfZntqWPBLedqBShuKSTzS') {
         list.add(i.toJsonString());
       }
     }

@@ -102,8 +102,8 @@ class _PasswordPageState extends State<PasswordPage> {
                     padding: const EdgeInsets.fromLTRB(15, 10, 10, 10),
                     label: title,
                     child: CupertinoSwitch(
-                      activeColor: DarkColors.mainColor54,
-                      trackColor: DarkColors.transactionColor,
+                      activeTrackColor: DarkColors.mainColor54,
+                      inactiveTrackColor: DarkColors.transactionColor,
                       thumbColor: isSwitched ? DarkColors.mainColor : Colors.white,
                       value: isSwitched,
                       onChanged: (bool? value) {

@@ -91,8 +91,8 @@ class _MySwitchState extends State<MySwitch> {
   @override
   Widget build(BuildContext context) {
     return CupertinoSwitch(
-      activeColor: DarkColors.mainColor54,
-      trackColor: widget.trackColor,
+      activeTrackColor: DarkColors.mainColor54,
+      inactiveTrackColor: widget.trackColor,
       thumbColor: isSwitched ? DarkColors.mainColor : Colors.white,
       value: isSwitched,
       onChanged: (bool? value) {

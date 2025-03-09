@@ -22,6 +22,20 @@ Before running the project, please run `flutter pub get` to get the dependencies
 * change `lib/model/config_modal.dart` langs
 * [localization](https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry)
 
+## Android
+* if you see the error like this:
+```
+ Namespace not specified. Please specify a namespace in the module's build.gradle file like so:
+```
+* add namespace to `build.gradle` for the third-party plugin
+```
+android {
+    compileSdkVersion 33
+    namespace "xxxx"
+}
+```
+
+
 ## End
 If you would like to make a donation to support this project, below is the donation address:  
 **4AzP6NX68y854ztnSMuBYLj8KHHAtX5HK**

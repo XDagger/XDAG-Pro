@@ -12,6 +12,7 @@ import 'package:xdag/common/transaction.dart';
 import 'package:xdag/model/config_modal.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/db_model.dart';
+import 'package:xdag/model/transction_modal.dart';
 import 'package:xdag/model/wallet_modal.dart';
 import 'package:xdag/page/common/add_contacts_page.dart';
 import 'package:xdag/page/common/check_page.dart';
@@ -122,9 +123,12 @@ class _SendPageState extends State<SendPage> {
         );
         if (context.mounted) {
           var res = response.data['result'] as String;
-          // print(res);
+          print(res);
+          // 把内容存在 localstorage,返回列表的时候，从 localstorage 中获取
           if (res.length == 32 && res.trim().split(' ').length == 1) {
-            var transactionItem = Transaction(time: '', amount: Helper.removeTrailingZeros(sendAmount.toString()), address: fromAddress, status: 'pending', from: fromAddress, to: toAddress, type: 0, hash: '', fee: 0, blockAddress: res, remark: sendRemark);
+            var transactionItem = Transaction(time: DateTime.now().toIso8601String(), amount: Helper.removeTrailingZeros(sendAmount.toString()), address: fromAddress, status: 'pending', from: fromAddress, to: toAddress, type: 0, hash: '', fee: 0.1, blockAddress: res, remark: sendRemark);
+            TransactionModal transactionModal = Provider.of<TransactionModal>(context, listen: false);
+            transactionModal.addTransaction(transactionItem, fromAddress);
             controller.clear();
             controller2.clear();
             setState(() {
@@ -132,6 +136,7 @@ class _SendPageState extends State<SendPage> {
               amount = '';
               remark = '';
             });
+
             Helper.changeAndroidStatusBar(true);
             ContactsItem? item = await Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
             if (item == null) {
@@ -168,6 +173,7 @@ class _SendPageState extends State<SendPage> {
             // snackbar
             setState(() {
               error = res;
+              isLoad = false;
             });
             controller.clear();
             controller2.clear();
@@ -247,7 +253,18 @@ class _SendPageState extends State<SendPage> {
                         ),
                       ),
                       const SizedBox(height: 15),
-                      Text(AppLocalizations.of(context)!.amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                      SizedBox(
+                        // height: 50,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(AppLocalizations.of(context)!.amount, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500))),
+                            // const Spacer(),
+                            Text('${AppLocalizations.of(context)!.fee}: 0.1 XDAG', style: Helper.fitChineseFont(context, const TextStyle(fontSize: 14, color: DarkColors.warningColor, fontWeight: FontWeight.w500))),
+                          ],
+                        ),
+                      ),
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller,
@@ -383,6 +400,13 @@ class _SendPageState extends State<SendPage> {
                     disable: !isButtonEnable,
                     isLoad: isLoad,
                     onPressed: () async {
+                      // 判断输入金额是否 大于 0.1
+                      if (double.parse(amount) <= 0.1) {
+                        setState(() {
+                          error = 'Amount must be greater than 0.1';
+                        });
+                        return;
+                      }
                       if (isLoad) return;
                       setState(() {
                         error = '';
@@ -395,7 +419,7 @@ class _SendPageState extends State<SendPage> {
 
                       if (context.mounted) {
                         Helper.changeAndroidStatusBar(true);
-                        var transactionItem = Transaction(time: '', amount: Helper.removeTrailingZeros(amount.toString()), address: wallet.address, status: 'pending', from: wallet.address, to: args.address, type: 0, hash: '', fee: 0, blockAddress: "", remark: remark);
+                        var transactionItem = Transaction(time: '', amount: Helper.removeTrailingZeros(amount.toString()), address: wallet.address, status: 'pending', from: wallet.address, to: args.address, type: 0, hash: '', fee: 0.1, blockAddress: "", remark: remark);
                         bool? flag = await Helper.showBottomSheet(
                           context,
                           TransactionShowDetail(transaction: transactionItem),

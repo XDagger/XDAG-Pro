@@ -140,11 +140,11 @@ class _ReceivePageState extends State<ReceivePage> {
                                     height: 270,
                                     decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10)),
                                     child: Center(
-                                      child: QrImage(
+                                      child: QrImageView(
                                         data: getQrString(),
                                         version: QrVersions.auto,
                                         embeddedImage: const AssetImage('images/logo_b_40.png'),
-                                        embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(40, 40)),
+                                        embeddedImageStyle: const QrEmbeddedImageStyle(size: Size(40, 40)),
                                       ),
                                     ),
                                   ),

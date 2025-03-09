@@ -62,13 +62,12 @@ class _StartPageState extends State<StartPage> {
         body: null,
       );
     }
-    return WillPopScope(
-      onWillPop: () async {
-        if (Platform.isAndroid) {
+    return PopScope(
+      canPop: !Platform.isAndroid, // 如果是 Android，则拦截返回键
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (!didPop && Platform.isAndroid) {
           BackToHome.backToPhoneHome();
-          return false;
         }
-        return true;
       },
       child: wallet == null ? const HomePage() : const WalletHomePage(),
     );

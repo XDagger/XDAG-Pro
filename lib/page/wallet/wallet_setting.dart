@@ -56,6 +56,22 @@ class WalletSettingPage extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(height: 1),
+                        // LabelButton(
+                        //   label: AppLocalizations.of(context)!.time_zone,
+                        //   onPressed: () async {
+                        //     Helper.changeAndroidStatusBar(true);
+                        //     await Helper.showBottomSheet(context, const LangsSelectPage());
+                        //     Helper.changeAndroidStatusBar(false);
+                        //   },
+                        //   child: Row(
+                        //     children: [
+                        //       Text(config.walletConfig.local == 0 ? AppLocalizations.of(context)!.auto : ConfigModal.langs[config.walletConfig.local].name, style: Helper.fitChineseFont(context, const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.w400))),
+                        //       const SizedBox(width: 5),
+                        //       const Icon(Icons.arrow_forward_ios, color: Colors.white, size: 12),
+                        //     ],
+                        //   ),
+                        // ),
+                        // const SizedBox(height: 1),
                         LabelButton(
                           type: 2,
                           label: AppLocalizations.of(context)!.network,
@@ -91,13 +107,13 @@ class WalletSettingPage extends StatelessWidget {
                           onPressed: () => Navigator.pushNamed(context, "/legal", arguments: LegalPageRouteParams(isFromSetting: true)),
                           child: Image.asset("images/document.png", width: 25, height: 25),
                         ),
-                        const SizedBox(height: 1),
-                        LabelButton(
-                          type: 2,
-                          label: "log",
-                          onPressed: () => Navigator.pushNamed(context, "/log"),
-                          child: Image.asset("images/aboutus.png", width: 25, height: 25),
-                        ),
+                        // const SizedBox(height: 1),
+                        // LabelButton(
+                        //   type: 2,
+                        //   label: "log",
+                        //   onPressed: () => Navigator.pushNamed(context, "/log"),
+                        //   child: Image.asset("images/aboutus.png", width: 25, height: 25),
+                        // ),
                         const SizedBox(height: 1),
                         LabelButton(
                           type: 1,

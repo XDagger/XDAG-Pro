@@ -147,10 +147,8 @@ class _DesktopLockPageState extends State<DesktopLockPage> {
   bool error = false;
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return !widget.showBack;
-      },
+    return PopScope(
+      canPop: !widget.showBack,
       child: Scaffold(
         backgroundColor: DarkColors.bgColor,
         body: Column(
@@ -186,7 +184,7 @@ class _DesktopLockPageState extends State<DesktopLockPage> {
                       if (value.length == 6) {
                         bool flag = await Global.checkPassword(value);
                         if (flag) {
-                          if (mounted) {
+                          if (context.mounted) {
                             Navigator.of(context).pop();
                             widget.checkCallback(true);
                           }
@@ -244,7 +242,7 @@ class PageCreatePassword extends StatelessWidget {
         ),
         type == 0 ? Linktext(text: AppLocalizations.of(context)!.desktop_create_password_tips) : const SizedBox(),
         SizedBox(height: type == 0 ? 10 : 0),
-        Row(children: [const Spacer(), BottomBtn(bgColor: disable ? DarkColors.mainColor.withOpacity(0.5) : DarkColors.mainColor, disable: disable, text: AppLocalizations.of(context)!.continueText, onPressed: onPressed)])
+        Row(children: [const Spacer(), BottomBtn(bgColor: disable ? DarkColors.mainColor.withAlpha(128) : DarkColors.mainColor, disable: disable, text: AppLocalizations.of(context)!.continueText, onPressed: onPressed)])
       ],
     );
   }
@@ -320,7 +318,6 @@ class PasswordInput extends StatefulWidget {
   final VoidCallback enterCallback;
   final bool obscureText;
   final int type;
-  // TODO 导出一个 controller 方便外部调用
 
   const PasswordInput({super.key, required this.length, required this.onChanged, required this.enterCallback, this.obscureText = false, this.type = 0});
 
@@ -379,11 +376,11 @@ class _PasswordInputState extends State<PasswordInput> {
   @override
   Widget build(BuildContext context) {
     double size = widget.type == 0 ? 40 : 50;
-    return RawKeyboardListener(
+    return KeyboardListener(
       focusNode: FocusNode(),
-      onKey: (RawKeyEvent event) {
-        if (event.runtimeType == RawKeyDownEvent) {
-          RawKeyDownEvent keyEvent = event as RawKeyDownEvent;
+      onKeyEvent: (KeyEvent event) {
+        if (event.runtimeType == KeyDownEvent) {
+          KeyDownEvent keyEvent = event as KeyDownEvent;
           // 判断是否是回车键
           if (keyEvent.logicalKey == LogicalKeyboardKey.enter) {
             widget.enterCallback();

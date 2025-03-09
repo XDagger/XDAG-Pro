@@ -6,9 +6,14 @@ import 'package:local_auth/local_auth.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:local_auth_android/local_auth_android.dart';
-import 'package:local_auth_ios/local_auth_ios.dart';
+import 'package:local_auth_darwin/local_auth_darwin.dart';
 import 'package:xdag/model/contacts_modal.dart';
 import 'package:xdag/model/db_model.dart';
+import 'package:event_bus/event_bus.dart';
+
+class TransactionChangedEvent {
+  TransactionChangedEvent();
+}
 
 class WalletConfig {
   int local;
@@ -52,6 +57,7 @@ class Global {
   static const String mainExplorURL = 'https://mainnet-explorer.xdagj.org';
 
   static const bool isTest = false;
+  static final EventBus eventBus = EventBus();
 
   static SharedPreferences get prefs => _prefs;
   // log string[]
@@ -75,12 +81,12 @@ class Global {
     walletListBox = await Hive.openBox<Wallet>(walletListKey);
     List<String>? contactsList = _prefs.getStringList(contactsListKey);
     contactsListBox = [
-      ContactsItem("Community Fund", '4duPWMbYUgAifVYkKDCWxLvRRkSByf5gb'),
+      ContactsItem("Community Fund", 'PKcBtHWDSnAWfZntqWPBLedqBShuKSTzS'),
     ];
     if (contactsList != null) {
       for (var item in contactsList) {
         ContactsItem ele = ContactsItem.fromJson(item);
-        if (ele.address != '4duPWMbYUgAifVYkKDCWxLvRRkSByf5gb') {
+        if (ele.address != 'PKcBtHWDSnAWfZntqWPBLedqBShuKSTzS') {
           contactsListBox.add(ele);
         }
       }
@@ -98,7 +104,7 @@ class Global {
     walletConfig = WalletConfig(local: 0, hasSetPassword: false, hasSetBiometrics: false);
     walletListBox = await Hive.openBox<Wallet>(walletListKey);
     contactsListBox = [
-      ContactsItem("Community Fund", '4duPWMbYUgAifVYkKDCWxLvRRkSByf5gb'),
+      ContactsItem("Community Fund", 'PKcBtHWDSnAWfZntqWPBLedqBShuKSTzS'),
     ];
     await updateConfig();
   }
