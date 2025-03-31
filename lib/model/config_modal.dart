@@ -35,6 +35,8 @@ class ConfigModal extends ChangeNotifier {
     return walletConfig.network == 0 ? Global.mainRpcURL : Global.rpcURL;
   }
 
+  bool get isTestNet => walletConfig.network == 1;
+
   String getCurrentExplorer({isApi = true}) {
     var url = walletConfig.network == 0 ? Global.mainExplorURL : Global.explorURL;
     return isApi ? '$url/api' : url;

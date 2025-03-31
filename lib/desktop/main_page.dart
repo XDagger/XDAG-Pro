@@ -542,9 +542,10 @@ class _SendCardState extends State<SendCard> {
       String amount = data[2] as String;
       String fromAddress = data[3] as String;
       String remark = data[4] as String;
+      String nonce = data[5] as String;
       bool isPrivateKey = res.trim().split(' ').length == 1;
       bip32.BIP32 wallet = Helper.createWallet(isPrivate: isPrivateKey, content: res);
-      String result = TransactionHelper.getTransaction(fromAddress, toAddress, remark, double.parse(amount), wallet);
+      String result = TransactionHelper.getTransaction(fromAddress, toAddress, remark, double.parse(amount), wallet, nonce);
       sendPort.send(['success', result]);
     });
   }
@@ -556,54 +557,79 @@ class _SendCardState extends State<SendCard> {
     final receivePort = ReceivePort();
     ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
     String rpcURL = config.getCurrentRpc();
+    bool isTestNet = config.isTestNet;
+    String nonce = '';
+    if (isTestNet) {
+      Response response = await dio.post(rpcURL, cancelToken: cancelToken, data: {
+        "jsonrpc": "2.0",
+        "method": "xdag_getTransactionNonce",
+        "params": [fromAddress],
+        "id": 1
+      });
+      nonce = response.data['result'] as String;
+    }
     isolate = await Isolate.spawn(isolateFunction, receivePort.sendPort);
     receivePort.listen((data) async {
       var sendAmount = amount;
       var sendRemark = remark;
       if (data is SendPort) {
         var subSendPort = data;
-        subSendPort.send([res, toAddress, amount, fromAddress, remark]);
+        subSendPort.send([res, toAddress, amount, fromAddress, remark, nonce]);
       } else if (data is List<String>) {
         String result = data[1];
-        Response response = await dio.post(rpcURL, cancelToken: cancelToken, data: {
-          "jsonrpc": "2.0",
-          "method": "xdag_sendRawTransaction",
-          "params": [result],
-          "id": 1
-        });
-        if (context.mounted) {
-          var res = response.data['result'] as String;
-          // print(res);
-          if (res.length == 32 && res.trim().split(' ').length == 1) {
-            var transactionItem = Transaction(time: '', amount: Helper.removeTrailingZeros(sendAmount.toString()), address: fromAddress, status: 'pending', from: fromAddress, to: toAddress, type: 0, hash: '', fee: 0, blockAddress: res, remark: sendRemark);
-            controller0.clear();
-            controller1.clear();
-            controller2.clear();
-            setState(() {
-              load = false;
-              amount = '';
-              remark = '';
-              address = '';
-            });
+        try {
+          Response response = await dio.post(rpcURL, cancelToken: cancelToken, data: {
+            "jsonrpc": "2.0",
+            "method": "xdag_sendRawTransaction",
+            "params": [result],
+            "id": 1
+          });
+          // 502 处理
 
-            showDialog(context: context, builder: (BuildContext context) => DesktopTransactionDetailPageWidget(transaction: transactionItem, address: fromAddress));
-            // Helper.changeAndroidStatusBar(true);
-            // ContactsItem? item = await Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
-            // if (item == null) {
-            //   Helper.changeAndroidStatusBar(false);
-            //   return;
-            // }
-          } else {
-            showDialog(context: context, builder: (context) => DesktopAlertModal(title: AppLocalizations.of(context)!.error, content: res));
-            controller0.clear();
-            controller1.clear();
-            controller2.clear();
+          if (context.mounted) {
+            var res = response.data['result'] as String;
+            // print(res);
+            if (res.length == 32 && res.trim().split(' ').length == 1) {
+              var transactionItem = Transaction(time: '', amount: Helper.removeTrailingZeros(sendAmount.toString()), address: fromAddress, status: 'pending', from: fromAddress, to: toAddress, type: 0, hash: '', fee: 0, blockAddress: res, remark: sendRemark);
+              controller0.clear();
+              controller1.clear();
+              controller2.clear();
+              setState(() {
+                load = false;
+                amount = '';
+                remark = '';
+                address = '';
+              });
+
+              showDialog(context: context, builder: (BuildContext context) => DesktopTransactionDetailPageWidget(transaction: transactionItem, address: fromAddress));
+              // Helper.changeAndroidStatusBar(true);
+              // ContactsItem? item = await Helper.showBottomSheet(context, TransactionPage(transaction: transactionItem, address: fromAddress));
+              // if (item == null) {
+              //   Helper.changeAndroidStatusBar(false);
+              //   return;
+              // }
+            } else {
+              showDialog(context: context, builder: (context) => DesktopAlertModal(title: AppLocalizations.of(context)!.error, content: res));
+              controller0.clear();
+              controller1.clear();
+              controller2.clear();
+              setState(() {
+                load = false;
+                amount = '';
+                remark = '';
+                address = '';
+              });
+            }
+          }
+        } on DioException catch (e) {
+          // 502 处理
+          if (e.response?.statusCode == 502) {
+            showDialog(context: context, builder: (BuildContext context) => DesktopAlertModal(title: AppLocalizations.of(context)!.error, content: AppLocalizations.of(context)!.error));
             setState(() {
               load = false;
-              amount = '';
-              remark = '';
-              address = '';
+              // error = AppLocalizations.of(context)!.error;
             });
+            return;
           }
         }
 
