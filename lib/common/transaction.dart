@@ -31,24 +31,24 @@ class TransactionHelper {
     var t = getCurrentTimestamp();
     var timeBytes = ByteData(8)..setUint64(0, t.toInt(), Endian.little);
     String sb = "0000000000000000";
-    // 奇公钥+无remark：e1dc560500000000
-    // 奇公钥+有remark：e1dc695500000000
-    // 偶公钥+无remark：e1dc570500000000
+    // 奇公钥+无remark：e1dc570500000000
+    // 奇公钥+有remark：e1dc795500000000
+    // 偶公钥+无remark：e1dc560500000000
     // 偶公钥+有remark：e1dc795500000000
     if (remark.isNotEmpty) {
-      sb += (isPubKeyEven ? "e1dc795500000000" : "e1dc695500000000");
+      sb += (isPubKeyEven ? "e1dc695500000000" : "e1dc795500000000");
     } else {
-      sb += (isPubKeyEven ? "e1dc570500000000" : "e1dc560500000000");
+      sb += (isPubKeyEven ? "e1dc560500000000" : "e1dc570500000000");
     }
     sb += HEX.encode(timeBytes.buffer.asUint8List());
 
     sb += "0000000000000000";
-    print('header: $sb');
+    // print('header: $sb');
     // nonce：前面补 48 个 0
     // 由于rpc查询出来的nonce（rpc查出来的到的结果是String类型），会放在该32字节的后八个字段，然后前面24个字节的零，这后八个字节存放nonce的方式是小端序存放。
     sb += encodeNonceTo32Bytes(nonce);
-    print('nonce: $nonce');
-    print('header + nonce: $sb');
+    // print('nonce: $nonce');
+    // print('header + nonce: $sb');
     sb += from;
     // amount
     sb += HEX.encode(valBytes);
@@ -76,11 +76,11 @@ class TransactionHelper {
       }
     }
     // print('nonce: $nonce');
-    print('sb: $sb');
+    // print('sb: $sb');
     //按照每 64 个字符，打印出来
-    for (var i = 0; i < sb.length; i += 64) {
-      print(sb.substring(i, i + 64));
-    }
+    // for (var i = 0; i < sb.length; i += 64) {
+    //   print(sb.substring(i, i + 64));
+    // }
     return sb;
   }
 

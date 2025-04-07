@@ -131,6 +131,7 @@ class _SendPageState extends State<SendPage> {
         subSendPort.send([res, toAddress, amount, fromAddress, remark, nonce]);
       } else if (data is List<String>) {
         String result = data[1];
+        // print('result: $result');
         try {
           Response response = await dio.post(
             rpcURL,
@@ -142,6 +143,7 @@ class _SendPageState extends State<SendPage> {
               "id": 1
             },
           );
+          print('response: ${response.data}');
           if (context.mounted) {
             var res = response.data['result'] as String;
             // 把内容存在 localstorage,返回列表的时候，从 localstorage 中获取
