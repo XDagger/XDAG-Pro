@@ -8,7 +8,41 @@ import 'package:xdag/common/helper.dart';
 import 'package:fixnum/fixnum.dart';
 
 class TransactionHelper {
+  //有 nonce，奇数公钥，无 remark
+  static const String hasNonceOddKeyNoRemark = "e1dc570500000000";
+  //有 nonce，偶数公钥，无 remark
+  static const String hasNonceEvenKeyNoRemark = "e1dc560500000000";
+  //有 nonce，奇数公钥，有 remark
+  static const String hasNonceOddKeyHasRemark = "e1dc795500000000";
+  //有 nonce，偶数公钥，有 remark
+  static const String hasNonceEvenKeyHasRemark = "e1dc695500000000";
+  //无 nonce，奇数公钥，无 remark
+  static const String noNonceOddKeyNoRemark = "c17d550000000000";
+  //无 nonce，偶数公钥，无 remark
+  static const String noNonceEvenKeyNoRemark = "c16d550000000000";
+  //无 nonce，奇数公钥，有 remark
+  static const String noNonceOddKeyHasRemark = "c19d570500000000";
+  //无 nonce，偶数公钥，有 remark
+  static const String noNonceEvenKeyHasRemark = "c19d560500000000";
+  //有 nonce、无 remark、签名时补零
+  static const int padZerosHasNonceNoRemarkSigned = 22;
+  //有 nonce、有 remark、签名时补零
+  static const int padZerosHasNonceHasRemarkSigned = 20;
+  //无 nonce、无 remark、签名时补零
+  static const int padZerosNoNonceNoRemarkSigned = 24;
+  //无 nonce、有 remark、签名时补零
+  static const int padZerosNoNonceHasRemarkSigned = 22;
+  //有 nonce、无 remark（成块补零）
+  static const int padZerosHasNonceNoRemark = 18;
+  //有 nonce、有 remark（成块补零）
+  static const int padZerosHasNonceHasRemark = 16;
+  //无 nonce、无 remark（成块补零）
+  static const int padZerosNoNonceNoRemark = 20;
+  //无 nonce、有 remark（成块补零）
+  static const int padZerosNoNonceHasRemark = 18;
+
   static String getTransaction(String fromAddress, String toAddress, String remark, double value, bip32.BIP32 wallet, String nonce) {
+    bool isMainNet = nonce.trim().isEmpty;
     // print('getTransaction: $fromAddress, $toAddress, $remark, $value, $nonce');
     bool isPubKeyEven = wallet.publicKey[0] % 2 == 0;
     String from = checkBase58Address(fromAddress);
@@ -30,50 +64,84 @@ class TransactionHelper {
     var t = getCurrentTimestamp();
     var timeBytes = ByteData(8)..setUint64(0, t.toInt(), Endian.little);
     String sb = "0000000000000000";
-    // 奇公钥+无remark：e1dc570500000000
-    // 奇公钥+有remark：e1dc795500000000
-    // 偶公钥+无remark：e1dc560500000000
-    // 偶公钥+有remark：e1dc795500000000
-    if (remark.isNotEmpty) {
-      sb += (isPubKeyEven ? "e1dc695500000000" : "e1dc795500000000");
-    } else {
-      sb += (isPubKeyEven ? "e1dc560500000000" : "e1dc570500000000");
-    }
-    sb += HEX.encode(timeBytes.buffer.asUint8List());
 
-    sb += "0000000000000000";
-    // print('header: $sb');
-    // nonce：前面补 48 个 0
-    // 由于rpc查询出来的nonce（rpc查出来的到的结果是String类型），会放在该32字节的后八个字段，然后前面24个字节的零，这后八个字节存放nonce的方式是小端序存放。
-    sb += encodeNonceTo32Bytes(nonce);
-    // print('nonce: $nonce');
-    // print('header + nonce: $sb');
-    sb += from;
-    // amount
-    sb += HEX.encode(valBytes);
-    // to
-    sb += to;
-    // amount
-    sb += HEX.encode(valBytes);
-    if (remark.isNotEmpty) {
-      sb += HEX.encode(remarkBytes);
-    }
-    var pub = HEX.encode(wallet.publicKey.sublist(1));
-    sb += pub;
-    Map<String, String> res = transactionSign(sb, wallet, remark.isNotEmpty);
-    sb += res['r']!;
-    sb += res['s']!;
-    if (remark.isNotEmpty) {
-      // 9 变成 8
-      for (var i = 0; i < 16; i++) {
-        sb += "00000000000000000000000000000000";
+    if (nonce.trim().isEmpty) {
+      //主网
+      if (remark.isNotEmpty) {
+        sb += (isPubKeyEven ? noNonceEvenKeyHasRemark : noNonceOddKeyHasRemark);
+      } else {
+        sb += (isPubKeyEven ? noNonceEvenKeyNoRemark : noNonceOddKeyNoRemark);
+      }
+      sb += HEX.encode(timeBytes.buffer.asUint8List());
+
+      sb += "0000000000000000";
+
+      sb += from;
+      // amount
+      sb += HEX.encode(valBytes);
+      // to
+      sb += to;
+      // amount
+      sb += HEX.encode(valBytes);
+      if (remark.isNotEmpty) {
+        sb += HEX.encode(remarkBytes);
+      }
+      var pub = HEX.encode(wallet.publicKey.sublist(1));
+      sb += pub;
+      Map<String, String> res = transactionSign(sb, wallet, remark.isNotEmpty, isMainNet);
+      sb += res['r']!;
+      sb += res['s']!;
+      if (remark.isNotEmpty) {
+        for (var i = 0; i < padZerosNoNonceHasRemark; i++) {
+          sb += "00000000000000000000000000000000";
+        }
+      } else {
+        for (var i = 0; i < padZerosNoNonceNoRemark; i++) {
+          sb += "00000000000000000000000000000000";
+        }
       }
     } else {
-      // 10 变成 9
-      for (var i = 0; i < 18; i++) {
-        sb += "00000000000000000000000000000000";
+      //测试网
+      if (remark.isNotEmpty) {
+        sb += (isPubKeyEven ? hasNonceEvenKeyHasRemark : hasNonceOddKeyHasRemark);
+      } else {
+        sb += (isPubKeyEven ? hasNonceEvenKeyNoRemark : hasNonceOddKeyNoRemark);
+      }
+      sb += HEX.encode(timeBytes.buffer.asUint8List());
+
+      sb += "0000000000000000";
+      // print('header: $sb');
+      // nonce：前面补 48 个 0
+      // 由于rpc查询出来的nonce（rpc查出来的到的结果是String类型），会放在该32字节的后八个字段，然后前面24个字节的零，这后八个字节存放nonce的方式是小端序存放。
+      sb += encodeNonceTo32Bytes(nonce);
+      // print('nonce: $nonce');
+      // print('header + nonce: $sb');
+      sb += from;
+      // amount
+      sb += HEX.encode(valBytes);
+      // to
+      sb += to;
+      // amount
+      sb += HEX.encode(valBytes);
+      if (remark.isNotEmpty) {
+        sb += HEX.encode(remarkBytes);
+      }
+      var pub = HEX.encode(wallet.publicKey.sublist(1));
+      sb += pub;
+      Map<String, String> res = transactionSign(sb, wallet, remark.isNotEmpty, isMainNet);
+      sb += res['r']!;
+      sb += res['s']!;
+      if (remark.isNotEmpty) {
+        for (var i = 0; i < padZerosHasNonceHasRemark; i++) {
+          sb += "00000000000000000000000000000000";
+        }
+      } else {
+        for (var i = 0; i < padZerosHasNonceNoRemark; i++) {
+          sb += "00000000000000000000000000000000";
+        }
       }
     }
+
     // print('nonce: $nonce');
     // print('sb: $sb');
     //按照每 64 个字符，打印出来
@@ -125,17 +193,29 @@ class TransactionHelper {
     return (sec << 10) | xmsec;
   }
 
-  static Map<String, String> transactionSign(String b, bip32.BIP32 wallet, bool hasRemark) {
+  static Map<String, String> transactionSign(String b, bip32.BIP32 wallet, bool hasRemark, bool isMainNet) {
     String sb = b;
-    if (hasRemark) {
-      // 11 -> 10
-      for (var i = 0; i < 20; i++) {
-        sb += "00000000000000000000000000000000";
+    if (isMainNet) {
+      if (hasRemark) {
+        for (var i = 0; i < padZerosNoNonceHasRemarkSigned; i++) {
+          sb += "00000000000000000000000000000000";
+        }
+      } else {
+        for (var i = 0; i < padZerosNoNonceNoRemarkSigned; i++) {
+          sb += "00000000000000000000000000000000";
+        }
       }
     } else {
-      // 12 -> 11
-      for (var i = 0; i < 22; i++) {
-        sb += "00000000000000000000000000000000";
+      if (hasRemark) {
+        // 11 -> 10
+        for (var i = 0; i < padZerosHasNonceHasRemarkSigned; i++) {
+          sb += "00000000000000000000000000000000";
+        }
+      } else {
+        // 12 -> 11
+        for (var i = 0; i < padZerosHasNonceNoRemarkSigned; i++) {
+          sb += "00000000000000000000000000000000";
+        }
       }
     }
     var pub = HEX.encode(wallet.publicKey);
