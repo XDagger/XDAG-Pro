@@ -2,13 +2,15 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
+import 'package:flutter/rendering.dart';
 import 'package:hex/hex.dart';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:xdag/common/helper.dart';
 import 'package:fixnum/fixnum.dart';
 
 class TransactionHelper {
-  static String getTransaction(String fromAddress, String toAddress, String remark, double value, bip32.BIP32 wallet) {
+  static String getTransaction(String fromAddress, String toAddress, String remark, double value, bip32.BIP32 wallet, String nonce) {
+    print('getTransaction: $fromAddress, $toAddress, $remark, $value, $nonce');
     bool isPubKeyEven = wallet.publicKey[0] % 2 == 0;
     String from = checkBase58Address(fromAddress);
     String to = checkBase58Address(toAddress);
@@ -28,18 +30,31 @@ class TransactionHelper {
     // ts
     var t = getCurrentTimestamp();
     var timeBytes = ByteData(8)..setUint64(0, t.toInt(), Endian.little);
-    String sb = "0000000000000000C1";
-    // sb += (Global.isTest ? "8" : "1");
+    String sb = "0000000000000000";
+    // 奇公钥+无remark：e1dc570500000000
+    // 奇公钥+有remark：e1dc795500000000
+    // 偶公钥+无remark：e1dc560500000000
+    // 偶公钥+有remark：e1dc795500000000
     if (remark.isNotEmpty) {
-      sb += (isPubKeyEven ? "9D560500000000" : "9D570500000000");
+      sb += (isPubKeyEven ? "e1dc695500000000" : "e1dc795500000000");
     } else {
-      sb += (isPubKeyEven ? "6D550000000000" : "7D550000000000");
+      sb += (isPubKeyEven ? "e1dc560500000000" : "e1dc570500000000");
     }
     sb += HEX.encode(timeBytes.buffer.asUint8List());
+
     sb += "0000000000000000";
+    // print('header: $sb');
+    // nonce：前面补 48 个 0
+    // 由于rpc查询出来的nonce（rpc查出来的到的结果是String类型），会放在该32字节的后八个字段，然后前面24个字节的零，这后八个字节存放nonce的方式是小端序存放。
+    sb += encodeNonceTo32Bytes(nonce);
+    // print('nonce: $nonce');
+    // print('header + nonce: $sb');
     sb += from;
+    // amount
     sb += HEX.encode(valBytes);
+    // to
     sb += to;
+    // amount
     sb += HEX.encode(valBytes);
     if (remark.isNotEmpty) {
       sb += HEX.encode(remarkBytes);
@@ -50,15 +65,39 @@ class TransactionHelper {
     sb += res['r']!;
     sb += res['s']!;
     if (remark.isNotEmpty) {
-      for (var i = 0; i < 18; i++) {
+      // 9 变成 8
+      for (var i = 0; i < 16; i++) {
         sb += "00000000000000000000000000000000";
       }
     } else {
-      for (var i = 0; i < 20; i++) {
+      // 10 变成 9
+      for (var i = 0; i < 18; i++) {
         sb += "00000000000000000000000000000000";
       }
     }
+    // print('nonce: $nonce');
+    // print('sb: $sb');
+    //按照每 64 个字符，打印出来
+    // for (var i = 0; i < sb.length; i += 64) {
+    //   print(sb.substring(i, i + 64));
+    // }
     return sb;
+  }
+
+  static String encodeNonceTo32Bytes(String nonce) {
+    // 创建 8 字节用于保存小端序的 nonce 值
+    final nonceBytes = Uint8List(8);
+    ByteData.view(nonceBytes.buffer).setUint64(
+      0,
+      int.parse(nonce), // 将字符串 nonce 转为 int
+      Endian.little, // 小端序写入
+    );
+
+    // 前 24 字节（48 个 hex 字符）补 0
+    final prefix = '0' * 48;
+
+    // 拼接结果：24 字节全 0 + 8 字节小端 nonce
+    return prefix + HEX.encode(nonceBytes);
   }
 
   static String checkBase58Address(String address) {
@@ -90,11 +129,13 @@ class TransactionHelper {
   static Map<String, String> transactionSign(String b, bip32.BIP32 wallet, bool hasRemark) {
     String sb = b;
     if (hasRemark) {
-      for (var i = 0; i < 22; i++) {
+      // 11 -> 10
+      for (var i = 0; i < 20; i++) {
         sb += "00000000000000000000000000000000";
       }
     } else {
-      for (var i = 0; i < 24; i++) {
+      // 12 -> 11
+      for (var i = 0; i < 22; i++) {
         sb += "00000000000000000000000000000000";
       }
     }

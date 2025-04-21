@@ -1,17 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-// import 'dart:ui' as ui show Color, Gradient, Image, ImageFilter;
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-// import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:vision_gallery_saver/vision_gallery_saver.dart';
-import 'package:vision_gallery_saver/vision_gallery_saver_platform_interface.dart';
 import 'package:xdag/common/color.dart';
 import 'package:xdag/common/global.dart';
 import 'package:xdag/common/helper.dart';
