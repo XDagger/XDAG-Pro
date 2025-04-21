@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
-import 'package:flutter/rendering.dart';
 import 'package:hex/hex.dart';
 import 'package:bip32/bip32.dart' as bip32;
 import 'package:xdag/common/helper.dart';
@@ -10,7 +9,7 @@ import 'package:fixnum/fixnum.dart';
 
 class TransactionHelper {
   static String getTransaction(String fromAddress, String toAddress, String remark, double value, bip32.BIP32 wallet, String nonce) {
-    print('getTransaction: $fromAddress, $toAddress, $remark, $value, $nonce');
+    // print('getTransaction: $fromAddress, $toAddress, $remark, $value, $nonce');
     bool isPubKeyEven = wallet.publicKey[0] % 2 == 0;
     String from = checkBase58Address(fromAddress);
     String to = checkBase58Address(toAddress);
