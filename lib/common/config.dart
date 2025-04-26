@@ -1,6 +1,6 @@
 // 放置全局的常量
 class ConfigGlobal {
-  static const String telegram = 'https://www.telegram.me/dagger_cryptocurrency';
+  static const String telegram = 'https://t.me/XDAG_Community';
   static const String discord = 'https://discord.gg/Nf72gd9';
   static const String twitter = 'https://twitter.com/XDAG_Community';
   static const String home = 'https://xdag.io/';
