@@ -62,5 +62,7 @@
 
     <key>NSPhotoLibraryAddUsageDescription</key>
     <string>XDAG-Pro needs to save the QR code image to your photo album.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>XDAG-Pro needs to get the QR code image from your photo album.</string>
 </dict>
 </plist>

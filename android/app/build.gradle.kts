@@ -11,7 +11,7 @@ val XDAG_RELEASE_KEY_PASSWORD = project.properties["XDAG_RELEASE_KEY_PASSWORD"] 
 
 android {
     namespace = "com.xdag.io"
-    compileSdk = 34
+    compileSdk = 35
     ndkVersion = "27.0.12077973"
 
     compileOptions {
