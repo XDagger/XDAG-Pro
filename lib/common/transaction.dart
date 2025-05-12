@@ -42,7 +42,6 @@ class TransactionHelper {
   static const int padZerosNoNonceHasRemark = 18;
 
   static String getTransaction(String fromAddress, String toAddress, String remark, double value, bip32.BIP32 wallet, String nonce) {
-    bool isMainNet = nonce.trim().isEmpty;
     // print('getTransaction: $fromAddress, $toAddress, $remark, $value, $nonce');
     bool isPubKeyEven = wallet.publicKey[0] % 2 == 0;
     String from = checkBase58Address(fromAddress);
@@ -91,7 +90,7 @@ class TransactionHelper {
     }
     var pub = HEX.encode(wallet.publicKey.sublist(1));
     sb += pub;
-    Map<String, String> res = transactionSign(sb, wallet, remark.isNotEmpty, isMainNet);
+    Map<String, String> res = transactionSign(sb, wallet, remark.isNotEmpty);
     sb += res['r']!;
     sb += res['s']!;
     if (remark.isNotEmpty) {
@@ -156,7 +155,7 @@ class TransactionHelper {
     return (sec << 10) | xmsec;
   }
 
-  static Map<String, String> transactionSign(String b, bip32.BIP32 wallet, bool hasRemark, bool isMainNet) {
+  static Map<String, String> transactionSign(String b, bip32.BIP32 wallet, bool hasRemark) {
     String sb = b;
     if (hasRemark) {
       // 11 -> 10
