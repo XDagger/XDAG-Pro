@@ -557,17 +557,14 @@ class _SendCardState extends State<SendCard> {
     final receivePort = ReceivePort();
     ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
     String rpcURL = config.getCurrentRpc();
-    bool isTestNet = config.isTestNet;
     String nonce = '';
-    if (isTestNet) {
-      Response response = await dio.post(rpcURL, cancelToken: cancelToken, data: {
-        "jsonrpc": "2.0",
-        "method": "xdag_getTransactionNonce",
-        "params": [fromAddress],
-        "id": 1
-      });
-      nonce = response.data['result'] as String;
-    }
+    Response response = await dio.post(rpcURL, cancelToken: cancelToken, data: {
+      "jsonrpc": "2.0",
+      "method": "xdag_getTransactionNonce",
+      "params": [fromAddress],
+      "id": 1
+    });
+    nonce = response.data['result'] as String;
     isolate = await Isolate.spawn(isolateFunction, receivePort.sendPort);
     receivePort.listen((data) async {
       var sendAmount = amount;

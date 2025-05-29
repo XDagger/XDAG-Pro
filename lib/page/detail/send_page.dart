@@ -104,24 +104,20 @@ class _SendPageState extends State<SendPage> {
     final receivePort = ReceivePort();
     ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
     String rpcURL = config.getCurrentRpc();
-    // 是否测试网
-    bool isTestNet = config.isTestNet;
     // xdag_getTransactionNonce
     // print('fromAddress: $fromAddress');
     String nonce = '';
-    if (isTestNet) {
-      Response response = await dio.post(
-        rpcURL,
-        cancelToken: cancelToken,
-        data: {
-          "jsonrpc": "2.0",
-          "method": "xdag_getTransactionNonce",
-          "params": [fromAddress],
-          "id": 1
-        },
-      ).timeout(const Duration(seconds: 10));
-      nonce = response.data['result'] as String;
-    }
+    Response response = await dio.post(
+      rpcURL,
+      cancelToken: cancelToken,
+      data: {
+        "jsonrpc": "2.0",
+        "method": "xdag_getTransactionNonce",
+        "params": [fromAddress],
+        "id": 1
+      },
+    ).timeout(const Duration(seconds: 10));
+    nonce = response.data['result'] as String;
     isolate = await Isolate.spawn(isolateFunction, receivePort.sendPort);
     receivePort.listen((data) async {
       var sendAmount = amount;
