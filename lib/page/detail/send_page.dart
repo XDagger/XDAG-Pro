@@ -29,7 +29,8 @@ class SendPageRouteParams {
   final String name;
   final String remark;
   final String amount;
-  SendPageRouteParams({required this.address, this.name = '', this.remark = '', this.amount = ''});
+  final bool isFromScanQR;
+  SendPageRouteParams({required this.address, this.name = '', this.remark = '', this.amount = '', this.isFromScanQR = false});
 }
 
 class SendPage extends StatefulWidget {
@@ -104,8 +105,6 @@ class _SendPageState extends State<SendPage> {
     final receivePort = ReceivePort();
     ConfigModal config = Provider.of<ConfigModal>(context, listen: false);
     String rpcURL = config.getCurrentRpc();
-    // xdag_getTransactionNonce
-    // print('fromAddress: $fromAddress');
     String nonce = '';
     Response response = await dio.post(
       rpcURL,
@@ -253,7 +252,7 @@ class _SendPageState extends State<SendPage> {
                     children: [
                       MyCupertinoButton(
                         padding: EdgeInsets.zero,
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: args.isFromScanQR ? null : () => Navigator.of(context).pop(),
                         child: Container(
                           height: 60,
                           decoration: BoxDecoration(
@@ -296,28 +295,33 @@ class _SendPageState extends State<SendPage> {
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller,
-                        onChanged: (value) {
-                          setState(() {
-                            amount = value;
-                          });
-                        },
+                        onChanged: args.isFromScanQR
+                            ? null
+                            : (value) {
+                                setState(() {
+                                  amount = value;
+                                });
+                              },
                         minFontSize: 32,
                         maxFontSize: 40,
                         maxLines: 1,
                         minLines: 1,
-                        autofocus: true,
+                        autofocus: !args.isFromScanQR,
+                        enabled: !args.isFromScanQR,
                         textInputAction: TextInputAction.done,
                         keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         keyboardAppearance: Brightness.dark,
                         textAlign: TextAlign.center,
-                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white)),
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
-                        ],
+                        style: Helper.fitChineseFont(context, TextStyle(fontSize: 32, fontWeight: FontWeight.w500, color: args.isFromScanQR ? Colors.white54 : Colors.white)),
+                        inputFormatters: args.isFromScanQR
+                            ? null
+                            : [
+                                FilteringTextInputFormatter.allow(RegExp(r'^\d+\.?\d{0,2}')),
+                              ],
                         decoration: InputDecoration(
                           filled: true,
                           contentPadding: const EdgeInsets.fromLTRB(15, 40, 15, 40),
-                          fillColor: DarkColors.blockColor,
+                          fillColor: args.isFromScanQR ? DarkColors.lineColor54 : DarkColors.blockColor,
                           hintText: 'XDAG',
                           hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 32, fontWeight: FontWeight.w500, color: Colors.white54)),
                           enabledBorder: const OutlineInputBorder(borderSide: BorderSide.none, borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -330,35 +334,33 @@ class _SendPageState extends State<SendPage> {
                         child: Row(
                           children: [
                             const Spacer(),
-                            MyCupertinoButton(
-                              padding: EdgeInsets.zero,
-                              onPressed: () {
-                                controller.text = wallet.amount;
-                                // 光标移到最后
-                                controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
-                                setState(() {
-                                  amount = wallet.amount;
-                                });
-                              },
-                              child: Row(
-                                children: [
-                                  Text('${wallet.amount} XDAG', style: Helper.fitChineseFont(context, TextStyle(fontSize: 14, color: isAmountError ? DarkColors.redColor : Colors.white, fontWeight: FontWeight.w500))),
-                                  const SizedBox(width: 10),
-                                  Container(
-                                    //radius: 10,
-                                    height: 30,
-                                    padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
-                                    decoration: BoxDecoration(
-                                      color: DarkColors.blockColor,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child: Center(
-                                      child: Text(AppLocalizations.of(context)!.all, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500))),
-                                    ),
-                                  )
-                                ],
+                            Text('${wallet.amount} XDAG', style: Helper.fitChineseFont(context, TextStyle(fontSize: 14, color: isAmountError ? DarkColors.redColor : Colors.white, fontWeight: FontWeight.w500))),
+                            if (!args.isFromScanQR) ...[
+                              const SizedBox(width: 10),
+                              MyCupertinoButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  controller.text = wallet.amount;
+                                  // 光标移到最后
+                                  controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length));
+                                  setState(() {
+                                    amount = wallet.amount;
+                                  });
+                                },
+                                child: Container(
+                                  //radius: 10,
+                                  height: 30,
+                                  padding: const EdgeInsets.fromLTRB(12, 0, 12, 0),
+                                  decoration: BoxDecoration(
+                                    color: DarkColors.blockColor,
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: Center(
+                                    child: Text(AppLocalizations.of(context)!.all, style: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500))),
+                                  ),
+                                ),
                               ),
-                            ),
+                            ],
                           ],
                         ),
                       ),
@@ -366,16 +368,19 @@ class _SendPageState extends State<SendPage> {
                       const SizedBox(height: 15),
                       AutoSizeTextField(
                         controller: controller2,
-                        onChanged: (value) {
-                          setState(() {
-                            remark = value;
-                          });
-                        },
+                        onChanged: args.isFromScanQR
+                            ? null
+                            : (value) {
+                                setState(() {
+                                  remark = value;
+                                });
+                              },
                         minFontSize: 16,
                         maxLines: 10,
                         minLines: 1,
                         maxLength: 32,
                         autofocus: false,
+                        enabled: !args.isFromScanQR,
                         keyboardAppearance: Brightness.dark,
                         contextMenuBuilder: (context, editableTextState) {
                           final List<ContextMenuButtonItem> buttonItems = editableTextState.contextMenuButtonItems;
@@ -385,11 +390,11 @@ class _SendPageState extends State<SendPage> {
                           );
                         },
                         textInputAction: TextInputAction.done,
-                        style: Helper.fitChineseFont(context, const TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white)),
+                        style: Helper.fitChineseFont(context, TextStyle(fontSize: 16, fontWeight: FontWeight.w500, color: args.isFromScanQR ? Colors.white54 : Colors.white)),
                         decoration: InputDecoration(
                           filled: true,
                           contentPadding: const EdgeInsets.all(15),
-                          fillColor: DarkColors.blockColor,
+                          fillColor: args.isFromScanQR ? DarkColors.lineColor54 : DarkColors.blockColor,
                           counterStyle: Helper.fitChineseFont(context, const TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: Colors.white)),
                           hintText: AppLocalizations.of(context)!.remark,
                           hintStyle: Helper.fitChineseFont(context, const TextStyle(decoration: TextDecoration.none, fontSize: 16, fontWeight: FontWeight.w500, color: Colors.white54)),
@@ -423,9 +428,9 @@ class _SendPageState extends State<SendPage> {
                   Button(
                     text: AppLocalizations.of(context)!.continueText,
                     width: ScreenHelper.screenWidth - 30,
-                    bgColor: isButtonEnable ? DarkColors.mainColor : DarkColors.lineColor54,
+                    bgColor: (isButtonEnable || args.isFromScanQR) ? DarkColors.mainColor : DarkColors.lineColor54,
                     textColor: Colors.white,
-                    disable: !isButtonEnable,
+                    disable: !isButtonEnable && !args.isFromScanQR,
                     isLoad: isLoad,
                     onPressed: () async {
                       // 判断输入金额是否 大于 0.1

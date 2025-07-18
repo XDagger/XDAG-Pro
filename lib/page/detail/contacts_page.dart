@@ -107,6 +107,7 @@ class ContactsStatePage extends State<ContactsPage> {
                                         amount: json["amount"] ?? "",
                                         remark: json["remark"] ?? "",
                                         name: json["name"] ?? "",
+                                        isFromScanQR: true,
                                       ),
                                     );
                                   }
@@ -270,6 +271,12 @@ class ContactsStatePage extends State<ContactsPage> {
                               '/send',
                               arguments: SendPageRouteParams(address: item.address, name: item.name),
                             );
+                            // TEST
+                            // Navigator.pushNamed(
+                            //   context,
+                            //   '/send',
+                            //   arguments: SendPageRouteParams(address: item.address, name: item.name, isFromScanQR: true, amount: "0.1", remark: "test"),
+                            // );
                           }
                         },
                         child: Container(
