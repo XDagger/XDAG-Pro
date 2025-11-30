@@ -81,7 +81,7 @@ class ContactsMainPage extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   onPressed: () async {
                     Helper.changeAndroidStatusBar(true);
-                    String? reslut = (await Helper.showBottomSheet(
+                    String? result = (await Helper.showBottomSheet(
                       context,
                       ContactsDetail(
                         item: item,
@@ -89,7 +89,7 @@ class ContactsMainPage extends StatelessWidget {
                       ),
                     )) as String?;
                     Helper.changeAndroidStatusBar(false);
-                    if (reslut == 'delete') {
+                    if (result == 'delete') {
                       if (context.mounted) {
                         Helper.changeAndroidStatusBarAndNavBar(true);
                         final shouldDelete = await showCupertinoModalPopup(
@@ -162,7 +162,7 @@ class ContactsMainPage extends StatelessWidget {
                         }
                       }
                     }
-                    if (reslut == 'edit') {
+                    if (result == 'edit') {
                       if (context.mounted) {
                         showModalBottomSheet(
                           backgroundColor: DarkColors.bgColor,
@@ -176,7 +176,7 @@ class ContactsMainPage extends StatelessWidget {
                         );
                       }
                     }
-                    if (reslut == 'send') {
+                    if (result == 'send') {
                       if (context.mounted) {
                         Navigator.pushNamed(
                           context,
