@@ -112,12 +112,12 @@ class WalletTransactionItem extends StatelessWidget {
           await Future.delayed(const Duration(milliseconds: 200));
           if (item.name.isNotEmpty) {
             if (context.mounted) {
-              String? reslut = (await Helper.showBottomSheet(
+              String? result = (await Helper.showBottomSheet(
                 context,
                 ContactsDetail(item: item),
               )) as String?;
               Helper.changeAndroidStatusBar(false);
-              if (reslut == 'send') {
+              if (result == 'send') {
                 if (context.mounted) {
                   Navigator.pushNamed(context, '/send', arguments: SendPageRouteParams(address: item.address, name: item.name));
                 }
