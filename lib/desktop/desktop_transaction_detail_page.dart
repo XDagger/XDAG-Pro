@@ -94,6 +94,7 @@ class DesktopTransactionDetailPageWidgetState extends State<DesktopTransactionDe
     Transaction transaction = widget.transaction;
     String address = widget.address;
     bool isSend = transaction.from == address;
+    String displayFee = fee.isNotEmpty ? fee : Helper.removeTrailingZeros((transaction.fee + 0.1).toString());
     ContactsModal contacts = Provider.of<ContactsModal>(context);
     ContactsItem otherContact = contacts.contactsList.firstWhere((element) => element.address == otherAddress, orElse: () => ContactsItem("", otherAddress));
     return DesktopModalFrame(
@@ -162,7 +163,7 @@ class DesktopTransactionDetailPageWidgetState extends State<DesktopTransactionDe
                             Helper.showToast(context, AppLocalizations.of(context)!.copied_to_clipboard);
                           }),
                       const SizedBox(height: 1),
-                      TransactionButton(showCopy: false, title: AppLocalizations.of(context)!.fee, value: '$fee XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+                      TransactionButton(showCopy: false, title: AppLocalizations.of(context)!.fee, value: '$displayFee XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
                       const SizedBox(height: 1),
                       if (transaction.remark.isNotEmpty)
                         TransactionButton(
@@ -233,7 +234,7 @@ class DesktopTransactionDetail extends StatelessWidget {
               value: transaction.from,
             ),
             const SizedBox(height: 1),
-            TransactionButton(showCopy: false, title: AppLocalizations.of(context)!.fee, value: '0.00 XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
+            TransactionButton(showCopy: false, title: AppLocalizations.of(context)!.fee, value: '${transaction.fee + 0.1} XDAG', borderRadius: transaction.remark.isNotEmpty ? BorderRadius.zero : const BorderRadius.only(bottomLeft: Radius.circular(8), bottomRight: Radius.circular(8))),
             const SizedBox(height: 1),
             if (transaction.remark.isNotEmpty)
               TransactionButton(

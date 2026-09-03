@@ -150,5 +150,9 @@
   "transactions": "Transactions",
   "forget_the_password": "forget_the_password",
   "time_zone": "Time Zone",
-  "transactions_in_progress": "Transactions in progress"
+  "transactions_in_progress": "Transactions in progress",
+  "express_fee": "Expression Fee",
+  "invalid_fee": "Please enter a invalid fee",
+  "average_fee": "Average Fee",
+  "fee_explanation": "Fee Explanation:\n1. Input fees must be added to the base fee of 0.1 XDAG\n2. The higher the fee, the faster the transaction confirmation speed"
 }

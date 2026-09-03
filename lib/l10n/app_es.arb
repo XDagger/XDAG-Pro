@@ -150,5 +150,9 @@
   "transactions": "Transacciones",
   "forget_the_password": "Olvidé la contraseña",
   "time_zone": "Zona horaria",
-  "transactions_in_progress": "Transacciones en progreso"
+  "transactions_in_progress": "Transacciones en progreso",
+  "express_fee": "Tarifa exprés",
+  "invalid_fee": "Por favor, introduzca una tarifa válida",
+  "average_fee": "Tarifa promedio",
+  "fee_explanation": "Explicación de la tarifa:\n1. Las tarifas de entrada deben añadirse a la tarifa base de 0,1 XDAG.\n2. Cuanto mayor sea la tarifa, más rápida será la confirmación de la transacción."
 }

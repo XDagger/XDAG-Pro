@@ -150,5 +150,9 @@
   "transactions": "Transaktionen",
   "forget_the_password": "Passwort vergessen",
   "time_zone": "Zeitzone",
-  "transactions_in_progress": "Transaktionen in Arbeit"
+  "transactions_in_progress": "Transaktionen in Arbeit",
+  "express_fee": "Variable Gebühr",
+  "invalid_fee": "Bitte geben Sie eine gültige Gebühr ein",
+  "average_fee": "Durchschnittliche Gebühr",
+  "fee_explanation": "Gebührenerklärung:\n1. Zur Grundgebühr von 0,1 XDAG müssen Eingabegebühren hinzugerechnet werden\n2. Je höher die Gebühr, desto schneller die Transaktionsbestätigung"
 }

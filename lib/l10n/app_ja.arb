@@ -150,5 +150,9 @@
    "transactions": "取引",
    "forget_the_password": "パスワードを忘れた",
    "time_zone": "タイムゾーン",
-   "transactions_in_progress": "取引中"
+   "transactions_in_progress": "取引中",
+   "express_fee": "可変手数料",
+   "invalid_fee": "有効な手数料を入力してください",
+   "average_fee": "平均手数料",
+   "fee_explanation": "手数料の説明：\n1. 入力手数料は0.1 XDAGの基本手数料に加算されます\n2. 手数料が高いほど、取引の確認速度が速くなります"
 }

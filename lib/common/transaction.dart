@@ -41,7 +41,7 @@ class TransactionHelper {
   //无 nonce、有 remark（成块补零）
   static const int padZerosNoNonceHasRemark = 18;
 
-  static String getTransaction(String fromAddress, String toAddress, String remark, double value, bip32.BIP32 wallet, String nonce) {
+  static String getTransaction(String fromAddress, String toAddress, String remark, double value, bip32.BIP32 wallet, String nonce, double fee) {
     // print('getTransaction: $fromAddress, $toAddress, $remark, $value, $nonce');
     bool isPubKeyEven = wallet.publicKey[0] % 2 == 0;
     String from = checkBase58Address(fromAddress);
@@ -71,7 +71,8 @@ class TransactionHelper {
     }
     sb += HEX.encode(timeBytes.buffer.asUint8List());
 
-    sb += "0000000000000000";
+    // 添加可变手续费
+    sb += fee2Bytes(fee);
     // print('header: $sb');
     // nonce：前面补 48 个 0
     // 由于rpc查询出来的nonce（rpc查出来的到的结果是String类型），会放在该32字节的后八个字段，然后前面24个字节的零，这后八个字节存放nonce的方式是小端序存放。
@@ -144,6 +145,19 @@ class TransactionHelper {
     value *= pow(2, 32);
     amount = value.ceil();
     return res + amount;
+  }
+
+    static String fee2Bytes(double fee) {
+    final amountValue = (fee * 1000000000).round();
+
+    final valBytes = Uint8List(8);
+    ByteData.view(valBytes.buffer).setUint64(0, amountValue, Endian.little);
+
+    final hexString = valBytes.map((byte) {
+      return byte.toRadixString(16).padLeft(2, '0');
+    }).join();
+
+    return hexString;
   }
 
   static Int64 getCurrentTimestamp() {

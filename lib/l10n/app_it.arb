@@ -150,5 +150,9 @@
    "transactions": "Transazioni",
    "forget_the_password": "Dimentica la password",
    "time_zone": "Fuso orario",
-   "transactions_in_progress": "Transazioni in corso"
+   "transactions_in_progress": "Transazioni in corso",
+   "express_fee": "Tassa di espressione",
+   "invalid_fee": "Inserisci una tariffa valida",
+   "average_fee": "Commissione media",
+   "fee_explanation": "Spiegazione delle commissioni:\n1. Le commissioni di input devono essere aggiunte alla commissione base di 0,1 XDAG.\n2. Maggiore è la commissione, maggiore è la velocità di conferma della transazione."
 }

@@ -150,5 +150,10 @@
   "transactions": "交易",
   "forget_the_password": "忘记密码",
   "time_zone": "时区",
-  "transactions_in_progress": "交易进行中"
+  "transactions_in_progress": "交易进行中",
+  "express_fee": "可变手续费",
+  "invalid_fee": "请输入有效的手续费",
+  "average_fee": "平均手续费",
+  "fee_explanation": "手续费说明：\n1. 输入费用需加上基础费用 0.1 XDAG\n2. 手续费越高，交易确认速度越快"
+
 }

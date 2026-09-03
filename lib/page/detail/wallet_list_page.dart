@@ -347,7 +347,7 @@ class Item extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(15),
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
         child: Row(
           children: [
             Expanded(

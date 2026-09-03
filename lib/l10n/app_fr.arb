@@ -150,5 +150,9 @@
   "transactions": "Transactions",
   "forget_the_password": "Mot de passe oublié",
   "time_zone": "Fuseau horaire",
-  "transactions_in_progress": "Transactions en cours"
+  "transactions_in_progress": "Transactions en cours",
+  "express_fee": "Frais d'expression",
+  "invalid_fee": "Veuillez saisir des frais valides",
+  "average_fee": "Frais moyens",
+  "fee_explanation": "Explication des frais :\n1. Les frais de saisie doivent être ajoutés aux frais de base de 0,1 XDAG.\n2. Plus les frais sont élevés, plus la confirmation de la transaction est rapide."
 }
