@@ -44,3 +44,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Keystore and signing files
+*.jks
+*.keystore
+key.properties
+**/android/key.properties
+upload_certificate.pem
+
+# Android C++ / NDK build cache
+.cxx/
+**/android/app/.cxx/
+
